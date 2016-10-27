@@ -585,6 +585,8 @@
 
     invoke-virtual {v1, v2, v0}, Landroid/content/Context;->registerReceiver(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;)Landroid/content/Intent;
 
+    invoke-static {}, Lcom/android/server/connectivity/TetheringInjector;->init()V
+
     new-instance v0, Landroid/content/IntentFilter;
 
     .end local v0    # "filter":Landroid/content/IntentFilter;
@@ -709,6 +711,10 @@
     invoke-virtual {v0, v4, v1, v2}, Landroid/app/NotificationManager;->cancelAsUser(Ljava/lang/String;ILandroid/os/UserHandle;)V
 
     iput v3, p0, Lcom/android/server/connectivity/Tethering;->mLastNotificationId:I
+
+    iget-object v1, p0, Lcom/android/server/connectivity/Tethering;->mContext:Landroid/content/Context;
+
+    invoke-static {v1}, Lcom/android/server/connectivity/TetheringInjector;->notificationFinished(Landroid/content/Context;)V
 
     :cond_0
     return-void
@@ -1556,7 +1562,11 @@
     goto :goto_2
 
     :cond_b
-    invoke-direct/range {p0 .. p0}, Lcom/android/server/connectivity/Tethering;->clearTetheredNotification()V
+    const v12, 0x1080683
+
+    move-object/from16 v0, p0
+
+    invoke-direct {v0, v12}, Lcom/android/server/connectivity/Tethering;->showTetheredNotification(I)V
 
     goto :goto_2
 
@@ -1654,10 +1664,6 @@
 
     invoke-virtual {v2, v0, v3}, Landroid/content/Intent;->setClassName(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;
 
-    const/high16 v0, 0x40000000    # 2.0f
-
-    invoke-virtual {v2, v0}, Landroid/content/Intent;->setFlags(I)Landroid/content/Intent;
-
     iget-object v0, p0, Lcom/android/server/connectivity/Tethering;->mContext:Landroid/content/Context;
 
     sget-object v5, Landroid/os/UserHandle;->CURRENT:Landroid/os/UserHandle;
@@ -1750,6 +1756,12 @@
     invoke-virtual {v0, v8}, Landroid/app/Notification$Builder;->setContentIntent(Landroid/app/PendingIntent;)Landroid/app/Notification$Builder;
 
     iput p1, p0, Lcom/android/server/connectivity/Tethering;->mLastNotificationId:I
+
+    iget-object v0, p0, Lcom/android/server/connectivity/Tethering;->mContext:Landroid/content/Context;
+
+    iget-object v1, p0, Lcom/android/server/connectivity/Tethering;->mTetheredNotificationBuilder:Landroid/app/Notification$Builder;
+
+    invoke-static {v0, v1}, Lcom/android/server/connectivity/TetheringInjector;->setTetheredNotification(Landroid/content/Context;Landroid/app/Notification$Builder;)V
 
     iget v0, p0, Lcom/android/server/connectivity/Tethering;->mLastNotificationId:I
 

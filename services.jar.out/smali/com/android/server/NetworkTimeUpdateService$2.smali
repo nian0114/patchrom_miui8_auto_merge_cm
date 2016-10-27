@@ -54,17 +54,20 @@
 
     iget-object v1, p0, Lcom/android/server/NetworkTimeUpdateService$2;->this$0:Lcom/android/server/NetworkTimeUpdateService;
 
+    const/4 v2, 0x0
+
+    # setter for: Lcom/android/server/NetworkTimeUpdateService;->mTryAgainCounter:I
+    invoke-static {v1, v2}, Lcom/android/server/NetworkTimeUpdateService;->access$mTryAgainCounter(Lcom/android/server/NetworkTimeUpdateService;I)I
+
+    iget-object v1, p0, Lcom/android/server/NetworkTimeUpdateService$2;->this$0:Lcom/android/server/NetworkTimeUpdateService;
+
     invoke-static {v1}, Lcom/android/server/NetworkTimeUpdateService;->-get0(Lcom/android/server/NetworkTimeUpdateService;)Landroid/os/Handler;
 
     move-result-object v1
 
     const/4 v2, 0x3
 
-    invoke-virtual {v1, v2}, Landroid/os/Handler;->obtainMessage(I)Landroid/os/Message;
-
-    move-result-object v1
-
-    invoke-virtual {v1}, Landroid/os/Message;->sendToTarget()V
+    invoke-static {p1, v1, v2}, Lcom/android/server/NetworkTimeUpdateServiceInjector;->handleNetworkChanged(Landroid/content/Context;Landroid/os/Handler;I)V
 
     :cond_0
     return-void

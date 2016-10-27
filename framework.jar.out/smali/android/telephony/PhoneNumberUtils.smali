@@ -961,7 +961,10 @@
 
     return v0
 
-    nop
+    :pswitch_4
+    const/16 v0, 0x3b
+
+    return v0
 
     :pswitch_data_0
     .packed-switch 0xa
@@ -969,6 +972,7 @@
         :pswitch_1
         :pswitch_2
         :pswitch_3
+        :pswitch_4
     .end packed-switch
 .end method
 
@@ -1287,20 +1291,20 @@
 
     if-eqz v2, :cond_0
 
-    invoke-static {}, Landroid/telephony/TelephonyManager;->getDefault()Landroid/telephony/TelephonyManager;
+    const-string v2, "gsm.operator.iso-country"
 
-    move-result-object v2
+    const-string v3, ""
 
-    invoke-virtual {v2}, Landroid/telephony/TelephonyManager;->getNetworkCountryIso()Ljava/lang/String;
+    invoke-static {v2, v3}, Landroid/telephony/PhoneNumberUtilsInjector;->getCdmaTelephonyProperty(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v0
 
     .local v0, "currIso":Ljava/lang/String;
-    invoke-static {}, Landroid/telephony/TelephonyManager;->getDefault()Landroid/telephony/TelephonyManager;
+    const-string v2, "gsm.sim.operator.iso-country"
 
-    move-result-object v2
+    const-string v3, ""
 
-    invoke-virtual {v2}, Landroid/telephony/TelephonyManager;->getSimCountryIso()Ljava/lang/String;
+    invoke-static {v2, v3}, Landroid/telephony/PhoneNumberUtilsInjector;->getCdmaTelephonyProperty(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v1
 
@@ -2252,7 +2256,7 @@
     :cond_c
     const/16 v18, 0x0
 
-    move-object/from16 v0, p1
+    move-object/from16 v0, p0
 
     move/from16 v1, v18
 
@@ -2368,7 +2372,7 @@
     :cond_14
     move-object/from16 v0, p1
 
-    invoke-static {v0, v10, v4}, Landroid/telephony/PhoneNumberUtils;->checkPrefixIsIgnorable(Ljava/lang/String;II)Z
+    invoke-static {v0, v11, v4}, Landroid/telephony/PhoneNumberUtils;->checkPrefixIsIgnorable(Ljava/lang/String;II)Z
 
     move-result v18
 
@@ -6709,6 +6713,8 @@
     move-result v0
 
     .local v0, "c":C
+    invoke-static {v4, v0, v2}, Landroid/telephony/PhoneNumberUtilsInjector;->appendNonSeparator(Ljava/lang/StringBuilder;CI)V
+
     const/16 v5, 0xa
 
     invoke-static {v0, v5}, Ljava/lang/Character;->digit(CI)I

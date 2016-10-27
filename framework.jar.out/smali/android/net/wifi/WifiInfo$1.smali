@@ -189,6 +189,13 @@
 
     iput v2, v1, Landroid/net/wifi/WifiInfo;->lowRssiCount:I
 
+    invoke-virtual {p1}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v2
+
+    # setter for: Landroid/net/wifi/WifiInfo;->mVendorInfo:Ljava/lang/String;
+    invoke-static {v1, v2}, Landroid/net/wifi/WifiInfo;->access$mVendorInfo(Landroid/net/wifi/WifiInfo;Ljava/lang/String;)Ljava/lang/String;
+
     sget-object v2, Landroid/net/wifi/SupplicantState;->CREATOR:Landroid/os/Parcelable$Creator;
 
     invoke-interface {v2, p1}, Landroid/os/Parcelable$Creator;->createFromParcel(Landroid/os/Parcel;)Ljava/lang/Object;

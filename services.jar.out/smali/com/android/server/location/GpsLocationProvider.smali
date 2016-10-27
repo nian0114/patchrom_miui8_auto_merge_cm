@@ -4259,6 +4259,12 @@
 
     invoke-virtual {v3, v4, v5}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Z)Landroid/content/Intent;
 
+    iget-object v4, p0, Lcom/android/server/location/GpsLocationProvider;->mClientSource:Landroid/os/WorkSource;
+
+    iget-boolean v5, p0, Lcom/android/server/location/GpsLocationProvider;->mNavigating:Z
+
+    invoke-static {v4, v5, v3}, Lcom/android/server/location/GpsLocationProviderInjector;->appendUidExtra(Landroid/os/WorkSource;ZLandroid/content/Intent;)V
+
     iget-object v4, p0, Lcom/android/server/location/GpsLocationProvider;->mContext:Landroid/content/Context;
 
     sget-object v5, Landroid/os/UserHandle;->ALL:Landroid/os/UserHandle;
@@ -4482,6 +4488,12 @@
 
     invoke-virtual {v0, v2, v3}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Z)Landroid/content/Intent;
 
+    iget-object v2, p0, Lcom/android/server/location/GpsLocationProvider;->mClientSource:Landroid/os/WorkSource;
+
+    iget-boolean v3, p0, Lcom/android/server/location/GpsLocationProvider;->mNavigating:Z
+
+    invoke-static {v2, v3, v0}, Lcom/android/server/location/GpsLocationProviderInjector;->appendUidExtra(Landroid/os/WorkSource;ZLandroid/content/Intent;)V
+
     iget-object v2, p0, Lcom/android/server/location/GpsLocationProvider;->mContext:Landroid/content/Context;
 
     sget-object v3, Landroid/os/UserHandle;->ALL:Landroid/os/UserHandle;
@@ -4515,6 +4527,8 @@
     iput-boolean v5, p0, Lcom/android/server/location/GpsLocationProvider;->mNavigating:Z
 
     goto :goto_0
+
+    nop
 
     :pswitch_data_0
     .packed-switch 0x1

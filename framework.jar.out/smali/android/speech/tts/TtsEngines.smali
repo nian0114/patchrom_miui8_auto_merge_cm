@@ -1158,11 +1158,25 @@
 .end method
 
 .method public getHighestRankedEngineName()Ljava/lang/String;
-    .locals 3
+    .locals 4
 
     .prologue
     const/4 v2, 0x0
 
+    invoke-static {}, Ljava/util/Locale;->getDefault()Ljava/util/Locale;
+
+    move-result-object v1
+
+    invoke-static {p0, v1}, Landroid/speech/tts/TtsEnginesInjector;->getRecommendEngineForLocale(Landroid/speech/tts/TtsEngines;Ljava/util/Locale;)Ljava/lang/String;
+
+    move-result-object v3
+
+    .local v3, "engine":Ljava/lang/String;
+    if-eqz v3, :cond_0
+
+    return-object v3
+
+    :cond_0
     invoke-virtual {p0}, Landroid/speech/tts/TtsEngines;->getEngines()Ljava/util/List;
 
     move-result-object v0
@@ -1172,7 +1186,7 @@
 
     move-result v1
 
-    if-lez v1, :cond_0
+    if-lez v1, :cond_1
 
     invoke-interface {v0, v2}, Ljava/util/List;->get(I)Ljava/lang/Object;
 
@@ -1182,7 +1196,7 @@
 
     iget-boolean v1, v1, Landroid/speech/tts/TextToSpeech$EngineInfo;->system:Z
 
-    if-eqz v1, :cond_0
+    if-eqz v1, :cond_1
 
     invoke-interface {v0, v2}, Ljava/util/List;->get(I)Ljava/lang/Object;
 
@@ -1194,7 +1208,7 @@
 
     return-object v1
 
-    :cond_0
+    :cond_1
     const/4 v1, 0x0
 
     return-object v1

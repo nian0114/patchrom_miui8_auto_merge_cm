@@ -109,16 +109,26 @@
     move-result v2
 
     .local v2, "result":I
-    if-ne v2, v5, :cond_2
+    const/16 v3, 0x63
 
-    return v5
+    if-ne v2, v3, :cond_2
+
+    move v5, v4
+
+    goto :goto_0
 
     :cond_2
-    if-nez v2, :cond_3
+    if-ne v2, v5, :cond_3
+
+    :goto_0
+    return v5
+
+    :cond_3
+    if-nez v2, :cond_4
 
     return v4
 
-    :cond_3
+    :cond_4
     const/4 v3, 0x3
 
     return v3

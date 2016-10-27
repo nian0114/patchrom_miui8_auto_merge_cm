@@ -6,9 +6,9 @@
 # static fields
 .field public static final BYTES_PER_MINTHUMB:I = 0x2710
 
-.field private static final HEADER_SIZE:I = 0xd
+.field private static final HEADER_SIZE:I = 0x15
 
-.field private static final MINI_THUMB_DATA_FILE_VERSION:I = 0x3
+.field private static final MINI_THUMB_DATA_FILE_VERSION:I = 0x4
 
 .field private static final TAG:Ljava/lang/String; = "MiniThumbFile"
 
@@ -168,7 +168,7 @@
 
     invoke-direct {p0}, Landroid/media/MiniThumbFile;->removeOldFile()V
 
-    const/4 v5, 0x3
+    const/4 v5, 0x4
 
     invoke-direct {p0, v5}, Landroid/media/MiniThumbFile;->randomAccessFilePath(I)Ljava/lang/String;
 
@@ -364,7 +364,7 @@
     .locals 4
 
     .prologue
-    const/4 v3, 0x2
+    const/4 v3, 0x3
 
     invoke-direct {p0, v3}, Landroid/media/MiniThumbFile;->randomAccessFilePath(I)Ljava/lang/String;
 
@@ -519,17 +519,17 @@
 
     :try_start_0
     invoke-direct {p0}, Landroid/media/MiniThumbFile;->miniThumbDataFile()Ljava/io/RandomAccessFile;
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_1
 
     move-result-object v9
 
     .local v9, "r":Ljava/io/RandomAccessFile;
     if-eqz v9, :cond_2
 
-    const-wide/16 v4, 0x2710
+    invoke-static {p1, p2}, Landroid/media/MiniThumbFileInjector;->getPosition(J)J
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_1
 
-    mul-long v2, p1, v4
+    move-result-wide v2
 
     .local v2, "pos":J
     const/4 v8, 0x0
@@ -542,13 +542,13 @@
 
     iget-object v1, p0, Landroid/media/MiniThumbFile;->mBuffer:Ljava/nio/ByteBuffer;
 
-    const/16 v4, 0x9
+    const/16 v4, 0x11
 
     invoke-virtual {v1, v4}, Ljava/nio/ByteBuffer;->limit(I)Ljava/nio/Buffer;
 
     iget-object v1, p0, Landroid/media/MiniThumbFile;->mChannel:Ljava/nio/channels/FileChannel;
 
-    const-wide/16 v4, 0x9
+    const-wide/16 v4, 0x11
 
     const/4 v6, 0x1
 
@@ -575,11 +575,11 @@
 
     iget-object v1, p0, Landroid/media/MiniThumbFile;->mBuffer:Ljava/nio/ByteBuffer;
 
-    invoke-virtual {v1}, Ljava/nio/ByteBuffer;->get()B
+    invoke-static {v1, p1, p2}, Landroid/media/MiniThumbFileInjector;->isMatch(Ljava/nio/ByteBuffer;J)Z
 
     move-result v1
 
-    if-ne v1, v10, :cond_1
+    if-eqz v1, :cond_1
 
     iget-object v1, p0, Landroid/media/MiniThumbFile;->mBuffer:Ljava/nio/ByteBuffer;
 
@@ -768,7 +768,7 @@
 .end method
 
 .method public declared-synchronized getMiniThumbFromFile(J[B)[B
-    .locals 17
+    .locals 19
     .param p1, "id"    # J
     .param p3, "data"    # [B
 
@@ -792,15 +792,18 @@
     return-object v3
 
     :cond_0
-    const-wide/16 v6, 0x2710
+    :try_start_1
+    invoke-static/range {p1 .. p2}, Landroid/media/MiniThumbFileInjector;->getPosition(J)J
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_1
 
-    mul-long v4, p1, v6
+    move-result-wide v4
 
     .local v4, "pos":J
     const/4 v12, 0x0
 
     .local v12, "lock":Ljava/nio/channels/FileLock;
-    :try_start_1
+    :try_start_2
     move-object/from16 v0, p0
 
     iget-object v3, v0, Landroid/media/MiniThumbFile;->mBuffer:Ljava/nio/ByteBuffer;
@@ -833,7 +836,7 @@
     move-result v16
 
     .local v16, "size":I
-    const/16 v3, 0xd
+    const/16 v3, 0x15
 
     move/from16 v0, v16
 
@@ -864,6 +867,15 @@
 
     move-result-wide v14
 
+    .local v14, "origId":J
+    move-object/from16 v0, p0
+
+    iget-object v3, v0, Landroid/media/MiniThumbFile;->mBuffer:Ljava/nio/ByteBuffer;
+
+    invoke-virtual {v3}, Ljava/nio/ByteBuffer;->getLong()J
+
+    move-result-wide v14
+
     .local v14, "magic":J
     move-object/from16 v0, p0
 
@@ -874,7 +886,7 @@
     move-result v11
 
     .local v11, "length":I
-    add-int/lit8 v3, v11, 0xd
+    add-int/lit8 v3, v11, 0x15
 
     move/from16 v0, v16
 
@@ -907,18 +919,18 @@
     move-object/from16 v0, p3
 
     invoke-virtual {v3, v0, v6, v11}, Ljava/nio/ByteBuffer;->get([BII)Ljava/nio/ByteBuffer;
-    :try_end_1
-    .catch Ljava/io/IOException; {:try_start_1 .. :try_end_1} :catch_4
-    .catch Ljava/lang/RuntimeException; {:try_start_1 .. :try_end_1} :catch_2
-    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+    :try_end_2
+    .catch Ljava/io/IOException; {:try_start_2 .. :try_end_2} :catch_4
+    .catch Ljava/lang/RuntimeException; {:try_start_2 .. :try_end_2} :catch_2
+    .catchall {:try_start_2 .. :try_end_2} :catchall_0
 
     if-eqz v12, :cond_1
 
-    :try_start_2
+    :try_start_3
     invoke-virtual {v12}, Ljava/nio/channels/FileLock;->release()V
-    :try_end_2
-    .catch Ljava/io/IOException; {:try_start_2 .. :try_end_2} :catch_0
-    .catchall {:try_start_2 .. :try_end_2} :catchall_1
+    :try_end_3
+    .catch Ljava/io/IOException; {:try_start_3 .. :try_end_3} :catch_0
+    .catchall {:try_start_3 .. :try_end_3} :catchall_1
 
     :cond_1
     :goto_0
@@ -939,11 +951,11 @@
     :cond_2
     if-eqz v12, :cond_3
 
-    :try_start_3
+    :try_start_4
     invoke-virtual {v12}, Ljava/nio/channels/FileLock;->release()V
-    :try_end_3
-    .catch Ljava/io/IOException; {:try_start_3 .. :try_end_3} :catch_1
-    .catchall {:try_start_3 .. :try_end_3} :catchall_1
+    :try_end_4
+    .catch Ljava/io/IOException; {:try_start_4 .. :try_end_4} :catch_1
+    .catchall {:try_start_4 .. :try_end_4} :catchall_1
 
     .end local v12    # "lock":Ljava/nio/channels/FileLock;
     .end local v16    # "size":I
@@ -970,7 +982,7 @@
     move-exception v9
 
     .local v9, "ex":Ljava/lang/RuntimeException;
-    :try_start_4
+    :try_start_5
     const-string v3, "MiniThumbFile"
 
     new-instance v6, Ljava/lang/StringBuilder;
@@ -1008,16 +1020,16 @@
     move-result-object v6
 
     invoke-static {v3, v6}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
-    :try_end_4
-    .catchall {:try_start_4 .. :try_end_4} :catchall_0
+    :try_end_5
+    .catchall {:try_start_5 .. :try_end_5} :catchall_0
 
     if-eqz v12, :cond_3
 
-    :try_start_5
+    :try_start_6
     invoke-virtual {v12}, Ljava/nio/channels/FileLock;->release()V
-    :try_end_5
-    .catch Ljava/io/IOException; {:try_start_5 .. :try_end_5} :catch_3
-    .catchall {:try_start_5 .. :try_end_5} :catchall_1
+    :try_end_6
+    .catch Ljava/io/IOException; {:try_start_6 .. :try_end_6} :catch_3
+    .catchall {:try_start_6 .. :try_end_6} :catchall_1
 
     goto :goto_1
 
@@ -1033,7 +1045,7 @@
     move-exception v2
 
     .restart local v2    # "ex":Ljava/io/IOException;
-    :try_start_6
+    :try_start_7
     const-string v3, "MiniThumbFile"
 
     new-instance v6, Ljava/lang/StringBuilder;
@@ -1067,16 +1079,16 @@
     move-result-object v6
 
     invoke-static {v3, v6}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
-    :try_end_6
-    .catchall {:try_start_6 .. :try_end_6} :catchall_0
+    :try_end_7
+    .catchall {:try_start_7 .. :try_end_7} :catchall_0
 
     if-eqz v12, :cond_3
 
-    :try_start_7
+    :try_start_8
     invoke-virtual {v12}, Ljava/nio/channels/FileLock;->release()V
-    :try_end_7
-    .catch Ljava/io/IOException; {:try_start_7 .. :try_end_7} :catch_5
-    .catchall {:try_start_7 .. :try_end_7} :catchall_1
+    :try_end_8
+    .catch Ljava/io/IOException; {:try_start_8 .. :try_end_8} :catch_5
+    .catchall {:try_start_8 .. :try_end_8} :catchall_1
 
     goto :goto_1
 
@@ -1091,18 +1103,18 @@
 
     if-eqz v12, :cond_4
 
-    :try_start_8
+    :try_start_9
     invoke-virtual {v12}, Ljava/nio/channels/FileLock;->release()V
-    :try_end_8
-    .catch Ljava/io/IOException; {:try_start_8 .. :try_end_8} :catch_6
-    .catchall {:try_start_8 .. :try_end_8} :catchall_1
+    :try_end_9
+    .catch Ljava/io/IOException; {:try_start_9 .. :try_end_9} :catch_6
+    .catchall {:try_start_9 .. :try_end_9} :catchall_1
 
     :cond_4
     :goto_2
-    :try_start_9
+    :try_start_a
     throw v3
-    :try_end_9
-    .catchall {:try_start_9 .. :try_end_9} :catchall_1
+    :try_end_a
+    .catchall {:try_start_a .. :try_end_a} :catchall_1
 
     .end local v4    # "pos":J
     .end local v13    # "r":Ljava/io/RandomAccessFile;
@@ -1134,8 +1146,6 @@
     .end annotation
 
     .prologue
-    const-wide/16 v4, 0x2710
-
     monitor-enter p0
 
     :try_start_0
@@ -1153,7 +1163,12 @@
     return-void
 
     :cond_0
-    mul-long v2, p2, v4
+    :try_start_1
+    invoke-static {p2, p3}, Landroid/media/MiniThumbFileInjector;->getPosition(J)J
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_1
+
+    move-result-wide v2
 
     .local v2, "pos":J
     const/4 v8, 0x0
@@ -1161,14 +1176,14 @@
     .local v8, "lock":Ljava/nio/channels/FileLock;
     if-eqz p1, :cond_2
 
-    :try_start_1
+    :try_start_2
     array-length v1, p1
-    :try_end_1
-    .catch Ljava/io/IOException; {:try_start_1 .. :try_end_1} :catch_3
-    .catch Ljava/lang/RuntimeException; {:try_start_1 .. :try_end_1} :catch_1
-    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+    :try_end_2
+    .catch Ljava/io/IOException; {:try_start_2 .. :try_end_2} :catch_3
+    .catch Ljava/lang/RuntimeException; {:try_start_2 .. :try_end_2} :catch_1
+    .catchall {:try_start_2 .. :try_end_2} :catchall_0
 
-    const/16 v4, 0x2703
+    const/16 v4, 0x26fb
 
     if-le v1, v4, :cond_1
 
@@ -1177,7 +1192,7 @@
     return-void
 
     :cond_1
-    :try_start_2
+    :try_start_3
     iget-object v1, p0, Landroid/media/MiniThumbFile;->mBuffer:Ljava/nio/ByteBuffer;
 
     invoke-virtual {v1}, Ljava/nio/ByteBuffer;->clear()Ljava/nio/Buffer;
@@ -1187,6 +1202,10 @@
     const/4 v4, 0x1
 
     invoke-virtual {v1, v4}, Ljava/nio/ByteBuffer;->put(B)Ljava/nio/ByteBuffer;
+
+    iget-object v1, p0, Landroid/media/MiniThumbFile;->mBuffer:Ljava/nio/ByteBuffer;
+
+    invoke-virtual {v1, p2, p3}, Ljava/nio/ByteBuffer;->putLong(J)Ljava/nio/ByteBuffer;
 
     iget-object v1, p0, Landroid/media/MiniThumbFile;->mBuffer:Ljava/nio/ByteBuffer;
 
@@ -1222,20 +1241,20 @@
     iget-object v4, p0, Landroid/media/MiniThumbFile;->mBuffer:Ljava/nio/ByteBuffer;
 
     invoke-virtual {v1, v4, v2, v3}, Ljava/nio/channels/FileChannel;->write(Ljava/nio/ByteBuffer;J)I
-    :try_end_2
-    .catch Ljava/io/IOException; {:try_start_2 .. :try_end_2} :catch_3
-    .catch Ljava/lang/RuntimeException; {:try_start_2 .. :try_end_2} :catch_1
-    .catchall {:try_start_2 .. :try_end_2} :catchall_0
+    :try_end_3
+    .catch Ljava/io/IOException; {:try_start_3 .. :try_end_3} :catch_3
+    .catch Ljava/lang/RuntimeException; {:try_start_3 .. :try_end_3} :catch_1
+    .catchall {:try_start_3 .. :try_end_3} :catchall_0
 
     .end local v8    # "lock":Ljava/nio/channels/FileLock;
     :cond_2
     if-eqz v8, :cond_3
 
-    :try_start_3
+    :try_start_4
     invoke-virtual {v8}, Ljava/nio/channels/FileLock;->release()V
-    :try_end_3
-    .catch Ljava/io/IOException; {:try_start_3 .. :try_end_3} :catch_0
-    .catchall {:try_start_3 .. :try_end_3} :catchall_1
+    :try_end_4
+    .catch Ljava/io/IOException; {:try_start_4 .. :try_end_4} :catch_0
+    .catchall {:try_start_4 .. :try_end_4} :catchall_1
 
     :cond_3
     :goto_0
@@ -1254,7 +1273,7 @@
     move-exception v7
 
     .local v7, "ex":Ljava/lang/RuntimeException;
-    :try_start_4
+    :try_start_5
     const-string v1, "MiniThumbFile"
 
     new-instance v4, Ljava/lang/StringBuilder;
@@ -1290,16 +1309,16 @@
     move-result-object v4
 
     invoke-static {v1, v4}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
-    :try_end_4
-    .catchall {:try_start_4 .. :try_end_4} :catchall_0
+    :try_end_5
+    .catchall {:try_start_5 .. :try_end_5} :catchall_0
 
     if-eqz v8, :cond_3
 
-    :try_start_5
+    :try_start_6
     invoke-virtual {v8}, Ljava/nio/channels/FileLock;->release()V
-    :try_end_5
-    .catch Ljava/io/IOException; {:try_start_5 .. :try_end_5} :catch_2
-    .catchall {:try_start_5 .. :try_end_5} :catchall_1
+    :try_end_6
+    .catch Ljava/io/IOException; {:try_start_6 .. :try_end_6} :catch_2
+    .catchall {:try_start_6 .. :try_end_6} :catchall_1
 
     goto :goto_0
 
@@ -1315,7 +1334,7 @@
     move-exception v0
 
     .restart local v0    # "ex":Ljava/io/IOException;
-    :try_start_6
+    :try_start_7
     const-string v1, "MiniThumbFile"
 
     new-instance v4, Ljava/lang/StringBuilder;
@@ -1345,8 +1364,8 @@
     invoke-static {v1, v4, v0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
     throw v0
-    :try_end_6
-    .catchall {:try_start_6 .. :try_end_6} :catchall_0
+    :try_end_7
+    .catchall {:try_start_7 .. :try_end_7} :catchall_0
 
     .end local v0    # "ex":Ljava/io/IOException;
     :catchall_0
@@ -1354,18 +1373,18 @@
 
     if-eqz v8, :cond_4
 
-    :try_start_7
+    :try_start_8
     invoke-virtual {v8}, Ljava/nio/channels/FileLock;->release()V
-    :try_end_7
-    .catch Ljava/io/IOException; {:try_start_7 .. :try_end_7} :catch_4
-    .catchall {:try_start_7 .. :try_end_7} :catchall_1
+    :try_end_8
+    .catch Ljava/io/IOException; {:try_start_8 .. :try_end_8} :catch_4
+    .catchall {:try_start_8 .. :try_end_8} :catchall_1
 
     :cond_4
     :goto_1
-    :try_start_8
+    :try_start_9
     throw v1
-    :try_end_8
-    .catchall {:try_start_8 .. :try_end_8} :catchall_1
+    :try_end_9
+    .catchall {:try_start_9 .. :try_end_9} :catchall_1
 
     .end local v2    # "pos":J
     .end local v9    # "r":Ljava/io/RandomAccessFile;

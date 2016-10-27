@@ -149,6 +149,8 @@
     move-result-object v1
 
     .local v1, "newEnabled":Ljava/lang/String;
+    if-eqz v1, :cond_3
+
     iget-object v5, p0, Lcom/android/server/InputMethodManagerService$SettingsObserver;->mLastEnabled:Ljava/lang/String;
 
     invoke-virtual {v5, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z

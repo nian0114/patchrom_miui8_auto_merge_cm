@@ -608,9 +608,9 @@
     .prologue
     invoke-direct {p0, p5}, Lcom/android/server/LockSettingsService;->checkPasswordReadPermission(I)V
 
-    iget-object v0, p0, Lcom/android/server/LockSettingsService;->mStorage:Lcom/android/server/LockSettingsStorage;
+    iget-object v1, p0, Lcom/android/server/LockSettingsService;->mStorage:Lcom/android/server/LockSettingsStorage;
 
-    invoke-virtual {v0, p5}, Lcom/android/server/LockSettingsStorage;->readPasswordHash(I)Lcom/android/server/LockSettingsStorage$CredentialHash;
+    invoke-virtual {v1, p5}, Lcom/android/server/LockSettingsStorage;->readPasswordHash(I)Lcom/android/server/LockSettingsStorage$CredentialHash;
 
     move-result-object v3
 
@@ -633,6 +633,28 @@
 
     move-result-object v0
 
+    .local v0, "response":Lcom/android/internal/widget/VerifyCredentialResponse;
+    invoke-virtual {v0}, Lcom/android/internal/widget/VerifyCredentialResponse;->getResponseCode()I
+
+    move-result v1
+
+    if-nez v1, :cond_0
+
+    invoke-static {p5}, Lmiui/securityspace/SecuritySpaceEcryptManager;->spaceNeedsEcryptfsMount(I)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_0
+
+    const/4 v1, 0x0
+
+    invoke-static {p5, v1, p1}, Lmiui/securityspace/SecuritySpaceEcryptManager;->spaceEcryptfsMount(IILjava/lang/String;)I
+
+    move-result v1
+
+    if-ltz v1, :cond_0
+
+    :cond_0
     return-object v0
 .end method
 
@@ -662,12 +684,12 @@
     move-result-object v5
 
     .local v5, "storedHash":Lcom/android/server/LockSettingsStorage$CredentialHash;
-    if-eqz v5, :cond_2
+    if-eqz v5, :cond_3
 
     iget-boolean v11, v5, Lcom/android/server/LockSettingsStorage$CredentialHash;->isBaseZeroPattern:Z
 
     :goto_0
-    if-eqz v11, :cond_3
+    if-eqz v11, :cond_4
 
     invoke-static {p1}, Lcom/android/internal/widget/LockPatternUtils;->patternStringToBaseZero(Ljava/lang/String;)Ljava/lang/String;
 
@@ -714,18 +736,41 @@
     invoke-virtual {p0, p1}, Lcom/android/server/LockSettingsService;->retainPassword(Ljava/lang/String;)V
 
     :cond_1
+    invoke-virtual {v2}, Lcom/android/internal/widget/VerifyCredentialResponse;->getResponseCode()I
+
+    move-result v3
+
+    if-nez v3, :cond_2
+
+    invoke-static/range {p5 .. p5}, Lmiui/securityspace/SecuritySpaceEcryptManager;->spaceNeedsEcryptfsMount(I)Z
+
+    move-result v3
+
+    if-eqz v3, :cond_2
+
+    const/4 v3, 0x0
+
+    move/from16 v0, p5
+
+    invoke-static {v0, v3, p1}, Lmiui/securityspace/SecuritySpaceEcryptManager;->spaceEcryptfsMount(IILjava/lang/String;)I
+
+    move-result v3
+
+    if-ltz v3, :cond_2
+
+    :cond_2
     return-object v2
 
     .end local v2    # "response":Lcom/android/internal/widget/VerifyCredentialResponse;
     .end local v6    # "patternToVerify":Ljava/lang/String;
-    :cond_2
+    :cond_3
     const/4 v11, 0x0
 
     .local v11, "shouldReEnrollBaseZero":Z
     goto :goto_0
 
     .end local v11    # "shouldReEnrollBaseZero":Z
-    :cond_3
+    :cond_4
     move-object v6, p1
 
     .restart local v6    # "patternToVerify":Ljava/lang/String;
@@ -2904,7 +2949,7 @@
 .end method
 
 .method public setLockPassword(Ljava/lang/String;Ljava/lang/String;I)V
-    .locals 4
+    .locals 5
     .param p1, "password"    # Ljava/lang/String;
     .param p2, "savedCredential"    # Ljava/lang/String;
     .param p3, "userId"    # I
@@ -2915,6 +2960,8 @@
     .end annotation
 
     .prologue
+    const/4 v4, 0x0
+
     const/4 v3, 0x0
 
     invoke-direct {p0, p3}, Lcom/android/server/LockSettingsService;->checkWritePermission(I)V
@@ -2935,6 +2982,8 @@
     iget-object v2, p0, Lcom/android/server/LockSettingsService;->mStorage:Lcom/android/server/LockSettingsStorage;
 
     invoke-virtual {v2, v3, p3}, Lcom/android/server/LockSettingsStorage;->writePasswordHash([BI)V
+
+    invoke-static {p3, v4, v3}, Lmiui/securityspace/SecuritySpaceEcryptManager;->spaceEcryptfsUpdate(IILjava/lang/String;)V
 
     invoke-direct {p0, v3, p3}, Lcom/android/server/LockSettingsService;->setKeystorePassword(Ljava/lang/String;I)V
 
@@ -2968,6 +3017,8 @@
     invoke-virtual {v2, v1, p3}, Lcom/android/server/LockSettingsStorage;->writePasswordHash([BI)V
 
     :goto_0
+    invoke-static {p3, v4, p1}, Lmiui/securityspace/SecuritySpaceEcryptManager;->spaceEcryptfsUpdate(IILjava/lang/String;)V
+
     return-void
 
     :cond_3
@@ -2981,7 +3032,7 @@
 .end method
 
 .method public setLockPattern(Ljava/lang/String;Ljava/lang/String;I)V
-    .locals 4
+    .locals 5
     .param p1, "pattern"    # Ljava/lang/String;
     .param p2, "savedCredential"    # Ljava/lang/String;
     .param p3, "userId"    # I
@@ -2992,6 +3043,8 @@
     .end annotation
 
     .prologue
+    const/4 v4, 0x0
+
     const/4 v3, 0x0
 
     invoke-direct {p0, p3}, Lcom/android/server/LockSettingsService;->checkWritePermission(I)V
@@ -3012,6 +3065,8 @@
     iget-object v2, p0, Lcom/android/server/LockSettingsService;->mStorage:Lcom/android/server/LockSettingsStorage;
 
     invoke-virtual {v2, v3, p3}, Lcom/android/server/LockSettingsStorage;->writePatternHash([BI)V
+
+    invoke-static {p3, v4, v3}, Lmiui/securityspace/SecuritySpaceEcryptManager;->spaceEcryptfsUpdate(IILjava/lang/String;)V
 
     invoke-direct {p0, v3, p3}, Lcom/android/server/LockSettingsService;->setKeystorePassword(Ljava/lang/String;I)V
 
@@ -3045,6 +3100,8 @@
     invoke-virtual {v2, v1, p3}, Lcom/android/server/LockSettingsStorage;->writePatternHash([BI)V
 
     :goto_0
+    invoke-static {p3, v4, p1}, Lmiui/securityspace/SecuritySpaceEcryptManager;->spaceEcryptfsUpdate(IILjava/lang/String;)V
+
     return-void
 
     :cond_3
@@ -3076,6 +3133,26 @@
     move-result-object v0
 
     invoke-direct {p0, p1, p4, v0}, Lcom/android/server/LockSettingsService;->setStringUnchecked(Ljava/lang/String;ILjava/lang/String;)V
+
+    return-void
+.end method
+
+.method public setRawLockPassword([BI)V
+    .locals 1
+    .param p1, "hash"    # [B
+    .param p2, "userId"    # I
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+
+    .prologue
+    invoke-direct {p0, p2}, Lcom/android/server/LockSettingsService;->checkWritePermission(I)V
+
+    iget-object v0, p0, Lcom/android/server/LockSettingsService;->mStorage:Lcom/android/server/LockSettingsStorage;
+
+    invoke-virtual {v0, p1, p2}, Lcom/android/server/LockSettingsStorage;->writePasswordHash([BI)V
 
     return-void
 .end method

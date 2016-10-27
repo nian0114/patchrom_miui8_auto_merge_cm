@@ -260,7 +260,22 @@
 
     iput-object v1, p0, Lcom/android/server/NetworkTimeUpdateService;->mWakeLock:Landroid/os/PowerManager$WakeLock;
 
+    iget-object v1, p0, Lcom/android/server/NetworkTimeUpdateService;->mTime:Landroid/util/TrustedTime;
+
+    invoke-static {p1, v1}, Lcom/android/server/NetworkTimeUpdateServiceInjector;->initNtpServers(Landroid/content/Context;Landroid/util/TrustedTime;)V
+
     return-void
+.end method
+
+.method static synthetic access$mTryAgainCounter(Lcom/android/server/NetworkTimeUpdateService;I)I
+    .locals 0
+    .param p0, "x0"    # Lcom/android/server/NetworkTimeUpdateService;
+    .param p1, "x1"    # I
+
+    .prologue
+    iput p1, p0, Lcom/android/server/NetworkTimeUpdateService;->mTryAgainCounter:I
+
+    return p1
 .end method
 
 .method private isAutomaticTimeRequested()Z
@@ -400,9 +415,9 @@
 
     if-ltz v6, :cond_2
 
-    iget-object v6, p0, Lcom/android/server/NetworkTimeUpdateService;->mTime:Landroid/util/TrustedTime;
+    iget v6, p0, Lcom/android/server/NetworkTimeUpdateService;->mTryAgainCounter:I
 
-    invoke-interface {v6}, Landroid/util/TrustedTime;->forceRefresh()Z
+    invoke-static {v6}, Lcom/android/server/NetworkTimeUpdateServiceInjector;->switchNtpServer(I)V
 
     :cond_2
     iget-object v6, p0, Lcom/android/server/NetworkTimeUpdateService;->mTime:Landroid/util/TrustedTime;

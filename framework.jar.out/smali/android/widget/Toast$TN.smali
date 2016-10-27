@@ -32,7 +32,7 @@
 
 .field mNextView:Landroid/view/View;
 
-.field private final mParams:Landroid/view/WindowManager$LayoutParams;
+.field final mParams:Landroid/view/WindowManager$LayoutParams;
 
 .field final mShow:Ljava/lang/Runnable;
 

@@ -74,6 +74,14 @@
 
     if-eqz v2, :cond_1
 
+    const-string v2, "assist"
+
+    invoke-virtual {v2, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v2
+
+    if-nez v2, :cond_1
+
     .end local v1    # "reason":Ljava/lang/String;
     :cond_0
     :goto_0

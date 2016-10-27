@@ -40,6 +40,33 @@
 
 
 # virtual methods
+.method public OnDoubleClickHome()V
+    .locals 3
+
+    .prologue
+    :try_start_0
+    iget-object v1, p0, Lcom/android/server/policy/keyguard/KeyguardServiceWrapper;->mService:Lcom/android/internal/policy/IKeyguardService;
+
+    invoke-interface {v1}, Lcom/android/internal/policy/IKeyguardService;->OnDoubleClickHome()V
+    :try_end_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+
+    :goto_0
+    return-void
+
+    :catch_0
+    move-exception v0
+
+    .local v0, "e":Landroid/os/RemoteException;
+    iget-object v1, p0, Lcom/android/server/policy/keyguard/KeyguardServiceWrapper;->TAG:Ljava/lang/String;
+
+    const-string v2, "Remote Exception"
+
+    invoke-static {v1, v2, v0}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+
+    goto :goto_0
+.end method
+
 .method public addStateMonitorCallback(Lcom/android/internal/policy/IKeyguardStateCallback;)V
     .locals 3
     .param p1, "callback"    # Lcom/android/internal/policy/IKeyguardStateCallback;

@@ -100,14 +100,23 @@
     check-cast v1, Landroid/content/Intent;
 
     .local v1, "intent":Landroid/content/Intent;
-    if-eqz v1, :cond_0
+    if-eqz v1, :cond_1
 
     iget-object v2, p0, Landroid/accounts/AccountManager$AmsTask$Response;->this$1:Landroid/accounts/AccountManager$AmsTask;
 
     iget-object v2, v2, Landroid/accounts/AccountManager$AmsTask;->mActivity:Landroid/app/Activity;
 
+    if-eqz v2, :cond_1
+
+    invoke-static {v1}, Lmiui/content/pm/ExtraPackageManager;->handleIfContainsXiaomiAccountType(Landroid/content/Intent;)Z
+
+    move-result v2
+
     if-eqz v2, :cond_0
 
+    goto :goto_0
+
+    :cond_0
     iget-object v2, p0, Landroid/accounts/AccountManager$AmsTask$Response;->this$1:Landroid/accounts/AccountManager$AmsTask;
 
     iget-object v2, v2, Landroid/accounts/AccountManager$AmsTask;->mActivity:Landroid/app/Activity;
@@ -117,14 +126,14 @@
     :goto_0
     return-void
 
-    :cond_0
+    :cond_1
     const-string v2, "retry"
 
     invoke-virtual {p1, v2}, Landroid/os/Bundle;->getBoolean(Ljava/lang/String;)Z
 
     move-result v2
 
-    if-eqz v2, :cond_1
+    if-eqz v2, :cond_2
 
     :try_start_0
     iget-object v2, p0, Landroid/accounts/AccountManager$AmsTask$Response;->this$1:Landroid/accounts/AccountManager$AmsTask;
@@ -142,7 +151,7 @@
     goto :goto_0
 
     .end local v0    # "e":Landroid/os/RemoteException;
-    :cond_1
+    :cond_2
     iget-object v2, p0, Landroid/accounts/AccountManager$AmsTask$Response;->this$1:Landroid/accounts/AccountManager$AmsTask;
 
     invoke-virtual {v2, p1}, Landroid/accounts/AccountManager$AmsTask;->set(Landroid/os/Bundle;)V

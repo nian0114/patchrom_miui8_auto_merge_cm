@@ -929,11 +929,24 @@
 
     move-result v3
 
-    if-eq v2, v3, :cond_0
+    if-eq v2, v3, :cond_1
 
+    invoke-static {p2}, Lmiui/securityspace/XSpaceUserHandle;->isUidBelongtoXSpace(I)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_0
+
+    invoke-virtual {p3}, Landroid/content/Context;->getUserId()I
+
+    move-result v2
+
+    if-eqz v2, :cond_1
+
+    :cond_0
     iget-boolean v2, p0, Landroid/content/ContentProvider;->mSingleUser:Z
 
-    if-nez v2, :cond_0
+    if-nez v2, :cond_1
 
     const-string v2, "android.permission.INTERACT_ACROSS_USERS"
 
@@ -941,13 +954,13 @@
 
     move-result v2
 
-    if-nez v2, :cond_1
+    if-nez v2, :cond_2
 
-    :cond_0
+    :cond_1
     :goto_0
     return v0
 
-    :cond_1
+    :cond_2
     move v0, v1
 
     goto :goto_0
@@ -1022,7 +1035,7 @@
 
     iget-boolean v8, v0, Landroid/content/ContentProvider;->mExported:Z
 
-    if-eqz v8, :cond_7
+    if-eqz v8, :cond_8
 
     move-object/from16 v0, p0
 
@@ -1030,14 +1043,27 @@
 
     move-result v8
 
-    if-eqz v8, :cond_7
+    if-nez v8, :cond_1
 
+    invoke-virtual {v4}, Landroid/content/Context;->getUserId()I
+
+    move-result v8
+
+    move-object/from16 v0, p2
+
+    invoke-static {v0, v8}, Lmiui/securityspace/CrossUserUtils;->checkCrossPermission(Ljava/lang/String;I)Z
+
+    move-result v8
+
+    if-eqz v8, :cond_8
+
+    :cond_1
     invoke-virtual/range {p0 .. p0}, Landroid/content/ContentProvider;->getReadPermission()Ljava/lang/String;
 
     move-result-object v12
 
     .local v12, "componentPerm":Ljava/lang/String;
-    if-eqz v12, :cond_2
+    if-eqz v12, :cond_3
 
     move-object/from16 v0, p0
 
@@ -1050,13 +1076,13 @@
     move-result v15
 
     .local v15, "mode":I
-    if-nez v15, :cond_1
+    if-nez v15, :cond_2
 
     const/4 v8, 0x0
 
     return v8
 
-    :cond_1
+    :cond_2
     move-object v14, v12
 
     .local v14, "missingPerm":Ljava/lang/String;
@@ -1068,8 +1094,8 @@
 
     .end local v14    # "missingPerm":Ljava/lang/String;
     .end local v15    # "mode":I
-    :cond_2
-    if-nez v12, :cond_3
+    :cond_3
+    if-nez v12, :cond_4
 
     const/4 v10, 0x1
 
@@ -1080,7 +1106,7 @@
     move-result-object v19
 
     .local v19, "pps":[Landroid/content/pm/PathPermission;
-    if-eqz v19, :cond_6
+    if-eqz v19, :cond_7
 
     invoke-virtual/range {p1 .. p1}, Landroid/net/Uri;->getPath()Ljava/lang/String;
 
@@ -1094,7 +1120,7 @@
     array-length v9, v0
 
     :goto_1
-    if-ge v8, v9, :cond_6
+    if-ge v8, v9, :cond_7
 
     aget-object v18, v19, v8
 
@@ -1104,7 +1130,7 @@
     move-result-object v17
 
     .local v17, "pathPerm":Ljava/lang/String;
-    if-eqz v17, :cond_5
+    if-eqz v17, :cond_6
 
     move-object/from16 v0, v18
 
@@ -1114,7 +1140,7 @@
 
     move-result v21
 
-    if-eqz v21, :cond_5
+    if-eqz v21, :cond_6
 
     move-object/from16 v0, p0
 
@@ -1129,7 +1155,7 @@
     move-result v15
 
     .restart local v15    # "mode":I
-    if-nez v15, :cond_4
+    if-nez v15, :cond_5
 
     const/4 v8, 0x0
 
@@ -1141,7 +1167,7 @@
     .end local v17    # "pathPerm":Ljava/lang/String;
     .end local v18    # "pp":Landroid/content/pm/PathPermission;
     .end local v19    # "pps":[Landroid/content/pm/PathPermission;
-    :cond_3
+    :cond_4
     const/4 v10, 0x0
 
     .restart local v10    # "allowDefaultRead":Z
@@ -1152,7 +1178,7 @@
     .restart local v17    # "pathPerm":Ljava/lang/String;
     .restart local v18    # "pp":Landroid/content/pm/PathPermission;
     .restart local v19    # "pps":[Landroid/content/pm/PathPermission;
-    :cond_4
+    :cond_5
     const/4 v10, 0x0
 
     move-object/from16 v14, v17
@@ -1166,7 +1192,7 @@
 
     .end local v14    # "missingPerm":Ljava/lang/String;
     .end local v15    # "mode":I
-    :cond_5
+    :cond_6
     add-int/lit8 v8, v8, 0x1
 
     goto :goto_1
@@ -1174,8 +1200,8 @@
     .end local v16    # "path":Ljava/lang/String;
     .end local v17    # "pathPerm":Ljava/lang/String;
     .end local v18    # "pp":Landroid/content/pm/PathPermission;
-    :cond_6
-    if-eqz v10, :cond_7
+    :cond_7
+    if-eqz v10, :cond_8
 
     const/4 v8, 0x0
 
@@ -1184,7 +1210,7 @@
     .end local v10    # "allowDefaultRead":Z
     .end local v12    # "componentPerm":Ljava/lang/String;
     .end local v19    # "pps":[Landroid/content/pm/PathPermission;
-    :cond_7
+    :cond_8
     invoke-static {v7}, Landroid/os/UserHandle;->getUserId(I)I
 
     move-result v11
@@ -1194,7 +1220,7 @@
 
     iget-boolean v8, v0, Landroid/content/ContentProvider;->mSingleUser:Z
 
-    if-eqz v8, :cond_8
+    if-eqz v8, :cond_9
 
     move-object/from16 v0, p0
 
@@ -1204,9 +1230,9 @@
 
     move-result v8
 
-    if-eqz v8, :cond_9
+    if-eqz v8, :cond_a
 
-    :cond_8
+    :cond_9
     move-object/from16 v5, p1
 
     .local v5, "userUri":Landroid/net/Uri;
@@ -1219,14 +1245,14 @@
 
     move-result v8
 
-    if-nez v8, :cond_a
+    if-nez v8, :cond_b
 
     const/4 v8, 0x0
 
     return v8
 
     .end local v5    # "userUri":Landroid/net/Uri;
-    :cond_9
+    :cond_a
     move-object/from16 v0, p1
 
     invoke-static {v0, v11}, Landroid/content/ContentProvider;->maybeAddUserId(Landroid/net/Uri;I)Landroid/net/Uri;
@@ -1236,23 +1262,23 @@
     .restart local v5    # "userUri":Landroid/net/Uri;
     goto :goto_2
 
-    :cond_a
+    :cond_b
     const/4 v8, 0x1
 
     move/from16 v0, v20
 
-    if-ne v0, v8, :cond_b
+    if-ne v0, v8, :cond_c
 
     const/4 v8, 0x1
 
     return v8
 
-    :cond_b
+    :cond_c
     move-object/from16 v0, p0
 
     iget-boolean v8, v0, Landroid/content/ContentProvider;->mExported:Z
 
-    if-eqz v8, :cond_c
+    if-eqz v8, :cond_d
 
     new-instance v8, Ljava/lang/StringBuilder;
 
@@ -1359,7 +1385,7 @@
     throw v8
 
     .end local v13    # "failReason":Ljava/lang/String;
-    :cond_c
+    :cond_d
     const-string v13, " requires the provider be exported, or grantUriPermission()"
 
     .restart local v13    # "failReason":Ljava/lang/String;

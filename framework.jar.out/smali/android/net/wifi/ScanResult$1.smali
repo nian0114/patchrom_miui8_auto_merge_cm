@@ -40,7 +40,7 @@
 
 # virtual methods
 .method public createFromParcel(Landroid/os/Parcel;)Landroid/net/wifi/ScanResult;
-    .locals 20
+    .locals 22
     .param p1, "in"    # Landroid/os/Parcel;
 
     .prologue
@@ -115,7 +115,15 @@
 
     const/16 v17, 0x0
 
-    invoke-direct/range {v3 .. v17}, Landroid/net/wifi/ScanResult;-><init>(Landroid/net/wifi/WifiSsid;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIJIIIIIZ)V
+    invoke-virtual/range {p1 .. p1}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v18
+
+    invoke-virtual/range {p1 .. p1}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v19
+
+    invoke-direct/range {v3 .. v19}, Landroid/net/wifi/ScanResult;-><init>(Landroid/net/wifi/WifiSsid;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIJIIIIIZLjava/lang/String;Ljava/lang/String;)V
 
     .local v3, "sr":Landroid/net/wifi/ScanResult;
     invoke-virtual/range {p1 .. p1}, Landroid/os/Parcel;->readLong()J
@@ -185,12 +193,12 @@
 
     invoke-virtual/range {p1 .. p1}, Landroid/os/Parcel;->readInt()I
 
-    move-result v19
+    move-result v21
 
-    .local v19, "n":I
-    if-eqz v19, :cond_2
+    .local v21, "n":I
+    if-eqz v21, :cond_2
 
-    move/from16 v0, v19
+    move/from16 v0, v21
 
     new-array v5, v0, [Landroid/net/wifi/ScanResult$InformationElement;
 
@@ -200,7 +208,7 @@
 
     .local v2, "i":I
     :goto_1
-    move/from16 v0, v19
+    move/from16 v0, v21
 
     if-ge v2, v0, :cond_2
 
@@ -224,14 +232,14 @@
 
     invoke-virtual/range {p1 .. p1}, Landroid/os/Parcel;->readInt()I
 
-    move-result v18
+    move-result v20
 
-    .local v18, "len":I
+    .local v20, "len":I
     iget-object v5, v3, Landroid/net/wifi/ScanResult;->informationElements:[Landroid/net/wifi/ScanResult$InformationElement;
 
     aget-object v5, v5, v2
 
-    move/from16 v0, v18
+    move/from16 v0, v20
 
     new-array v6, v0, [B
 
@@ -252,14 +260,14 @@
     goto :goto_1
 
     .end local v2    # "i":I
-    .end local v18    # "len":I
-    .end local v19    # "n":I
+    .end local v20    # "len":I
+    .end local v21    # "n":I
     :cond_1
     const/4 v5, 0x0
 
     goto :goto_0
 
-    .restart local v19    # "n":I
+    .restart local v21    # "n":I
     :cond_2
     return-object v3
 .end method

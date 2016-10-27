@@ -1043,6 +1043,10 @@
 
     invoke-static {v14, v0}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
 
+    const/16 v14, 0x7589
+
+    invoke-static {v14, v10, v11}, Landroid/util/EventLog;->writeEvent(IJ)I
+
     :cond_1
     move-object/from16 v0, p0
 

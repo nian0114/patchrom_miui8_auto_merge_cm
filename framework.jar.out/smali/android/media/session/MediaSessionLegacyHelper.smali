@@ -251,9 +251,9 @@
 
     const/4 v3, -0x1
 
-    if-eq p1, v3, :cond_12
+    if-eq p1, v3, :cond_13
 
-    if-eq p2, v3, :cond_12
+    if-eq p2, v3, :cond_13
 
     const/4 v1, 0x1
 
@@ -287,7 +287,7 @@
     invoke-virtual {v2, v3, v4}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
 
     :cond_0
-    if-eqz v1, :cond_13
+    if-eqz v1, :cond_14
 
     const-string v3, "android.media.metadata.ART"
 
@@ -295,7 +295,7 @@
 
     move-result v3
 
-    if-eqz v3, :cond_13
+    if-eqz v3, :cond_14
 
     const-string v3, "android.media.metadata.ART"
 
@@ -685,18 +685,41 @@
     invoke-virtual {v2, v3, v4}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
 
     :cond_11
+    const-string v3, "android.media.metadata.LYRIC"
+
+    invoke-virtual {p0, v3}, Landroid/media/MediaMetadata;->containsKey(Ljava/lang/String;)Z
+
+    move-result v3
+
+    if-eqz v3, :cond_12
+
+    const/16 v3, 0x3e8
+
+    invoke-static {v3}, Ljava/lang/String;->valueOf(I)Ljava/lang/String;
+
+    move-result-object v3
+
+    const-string v4, "android.media.metadata.LYRIC"
+
+    invoke-virtual {p0, v4}, Landroid/media/MediaMetadata;->getString(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-virtual {v2, v3, v4}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
+
+    :cond_12
     return-object v2
 
     .end local v1    # "includeArtwork":Z
     .end local v2    # "oldMetadata":Landroid/os/Bundle;
-    :cond_12
+    :cond_13
     const/4 v1, 0x0
 
     .restart local v1    # "includeArtwork":Z
     goto/16 :goto_0
 
     .restart local v2    # "oldMetadata":Landroid/os/Bundle;
-    :cond_13
+    :cond_14
     if-eqz v1, :cond_1
 
     const-string v3, "android.media.metadata.ALBUM_ART"

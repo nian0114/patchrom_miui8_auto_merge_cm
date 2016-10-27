@@ -48,7 +48,7 @@
 
 .field private static DEFAULT_LINGER_DELAY_MS:I = 0x0
 
-.field private static final DEFAULT_SERVER:Ljava/lang/String; = "connectivitycheck.gstatic.com"
+.field private static final DEFAULT_SERVER:Ljava/lang/String; = "connect.rom.miui.com"
 
 .field public static final EVENT_NETWORK_LINGER_COMPLETE:I = 0x82005
 
@@ -555,7 +555,7 @@
 
     if-nez v0, :cond_0
 
-    const-string v0, "connectivitycheck.gstatic.com"
+    const-string v0, "connect.rom.miui.com"
 
     iput-object v0, p0, Lcom/android/server/connectivity/NetworkMonitor;->mServer:Ljava/lang/String;
 
@@ -622,6 +622,17 @@
 
     :cond_0
     sput p0, Lcom/android/server/connectivity/NetworkMonitor;->DEFAULT_LINGER_DELAY_MS:I
+
+    return-void
+.end method
+
+.method static synthetic access$transitionTo(Lcom/android/server/connectivity/NetworkMonitor;Lcom/android/internal/util/IState;)V
+    .locals 0
+    .param p0, "x0"    # Lcom/android/server/connectivity/NetworkMonitor;
+    .param p1, "x1"    # Lcom/android/internal/util/IState;
+
+    .prologue
+    invoke-virtual {p0, p1}, Lcom/android/server/connectivity/NetworkMonitor;->transitionTo(Lcom/android/internal/util/IState;)V
 
     return-void
 .end method
@@ -1159,6 +1170,16 @@
 
     .end local v14    # "hostToResolve":Ljava/lang/String;
     :cond_7
+    move-object/from16 v0, p0
+
+    iget-object v3, v0, Lcom/android/server/connectivity/NetworkMonitor;->mContext:Landroid/content/Context;
+
+    move-object/from16 v0, v17
+
+    invoke-static {v3, v0}, Lcom/android/server/connectivity/NetworkMonitorInjector;->getCaptivePortalServer(Landroid/content/Context;Ljava/net/URL;)Ljava/net/URL;
+
+    move-result-object v17
+
     new-instance v3, Ljava/lang/StringBuilder;
 
     invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V

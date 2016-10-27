@@ -48,7 +48,7 @@
 
 # virtual methods
 .method public enter()V
-    .locals 9
+    .locals 11
 
     .prologue
     const/4 v8, 0x1

@@ -178,6 +178,10 @@
     .end local v5    # "pkgList":[Ljava/lang/String;
     :cond_3
     :goto_1
+    invoke-static {v5}, Lcom/android/server/AlarmManagerServiceInjector;->filterPersistPackages([Ljava/lang/String;)[Ljava/lang/String;
+
+    move-result-object v5
+
     if-eqz v5, :cond_a
 
     array-length v11, v5

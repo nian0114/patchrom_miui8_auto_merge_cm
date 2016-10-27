@@ -71,10 +71,10 @@
 # instance fields
 .field private mAccountsUpdatedReceiver:Landroid/content/BroadcastReceiver;
 
-.field protected final mActiveSyncContexts:Ljava/util/ArrayList;
+.field protected final mActiveSyncContexts:Ljava/util/concurrent/CopyOnWriteArrayList;
     .annotation system Ldalvik/annotation/Signature;
         value = {
-            "Ljava/util/ArrayList",
+            "Ljava/util/concurrent/CopyOnWriteArrayList",
             "<",
             "Lcom/android/server/content/SyncManager$ActiveSyncContext;",
             ">;"
@@ -129,6 +129,8 @@
 .field private final mSyncHandler:Lcom/android/server/content/SyncManager$SyncHandler;
 
 .field private volatile mSyncManagerWakeLock:Landroid/os/PowerManager$WakeLock;
+
+.field private mSyncOnWifiSettingChanged:Landroid/content/BroadcastReceiver;
 
 .field private final mSyncQueue:Lcom/android/server/content/SyncQueue;
     .annotation build Lcom/android/internal/annotations/GuardedBy;
@@ -708,11 +710,11 @@
 
     iput-object v4, p0, Lcom/android/server/content/SyncManager;->mAlarmService:Landroid/app/AlarmManager;
 
-    invoke-static {}, Lcom/google/android/collect/Lists;->newArrayList()Ljava/util/ArrayList;
+    new-instance v0, Ljava/util/concurrent/CopyOnWriteArrayList;
 
-    move-result-object v0
+    invoke-direct {v0}, Ljava/util/concurrent/CopyOnWriteArrayList;-><init>()V
 
-    iput-object v0, p0, Lcom/android/server/content/SyncManager;->mActiveSyncContexts:Ljava/util/ArrayList;
+    iput-object v0, p0, Lcom/android/server/content/SyncManager;->mActiveSyncContexts:Ljava/util/concurrent/CopyOnWriteArrayList;
 
     iput-boolean v6, p0, Lcom/android/server/content/SyncManager;->mNeedSyncActiveNotification:Z
 
@@ -759,6 +761,12 @@
     iput-object v0, p0, Lcom/android/server/content/SyncManager;->mUserIntentReceiver:Landroid/content/BroadcastReceiver;
 
     iput-boolean v6, p0, Lcom/android/server/content/SyncManager;->mBootCompleted:Z
+
+    new-instance v0, Lcom/android/server/content/SyncManager$mSyncOnWifiSettingChanged;
+
+    invoke-direct {v0, p0}, Lcom/android/server/content/SyncManager$mSyncOnWifiSettingChanged;-><init>(Lcom/android/server/content/SyncManager;)V
+
+    iput-object v0, p0, Lcom/android/server/content/SyncManager;->mSyncOnWifiSettingChanged:Landroid/content/BroadcastReceiver;
 
     iput-object p1, p0, Lcom/android/server/content/SyncManager;->mContext:Landroid/content/Context;
 
@@ -846,6 +854,10 @@
 
     iput-object v0, p0, Lcom/android/server/content/SyncManager;->mAppIdleMonitor:Lcom/android/server/content/AppIdleMonitor;
 
+    iget-object v0, p0, Lcom/android/server/content/SyncManager;->mContext:Landroid/content/Context;
+
+    invoke-static {v0, p0}, Lcom/android/server/content/SyncManagerInjector;->initNetReachableControl(Landroid/content/Context;Lcom/android/server/content/SyncManager;)V
+
     new-instance v3, Landroid/content/IntentFilter;
 
     const-string v0, "android.net.conn.CONNECTIVITY_CHANGE"
@@ -876,6 +888,18 @@
     invoke-virtual {p1, v0, v3}, Landroid/content/Context;->registerReceiver(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;)Landroid/content/Intent;
 
     :cond_0
+    iget-object v0, p0, Lcom/android/server/content/SyncManager;->mContext:Landroid/content/Context;
+
+    iget-object v1, p0, Lcom/android/server/content/SyncManager;->mSyncOnWifiSettingChanged:Landroid/content/BroadcastReceiver;
+
+    new-instance v2, Landroid/content/IntentFilter;
+
+    const-string v5, "com.miui.action.SYNC_ON_WIFI_ONLY_CHANGED"
+
+    invoke-direct {v2, v5}, Landroid/content/IntentFilter;-><init>(Ljava/lang/String;)V
+
+    invoke-virtual {v0, v1, v2}, Landroid/content/Context;->registerReceiver(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;)Landroid/content/Intent;
+
     new-instance v3, Landroid/content/IntentFilter;
 
     .end local v3    # "intentFilter":Landroid/content/IntentFilter;
@@ -1148,6 +1172,19 @@
     monitor-exit v1
 
     throw v0
+.end method
+
+.method static synthetic access$isTrafficForbidden(Lcom/android/server/content/SyncManager;Lcom/android/server/content/SyncOperation;)Z
+    .locals 1
+    .param p0, "x0"    # Lcom/android/server/content/SyncManager;
+    .param p1, "x1"    # Lcom/android/server/content/SyncOperation;
+
+    .prologue
+    invoke-direct {p0, p1}, Lcom/android/server/content/SyncManager;->isTrafficForbidden(Lcom/android/server/content/SyncOperation;)Z
+
+    move-result v0
+
+    return v0
 .end method
 
 .method private clearBackoffSetting(Lcom/android/server/content/SyncOperation;)V
@@ -4514,9 +4551,9 @@
     .param p1, "activeSyncContext"    # Lcom/android/server/content/SyncManager$ActiveSyncContext;
 
     .prologue
-    iget-object v2, p0, Lcom/android/server/content/SyncManager;->mActiveSyncContexts:Ljava/util/ArrayList;
+    iget-object v2, p0, Lcom/android/server/content/SyncManager;->mActiveSyncContexts:Ljava/util/concurrent/CopyOnWriteArrayList;
 
-    invoke-interface {v2}, Ljava/lang/Iterable;->iterator()Ljava/util/Iterator;
+    invoke-virtual {v2}, Ljava/util/concurrent/CopyOnWriteArrayList;->iterator()Ljava/util/Iterator;
 
     move-result-object v1
 
@@ -4546,6 +4583,193 @@
     const/4 v2, 0x0
 
     return v2
+.end method
+
+.method private isTrafficForbidden(Lcom/android/server/content/SyncOperation;)Z
+    .locals 9
+    .param p1, "op"    # Lcom/android/server/content/SyncOperation;
+
+    .prologue
+    const/4 v8, 0x2
+
+    const/4 v6, 0x1
+
+    const/4 v5, 0x0
+
+    iget-boolean v0, p0, Lcom/android/server/content/SyncManager;->mDataConnectionIsConnected:Z
+
+    .local v0, "allowed":Z
+    const/4 v2, 0x0
+
+    .local v2, "ignoreSettings":Z
+    if-eqz p1, :cond_0
+
+    iget-object v4, p1, Lcom/android/server/content/SyncOperation;->extras:Landroid/os/Bundle;
+
+    const-string v7, "ignore_settings"
+
+    invoke-virtual {v4, v7, v5}, Landroid/os/Bundle;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result v2
+
+    :cond_0
+    if-eqz v2, :cond_2
+
+    const-string v4, "SyncManager"
+
+    invoke-static {v4, v8}, Landroid/util/Log;->isLoggable(Ljava/lang/String;I)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_1
+
+    const-string v4, "SyncManager"
+
+    new-instance v7, Ljava/lang/StringBuilder;
+
+    invoke-direct {v7}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v8, "checking traffic, ignore settings, traffic allowed: "
+
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    invoke-virtual {v7, v0}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    const-string v8, ", op: "
+
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    invoke-virtual {v7, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    invoke-virtual {v7}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v7
+
+    invoke-static {v4, v7}, Landroid/util/Log;->v(Ljava/lang/String;Ljava/lang/String;)I
+
+    :cond_1
+    :goto_0
+    if-nez v0, :cond_6
+
+    :goto_1
+    return v6
+
+    :cond_2
+    invoke-direct {p0}, Lcom/android/server/content/SyncManager;->getConnectivityManager()Landroid/net/ConnectivityManager;
+
+    move-result-object v1
+
+    .local v1, "cm":Landroid/net/ConnectivityManager;
+    iget-object v4, p0, Lcom/android/server/content/SyncManager;->mContext:Landroid/content/Context;
+
+    invoke-virtual {v4}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
+
+    move-result-object v4
+
+    const-string v7, "sync_on_wifi_only"
+
+    invoke-static {v4, v7, v5}, Landroid/provider/Settings$Secure;->getInt(Landroid/content/ContentResolver;Ljava/lang/String;I)I
+
+    move-result v4
+
+    if-ne v4, v6, :cond_4
+
+    move v3, v6
+
+    .local v3, "wifiOnly":Z
+    :goto_2
+    if-eqz v3, :cond_3
+
+    invoke-virtual {v1}, Landroid/net/ConnectivityManager;->isActiveNetworkMetered()Z
+
+    move-result v4
+
+    if-nez v4, :cond_5
+
+    :cond_3
+    move v4, v6
+
+    :goto_3
+    and-int/2addr v0, v4
+
+    const-string v4, "SyncManager"
+
+    invoke-static {v4, v8}, Landroid/util/Log;->isLoggable(Ljava/lang/String;I)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_1
+
+    const-string v4, "SyncManager"
+
+    new-instance v7, Ljava/lang/StringBuilder;
+
+    invoke-direct {v7}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v8, "checking traffic, wifi only: "
+
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    invoke-virtual {v7, v3}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    const-string v8, ", traffic allowed: "
+
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    invoke-virtual {v7, v0}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    const-string v8, ", op: "
+
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    invoke-virtual {v7, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    invoke-virtual {v7}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v7
+
+    invoke-static {v4, v7}, Landroid/util/Log;->v(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto :goto_0
+
+    .end local v3    # "wifiOnly":Z
+    :cond_4
+    move v3, v5
+
+    goto :goto_2
+
+    .restart local v3    # "wifiOnly":Z
+    :cond_5
+    move v4, v5
+
+    goto :goto_3
+
+    .end local v1    # "cm":Landroid/net/ConnectivityManager;
+    .end local v3    # "wifiOnly":Z
+    :cond_6
+    move v6, v5
+
+    goto :goto_1
 .end method
 
 .method private jitterize(JJ)J
@@ -5538,6 +5762,24 @@
 
     invoke-virtual {v0, v1}, Ljava/io/PrintWriter;->println(Z)V
 
+    const-string v34, "net_reachable stat: "
+
+    move-object/from16 v0, p1
+
+    move-object/from16 v1, v34
+
+    invoke-virtual {v0, v1}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
+
+    invoke-static {}, Lcom/android/server/content/SyncManagerInjector;->isNetReachable()Z
+
+    move-result v34
+
+    move-object/from16 v0, p1
+
+    move/from16 v1, v34
+
+    invoke-virtual {v0, v1}, Ljava/io/PrintWriter;->println(Z)V
+
     invoke-static {}, Lcom/android/server/accounts/AccountManagerService;->getSingleton()Lcom/android/server/accounts/AccountManagerService;
 
     move-result-object v33
@@ -5881,11 +6123,11 @@
 
     move-object/from16 v0, p0
 
-    iget-object v0, v0, Lcom/android/server/content/SyncManager;->mActiveSyncContexts:Ljava/util/ArrayList;
+    iget-object v0, v0, Lcom/android/server/content/SyncManager;->mActiveSyncContexts:Ljava/util/concurrent/CopyOnWriteArrayList;
 
     move-object/from16 v34, v0
 
-    invoke-virtual/range {v34 .. v34}, Ljava/util/ArrayList;->size()I
+    invoke-virtual/range {v34 .. v34}, Ljava/util/concurrent/CopyOnWriteArrayList;->size()I
 
     move-result v34
 
@@ -5916,11 +6158,11 @@
     .local v17, "pm":Landroid/content/pm/PackageManager;
     move-object/from16 v0, p0
 
-    iget-object v0, v0, Lcom/android/server/content/SyncManager;->mActiveSyncContexts:Ljava/util/ArrayList;
+    iget-object v0, v0, Lcom/android/server/content/SyncManager;->mActiveSyncContexts:Ljava/util/concurrent/CopyOnWriteArrayList;
 
     move-object/from16 v33, v0
 
-    invoke-interface/range {v33 .. v33}, Ljava/lang/Iterable;->iterator()Ljava/util/Iterator;
+    invoke-virtual/range {v33 .. v33}, Ljava/util/concurrent/CopyOnWriteArrayList;->iterator()Ljava/util/Iterator;
 
     move-result-object v7
 
@@ -6176,7 +6418,7 @@
 
     invoke-virtual {v0, v1, v2}, Ljava/io/PrintWriter;->printf(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintWriter;
 
-    const-string v33, "======================================================================="
+    const-string v33, "======= #@.method protected dumpSyncState@======= #@.method protected dumpSyncState@======= #@.method protected dumpSyncState@======= #@.method protected dumpSyncState@======= #@.method protected dumpSyncState@======= #@.method protected dumpSyncState@======= #@.method protected dumpSyncState@======= #@.method protected dumpSyncState@======= #@.method protected dumpSyncState@======= #@.method protected dumpSyncState@="
 
     move-object/from16 v0, p1
 
@@ -8133,6 +8375,37 @@
     throw v3
 .end method
 
+.method removeIgnoreSettingsFlag(Lcom/android/server/content/SyncOperation;)V
+    .locals 2
+    .param p1, "operation"    # Lcom/android/server/content/SyncOperation;
+
+    .prologue
+    iget-object v0, p1, Lcom/android/server/content/SyncOperation;->extras:Landroid/os/Bundle;
+
+    const-string v1, "ignore_settings"
+
+    invoke-virtual {v0, v1}, Landroid/os/Bundle;->remove(Ljava/lang/String;)V
+
+    const-string v0, "SyncManager"
+
+    const/4 v1, 0x2
+
+    invoke-static {v0, v1}, Landroid/util/Log;->isLoggable(Ljava/lang/String;I)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_0
+
+    const-string v0, "SyncManager"
+
+    const-string v1, "ignore settings flag removed"
+
+    invoke-static {v0, v1}, Landroid/util/Log;->v(Ljava/lang/String;Ljava/lang/String;)I
+
+    :cond_0
+    return-void
+.end method
+
 .method public scheduleLocalSync(Landroid/accounts/Account;IILjava/lang/String;)V
     .locals 11
     .param p1, "account"    # Landroid/accounts/Account;
@@ -9571,9 +9844,9 @@
     iget-object v0, p0, Lcom/android/server/content/SyncManager;->mRunningAccounts:[Landroid/accounts/AccountAndUser;
 
     .local v0, "accounts":[Landroid/accounts/AccountAndUser;
-    iget-object v3, p0, Lcom/android/server/content/SyncManager;->mActiveSyncContexts:Ljava/util/ArrayList;
+    iget-object v3, p0, Lcom/android/server/content/SyncManager;->mActiveSyncContexts:Ljava/util/concurrent/CopyOnWriteArrayList;
 
-    invoke-interface {v3}, Ljava/lang/Iterable;->iterator()Ljava/util/Iterator;
+    invoke-virtual {v3}, Ljava/util/concurrent/CopyOnWriteArrayList;->iterator()Ljava/util/Iterator;
 
     move-result-object v2
 

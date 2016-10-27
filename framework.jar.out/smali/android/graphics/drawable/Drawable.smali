@@ -264,6 +264,8 @@
     .local v4, "opticalInsets":Landroid/graphics/Rect;
     invoke-virtual {v1, v4}, Landroid/graphics/Bitmap;->getOpticalInsets(Landroid/graphics/Rect;)V
 
+    invoke-static {v1, p3}, Lmiui/util/DumpBitmapInfoUtils;->putBitmap(Landroid/graphics/Bitmap;Ljava/lang/CharSequence;)V
+
     move-object v0, p0
 
     move-object v5, p3

@@ -1740,6 +1740,48 @@
     .param p2, "value"    # Ljava/lang/String;
 
     .prologue
+    const-string v5, "gsm.sim.operator.alpha"
+
+    invoke-virtual {v5, p1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v5
+
+    if-nez v5, :cond_0
+
+    const-string v5, "gsm.operator.alpha"
+
+    invoke-virtual {v5, p1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v5
+
+    if-nez v5, :cond_0
+
+    const-string v5, "gsm.sim.operator.numeric"
+
+    invoke-virtual {v5, p1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v5
+
+    if-nez v5, :cond_0
+
+    const-string v5, "gsm.operator.numeric"
+
+    invoke-virtual {v5, p1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v5
+
+    if-eqz v5, :cond_1
+
+    :cond_0
+    invoke-static {}, Lmiui/telephony/TelephonyManagerEx;->getDefault()Lmiui/telephony/TelephonyManagerEx;
+
+    move-result-object v5
+
+    invoke-virtual {v5, p0, p1, p2}, Lmiui/telephony/TelephonyManagerEx;->onOperatorNumericOrNameSet(ILjava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object p2
+
+    :cond_1
     const-string v3, ""
 
     .local v3, "propVal":Ljava/lang/String;
@@ -1751,12 +1793,12 @@
     move-result-object v2
 
     .local v2, "prop":Ljava/lang/String;
-    if-nez p2, :cond_0
+    if-nez p2, :cond_2
 
     const-string p2, ""
 
-    :cond_0
-    if-eqz v2, :cond_1
+    :cond_2
+    if-eqz v2, :cond_3
 
     const-string v5, ","
 
@@ -1765,12 +1807,12 @@
     move-result-object v1
 
     .end local v1    # "p":[Ljava/lang/String;
-    :cond_1
+    :cond_3
     invoke-static {p0}, Landroid/telephony/SubscriptionManager;->isValidPhoneId(I)Z
 
     move-result v5
 
-    if-nez v5, :cond_2
+    if-nez v5, :cond_4
 
     const-string v5, "TelephonyManager"
 
@@ -1826,25 +1868,25 @@
 
     return-void
 
-    :cond_2
+    :cond_4
     const/4 v0, 0x0
 
     .local v0, "i":I
     :goto_0
-    if-ge v0, p0, :cond_4
+    if-ge v0, p0, :cond_6
 
     const-string v4, ""
 
     .local v4, "str":Ljava/lang/String;
-    if-eqz v1, :cond_3
+    if-eqz v1, :cond_5
 
     array-length v5, v1
 
-    if-ge v0, v5, :cond_3
+    if-ge v0, v5, :cond_5
 
     aget-object v4, v1, v0
 
-    :cond_3
+    :cond_5
     new-instance v5, Ljava/lang/StringBuilder;
 
     invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V
@@ -1872,7 +1914,7 @@
     goto :goto_0
 
     .end local v4    # "str":Ljava/lang/String;
-    :cond_4
+    :cond_6
     new-instance v5, Ljava/lang/StringBuilder;
 
     invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V
@@ -1889,14 +1931,14 @@
 
     move-result-object v3
 
-    if-eqz v1, :cond_5
+    if-eqz v1, :cond_7
 
     add-int/lit8 v0, p0, 0x1
 
     :goto_1
     array-length v5, v1
 
-    if-ge v0, v5, :cond_5
+    if-ge v0, v5, :cond_7
 
     new-instance v5, Ljava/lang/StringBuilder;
 
@@ -1926,14 +1968,14 @@
 
     goto :goto_1
 
-    :cond_5
+    :cond_7
     invoke-virtual {p1}, Ljava/lang/String;->length()I
 
     move-result v5
 
     const/16 v6, 0x1f
 
-    if-gt v5, v6, :cond_6
+    if-gt v5, v6, :cond_8
 
     invoke-virtual {v3}, Ljava/lang/String;->length()I
 
@@ -1941,9 +1983,9 @@
 
     const/16 v6, 0x5b
 
-    if-le v5, v6, :cond_7
+    if-le v5, v6, :cond_9
 
-    :cond_6
+    :cond_8
     const-string v5, "TelephonyManager"
 
     new-instance v6, Ljava/lang/StringBuilder;
@@ -1998,7 +2040,7 @@
 
     return-void
 
-    :cond_7
+    :cond_9
     const-string v5, "TelephonyManager"
 
     new-instance v6, Ljava/lang/StringBuilder;
@@ -8001,7 +8043,7 @@
 
     move-result-object v0
 
-    if-eqz v0, :cond_1
+    if-eqz v0, :cond_2
 
     const/4 v0, 0x1
 
@@ -8011,6 +8053,23 @@
     move-result-object v8
 
     .local v8, "notifyNow":Ljava/lang/Boolean;
+    sget-object v0, Landroid/telephony/TelephonyManager;->sRegistry:Lcom/android/internal/telephony/ITelephonyRegistry;
+
+    if-nez v0, :cond_1
+
+    const-string v0, "telephony.registry"
+
+    invoke-static {v0}, Landroid/os/ServiceManager;->getService(Ljava/lang/String;)Landroid/os/IBinder;
+
+    move-result-object v0
+
+    invoke-static {v0}, Lcom/android/internal/telephony/ITelephonyRegistry$Stub;->asInterface(Landroid/os/IBinder;)Lcom/android/internal/telephony/ITelephonyRegistry;
+
+    move-result-object v0
+
+    sput-object v0, Landroid/telephony/TelephonyManager;->sRegistry:Lcom/android/internal/telephony/ITelephonyRegistry;
+
+    :cond_1
     sget-object v0, Landroid/telephony/TelephonyManager;->sRegistry:Lcom/android/internal/telephony/ITelephonyRegistry;
 
     iget v1, p1, Landroid/telephony/PhoneStateListener;->mSubId:I
@@ -8036,7 +8095,7 @@
     :goto_1
     return-void
 
-    :cond_1
+    :cond_2
     const/4 v0, 0x0
 
     goto :goto_0

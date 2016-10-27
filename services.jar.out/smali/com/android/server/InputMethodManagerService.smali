@@ -826,6 +826,12 @@
 
     monitor-exit v1
 
+    iget-object v0, p0, Lcom/android/server/InputMethodManagerService;->mMethodList:Ljava/util/ArrayList;
+
+    iget-object v1, p0, Lcom/android/server/InputMethodManagerService;->mSettings:Lcom/android/internal/inputmethod/InputMethodUtils$InputMethodSettings;
+
+    invoke-static {v0, v1}, Lcom/android/server/InputMethodManagerServiceInjector;->enableSystemIMEsIfThereIsNoEnabledIME(Ljava/util/ArrayList;Lcom/android/internal/inputmethod/InputMethodUtils$InputMethodSettings;)V
+
     iget-object v0, p0, Lcom/android/server/InputMethodManagerService;->mSettings:Lcom/android/internal/inputmethod/InputMethodUtils$InputMethodSettings;
 
     invoke-virtual {v0}, Lcom/android/internal/inputmethod/InputMethodUtils$InputMethodSettings;->enableAllIMEsIfThereIsNoEnabledIME()V
@@ -2101,8 +2107,6 @@
 
     if-eqz v3, :cond_5
 
-    invoke-direct {p0, v0}, Lcom/android/server/InputMethodManagerService;->publishImeSelectorCustomTile(Landroid/view/inputmethod/InputMethodInfo;)V
-
     :goto_1
     return-void
 
@@ -2135,8 +2139,6 @@
     throw v3
 
     :cond_5
-    invoke-direct {p0}, Lcom/android/server/InputMethodManagerService;->unpublishImeSelectorCustomTile()V
-
     goto :goto_1
 .end method
 
@@ -3918,6 +3920,8 @@
 
     invoke-virtual {v14, v0}, Landroid/widget/Switch;->setOnCheckedChangeListener(Landroid/widget/CompoundButton$OnCheckedChangeListener;)V
 
+    invoke-virtual/range {p0 .. p0}, Lcom/android/server/InputMethodManagerService;->removeCustomTitle()V
+
     new-instance v6, Lcom/android/server/InputMethodManagerService$ImeSubtypeListAdapter;
 
     const v27, 0x109006c
@@ -4432,16 +4436,13 @@
     move-result v7
 
     if-eqz v7, :cond_5
-
-    :cond_3
-    :goto_1
-    invoke-direct {p0, v2}, Lcom/android/server/InputMethodManagerService;->publishImeSelectorCustomTile(Landroid/view/inputmethod/InputMethodInfo;)V
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
     .end local v4    # "summary":Ljava/lang/CharSequence;
     .end local v5    # "title":Ljava/lang/CharSequence;
-    :goto_2
+    :cond_3
+    :goto_1
     invoke-static {v0, v1}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
     return-void
@@ -4519,13 +4520,11 @@
     const/4 v7, 0x0
 
     iput-boolean v7, p0, Lcom/android/server/InputMethodManagerService;->mNotificationShown:Z
-
-    :cond_7
-    invoke-direct {p0}, Lcom/android/server/InputMethodManagerService;->unpublishImeSelectorCustomTile()V
     :try_end_2
     .catchall {:try_start_2 .. :try_end_2} :catchall_0
 
-    goto :goto_2
+    :cond_7
+    goto :goto_1
 .end method
 
 .method private updateTouchHovering()V
@@ -8501,6 +8500,27 @@
     monitor-exit v2
 
     throw v1
+.end method
+
+.method removeCustomTitle()V
+    .locals 3
+
+    .prologue
+    const/4 v2, 0x0
+
+    iget-object v0, p0, Lcom/android/server/InputMethodManagerService;->mDialogBuilder:Landroid/app/AlertDialog$Builder;
+
+    invoke-virtual {v0, v2}, Landroid/app/AlertDialog$Builder;->setCustomTitle(Landroid/view/View;)Landroid/app/AlertDialog$Builder;
+
+    iget-object v0, p0, Lcom/android/server/InputMethodManagerService;->mDialogBuilder:Landroid/app/AlertDialog$Builder;
+
+    sget v1, Lcom/android/internal/R$string;->select_input_method:I
+
+    invoke-virtual {v0, v1}, Landroid/app/AlertDialog$Builder;->setTitle(I)Landroid/app/AlertDialog$Builder;
+
+    iput-object v2, p0, Lcom/android/server/InputMethodManagerService;->mSwitchingDialogTitleView:Landroid/view/View;
+
+    return-void
 .end method
 
 .method requestClientSessionLocked(Lcom/android/server/InputMethodManagerService$ClientState;)V

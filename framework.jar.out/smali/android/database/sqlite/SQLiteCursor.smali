@@ -573,6 +573,10 @@
     :goto_0
     invoke-direct {p0, p2}, Landroid/database/sqlite/SQLiteCursor;->fillWindow(I)V
 
+    iget-object v0, p0, Landroid/database/sqlite/SQLiteCursor;->mWindow:Landroid/database/CursorWindow;
+
+    invoke-static {p0, v0, p1, p2}, Landroid/database/sqlite/SQLiteCursorInjector;->calibRowCount(Landroid/database/sqlite/SQLiteCursor;Landroid/database/CursorWindow;II)V
+
     :cond_1
     const/4 v0, 0x1
 

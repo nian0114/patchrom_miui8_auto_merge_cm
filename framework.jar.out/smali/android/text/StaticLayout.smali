@@ -1557,6 +1557,24 @@
 
     if-ne v0, v1, :cond_10
 
+    move/from16 v0, p2
+
+    move/from16 v1, p3
+
+    if-eq v0, v1, :cond_4
+
+    add-int/lit8 v2, p19, -0x1
+
+    move-object/from16 v0, p1
+
+    invoke-interface {v0, v2}, Ljava/lang/CharSequence;->charAt(I)C
+
+    move-result v2
+
+    const/16 v3, 0xa
+
+    if-eq v2, v3, :cond_10
+
     :cond_4
     const/16 v23, 0x1
 

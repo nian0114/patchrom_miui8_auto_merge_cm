@@ -10422,7 +10422,21 @@
 
     iget-boolean v8, p0, Lcom/android/server/notification/NotificationManagerService;->mScreenOn:Z
 
-    if-eqz v8, :cond_6
+    if-nez v8, :cond_5
+
+    invoke-virtual {p0}, Lcom/android/server/notification/NotificationManagerService;->getContext()Landroid/content/Context;
+
+    move-result-object v8
+
+    iget-object v9, v2, Lcom/android/server/notification/NotificationRecord;->sbn:Landroid/service/notification/StatusBarNotification;
+
+    const-string v10, "_led"
+
+    invoke-static {v8, v9, v10}, Lmiui/util/NotificationFilterHelper;->isAllowed(Landroid/content/Context;Landroid/service/notification/StatusBarNotification;Ljava/lang/String;)Z
+
+    move-result v8
+
+    if-nez v8, :cond_7
 
     :cond_5
     const/4 v0, 0x0

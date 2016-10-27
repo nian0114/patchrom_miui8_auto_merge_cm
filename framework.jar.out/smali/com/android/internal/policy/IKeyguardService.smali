@@ -15,6 +15,14 @@
 
 
 # virtual methods
+.method public abstract OnDoubleClickHome()V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
 .method public abstract addStateMonitorCallback(Lcom/android/internal/policy/IKeyguardStateCallback;)V
     .annotation system Ldalvik/annotation/Throws;
         value = {

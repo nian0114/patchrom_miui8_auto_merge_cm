@@ -38,6 +38,8 @@
 
 .field public static final PER_USER_RANGE:I = 0x186a0
 
+.field public static final USER_AIRLOCK:I = 0x63
+
 .field public static final USER_ALL:I = -0x1
 
 .field public static final USER_CURRENT:I = -0x2

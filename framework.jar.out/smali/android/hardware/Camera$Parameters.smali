@@ -498,7 +498,7 @@
     return-object v0
 .end method
 
-.method private constructor <init>(Landroid/hardware/Camera;)V
+.method protected constructor <init>(Landroid/hardware/Camera;)V
     .locals 2
     .param p1, "this$0"    # Landroid/hardware/Camera;
 

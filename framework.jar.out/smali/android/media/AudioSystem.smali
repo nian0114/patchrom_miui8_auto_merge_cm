@@ -496,7 +496,13 @@
 
     sput-object v0, Landroid/media/AudioSystem;->DEFAULT_STREAM_VOLUME:[I
 
+    sget-object v0, Landroid/media/AudioSystem;->DEFAULT_STREAM_VOLUME:[I
+
+    invoke-static {v0}, Landroid/media/AudioServiceInjector;->adjustDefaultStreamVolume([I)V
+
     return-void
+
+    nop
 
     :array_0
     .array-data 4

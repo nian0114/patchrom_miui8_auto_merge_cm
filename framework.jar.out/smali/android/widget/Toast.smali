@@ -418,6 +418,20 @@
     return-void
 .end method
 
+.method public setType(I)V
+    .locals 1
+    .param p1, "type"    # I
+
+    .prologue
+    iget-object v0, p0, Landroid/widget/Toast;->mTN:Landroid/widget/Toast$TN;
+
+    iget-object v0, v0, Landroid/widget/Toast$TN;->mParams:Landroid/view/WindowManager$LayoutParams;
+
+    iput p1, v0, Landroid/view/WindowManager$LayoutParams;->type:I
+
+    return-void
+.end method
+
 .method public setView(Landroid/view/View;)V
     .locals 0
     .param p1, "view"    # Landroid/view/View;
@@ -432,9 +446,20 @@
     .locals 6
 
     .prologue
-    iget-object v4, p0, Landroid/widget/Toast;->mNextView:Landroid/view/View;
+    iget-object v4, p0, Landroid/widget/Toast;->mContext:Landroid/content/Context;
+
+    invoke-static {p0, v4}, Landroid/widget/ToastInjector;->interceptBackgroundToast(Landroid/widget/Toast;Landroid/content/Context;)Z
+
+    move-result v4
 
     if-nez v4, :cond_0
+
+    goto :goto_0
+
+    :cond_0
+    iget-object v4, p0, Landroid/widget/Toast;->mNextView:Landroid/view/View;
+
+    if-nez v4, :cond_1
 
     new-instance v4, Ljava/lang/RuntimeException;
 
@@ -444,7 +469,7 @@
 
     throw v4
 
-    :cond_0
+    :cond_1
     invoke-static {}, Landroid/widget/Toast;->getService()Landroid/app/INotificationManager;
 
     move-result-object v2

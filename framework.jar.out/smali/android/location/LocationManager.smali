@@ -141,7 +141,11 @@
 
     iput-object v0, p0, Landroid/location/LocationManager;->mListeners:Ljava/util/HashMap;
 
-    iput-object p2, p0, Landroid/location/LocationManager;->mService:Landroid/location/ILocationManager;
+    invoke-static {p2}, Landroid/location/MiuiLocationManagerProxy;->getProxy(Landroid/location/ILocationManager;)Landroid/location/ILocationManager;
+
+    move-result-object v0
+
+    iput-object v0, p0, Landroid/location/LocationManager;->mService:Landroid/location/ILocationManager;
 
     iput-object p1, p0, Landroid/location/LocationManager;->mContext:Landroid/content/Context;
 

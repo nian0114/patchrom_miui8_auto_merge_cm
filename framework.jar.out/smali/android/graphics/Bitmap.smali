@@ -43,7 +43,7 @@
 
 
 # instance fields
-.field private mBuffer:[B
+.field public mBuffer:[B
 
 .field mDensity:I
 
@@ -59,7 +59,7 @@
 
 .field private mNinePatchInsets:Landroid/graphics/NinePatch$InsetStruct;
 
-.field private mRecycled:Z
+.field public mRecycled:Z
 
 .field private mRequestPremultiplied:Z
 
@@ -281,6 +281,10 @@
     iget-object v1, p0, Landroid/graphics/Bitmap;->mFinalizer:Landroid/graphics/Bitmap$BitmapFinalizer;
 
     invoke-virtual {v1, v0}, Landroid/graphics/Bitmap$BitmapFinalizer;->setNativeAllocationByteCount(I)V
+
+    const/4 v1, 0x0
+
+    invoke-static {p0, v1}, Lmiui/util/DumpBitmapInfoUtils;->putBitmap(Landroid/graphics/Bitmap;Ljava/lang/CharSequence;)V
 
     return-void
 

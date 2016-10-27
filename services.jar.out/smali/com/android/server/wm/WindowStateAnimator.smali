@@ -2761,7 +2761,7 @@
 
     iget-object v2, v0, Lcom/android/server/wm/WindowStateAnimator;->mSurfaceControl:Landroid/view/SurfaceControl;
 
-    if-nez v2, :cond_7
+    if-nez v2, :cond_8
 
     const/4 v2, 0x1
 
@@ -2783,7 +2783,7 @@
 
     iget-object v2, v2, Lcom/android/server/wm/AppWindowAnimator;->animation:Landroid/view/animation/Animation;
 
-    if-nez v2, :cond_8
+    if-nez v2, :cond_9
 
     move-object/from16 v0, v21
 
@@ -2840,19 +2840,19 @@
 
     and-int/2addr v2, v3
 
-    if-eqz v2, :cond_a
+    if-eqz v2, :cond_b
 
     iget v2, v9, Landroid/view/WindowManager$LayoutParams;->systemUiVisibility:I
 
     and-int/lit16 v2, v2, 0x200
 
-    if-nez v2, :cond_a
+    if-nez v2, :cond_b
 
     iget v2, v9, Landroid/view/WindowManager$LayoutParams;->systemUiVisibility:I
 
     and-int/lit8 v2, v2, 0x2
 
-    if-nez v2, :cond_9
+    if-nez v2, :cond_a
 
     const/4 v10, 0x1
 
@@ -2876,12 +2876,12 @@
     move-result-object v14
 
     .local v14, "displayInfo":Landroid/view/DisplayInfo;
-    if-eqz v10, :cond_b
+    if-eqz v10, :cond_c
 
     iget v12, v14, Landroid/view/DisplayInfo;->logicalWidth:I
 
     :goto_2
-    if-eqz v10, :cond_c
+    if-eqz v10, :cond_d
 
     iget v11, v14, Landroid/view/DisplayInfo;->logicalHeight:I
 
@@ -2892,7 +2892,7 @@
 
     and-int/lit16 v2, v2, 0x4000
 
-    if-eqz v2, :cond_d
+    if-eqz v2, :cond_e
 
     move-object/from16 v0, v21
 
@@ -3098,13 +3098,13 @@
 
     and-int/2addr v2, v3
 
-    if-eqz v2, :cond_10
+    if-eqz v2, :cond_11
 
     const/16 v18, 0x1
 
     .local v18, "isHwAccelerated":Z
     :goto_5
-    if-eqz v18, :cond_11
+    if-eqz v18, :cond_12
 
     const/4 v7, -0x3
 
@@ -3194,9 +3194,24 @@
     move-object/from16 v1, p0
 
     iput v0, v1, Lcom/android/server/wm/WindowStateAnimator;->mSurfaceY:F
+
+    iget v2, v9, Landroid/view/WindowManager$LayoutParams;->flags:I
+
+    and-int/lit8 v2, v2, 0x4
+
+    if-eqz v2, :cond_6
+
+    move-object/from16 v1, p0
+
+    iget-object v2, v1, Lcom/android/server/wm/WindowStateAnimator;->mSurfaceControl:Landroid/view/SurfaceControl;
+
+    const/4 v3, 0x1
+
+    invoke-virtual {v2, v3}, Landroid/view/SurfaceControl;->setBlur(Z)V
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
+    :cond_6
     :try_start_2
     move-object/from16 v0, p0
 
@@ -3216,7 +3231,7 @@
 
     iput v2, v0, Lcom/android/server/wm/WindowStateAnimator;->mSurfaceLayer:I
 
-    if-eqz v13, :cond_6
+    if-eqz v13, :cond_7
 
     invoke-virtual {v13}, Lcom/android/server/wm/DisplayContent;->getDisplay()Landroid/view/Display;
 
@@ -3240,7 +3255,7 @@
 
     invoke-virtual {v2, v3}, Landroid/view/SurfaceControl;->setLayerStack(I)V
 
-    :cond_6
+    :cond_7
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowStateAnimator;->mSurfaceControl:Landroid/view/SurfaceControl;
@@ -3298,14 +3313,14 @@
     .end local v18    # "isHwAccelerated":Z
     .end local v19    # "left":F
     .end local v20    # "top":F
-    :cond_7
+    :cond_8
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowStateAnimator;->mSurfaceControl:Landroid/view/SurfaceControl;
 
     return-object v2
 
-    :cond_8
+    :cond_9
     move-object/from16 v0, v21
 
     iget-object v2, v0, Lcom/android/server/wm/WindowState;->mAppToken:Lcom/android/server/wm/AppWindowToken;
@@ -3318,14 +3333,14 @@
 
     .restart local v8    # "flags":I
     .restart local v9    # "attrs":Landroid/view/WindowManager$LayoutParams;
-    :cond_9
+    :cond_a
     const/4 v10, 0x0
 
     .restart local v10    # "consumingNavBar":Z
     goto/16 :goto_1
 
     .end local v10    # "consumingNavBar":Z
-    :cond_a
+    :cond_b
     const/4 v10, 0x0
 
     .restart local v10    # "consumingNavBar":Z
@@ -3335,25 +3350,25 @@
     .restart local v12    # "defaultWidth":I
     .restart local v13    # "displayContent":Lcom/android/server/wm/DisplayContent;
     .restart local v14    # "displayInfo":Landroid/view/DisplayInfo;
-    :cond_b
+    :cond_c
     iget v12, v14, Landroid/view/DisplayInfo;->appWidth:I
 
     goto/16 :goto_2
 
-    :cond_c
+    :cond_d
     iget v11, v14, Landroid/view/DisplayInfo;->appHeight:I
 
     goto/16 :goto_3
 
     .end local v14    # "displayInfo":Landroid/view/DisplayInfo;
-    :cond_d
-    if-eqz v10, :cond_e
+    :cond_e
+    if-eqz v10, :cond_f
 
     move v5, v12
 
     .restart local v5    # "width":I
     :goto_8
-    if-eqz v10, :cond_f
+    if-eqz v10, :cond_10
 
     move v6, v11
 
@@ -3362,7 +3377,7 @@
 
     .end local v5    # "width":I
     .end local v6    # "height":I
-    :cond_e
+    :cond_f
     move-object/from16 v0, v21
 
     iget-object v2, v0, Lcom/android/server/wm/WindowState;->mCompatFrame:Landroid/graphics/Rect;
@@ -3374,7 +3389,7 @@
     .restart local v5    # "width":I
     goto :goto_8
 
-    :cond_f
+    :cond_10
     move-object/from16 v0, v21
 
     iget-object v2, v0, Lcom/android/server/wm/WindowState;->mCompatFrame:Landroid/graphics/Rect;
@@ -3388,13 +3403,13 @@
 
     .restart local v19    # "left":F
     .restart local v20    # "top":F
-    :cond_10
+    :cond_11
     const/16 v18, 0x0
 
     .restart local v18    # "isHwAccelerated":Z
     goto/16 :goto_5
 
-    :cond_11
+    :cond_12
     :try_start_4
     iget v7, v9, Landroid/view/WindowManager$LayoutParams;->format:I
     :try_end_4

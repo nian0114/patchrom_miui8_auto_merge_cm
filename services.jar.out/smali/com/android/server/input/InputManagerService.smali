@@ -61,6 +61,8 @@
 
 .field private static final MSG_UPDATE_KEYBOARD_LAYOUTS:I = 0x4
 
+.field public static final SW_BACK_LID_BIT:I = 0x12
+
 .field public static final SW_CAMERA_LENS_COVER:I = 0x9
 
 .field public static final SW_CAMERA_LENS_COVER_BIT:I = 0x200
@@ -2573,7 +2575,7 @@
 .end method
 
 .method private notifySwitch(JII)V
-    .locals 7
+    .locals 9
     .param p1, "whenNanos"    # J
     .param p3, "switchValues"    # I
     .param p4, "switchMask"    # I
@@ -2587,7 +2589,7 @@
 
     and-int/lit8 v4, p3, 0x1
 
-    if-nez v4, :cond_5
+    if-nez v4, :cond_6
 
     const/4 v2, 0x1
 
@@ -2599,40 +2601,58 @@
 
     .end local v2    # "lidOpen":Z
     :cond_0
-    and-int/lit16 v4, p4, 0x200
+    and-int/lit8 v4, p4, 0x12
 
     if-eqz v4, :cond_1
 
+    and-int/lit8 v4, p3, 0x12
+
+    if-nez v4, :cond_7
+
+    move v7, v3
+
+    .local v7, "backLidOpen":Z
+    :goto_1
+    iget-object v4, p0, Lcom/android/server/input/InputManagerService;->mWindowManagerCallbacks:Lcom/android/server/input/InputManagerService$WindowManagerCallbacks;
+
+    invoke-interface {v4, p1, p2, v7}, Lcom/android/server/input/InputManagerService$WindowManagerCallbacks;->notifyBackLidSwitchChanged(JZ)V
+
+    .end local v7    # "backLidOpen":Z
+    :cond_1
+    and-int/lit16 v4, p4, 0x200
+
+    if-eqz v4, :cond_2
+
     and-int/lit16 v4, p3, 0x200
 
-    if-eqz v4, :cond_6
+    if-eqz v4, :cond_8
 
     const/4 v1, 0x1
 
     .local v1, "lensCovered":Z
-    :goto_1
+    :goto_2
     iget-object v4, p0, Lcom/android/server/input/InputManagerService;->mWindowManagerCallbacks:Lcom/android/server/input/InputManagerService$WindowManagerCallbacks;
 
     invoke-interface {v4, p1, p2, v1}, Lcom/android/server/input/InputManagerService$WindowManagerCallbacks;->notifyCameraLensCoverSwitchChanged(JZ)V
 
     .end local v1    # "lensCovered":Z
-    :cond_1
+    :cond_2
     iget-boolean v4, p0, Lcom/android/server/input/InputManagerService;->mUseDevInputEventForAudioJack:Z
 
-    if-eqz v4, :cond_2
+    if-eqz v4, :cond_3
 
     and-int/lit16 v4, p4, 0xd4
 
-    if-eqz v4, :cond_2
+    if-eqz v4, :cond_3
 
     iget-object v4, p0, Lcom/android/server/input/InputManagerService;->mWiredAccessoryCallbacks:Lcom/android/server/input/InputManagerService$WiredAccessoryCallbacks;
 
     invoke-interface {v4, p1, p2, p3, p4}, Lcom/android/server/input/InputManagerService$WiredAccessoryCallbacks;->notifyWiredAccessoryChanged(JII)V
 
-    :cond_2
+    :cond_3
     and-int/lit8 v4, p4, 0x2
 
-    if-eqz v4, :cond_4
+    if-eqz v4, :cond_5
 
     invoke-static {}, Lcom/android/internal/os/SomeArgs;->obtain()Lcom/android/internal/os/SomeArgs;
 
@@ -2657,11 +2677,11 @@
 
     and-int/lit8 v4, p3, 0x2
 
-    if-eqz v4, :cond_3
+    if-eqz v4, :cond_4
 
     const/4 v3, 0x1
 
-    :cond_3
+    :cond_4
     invoke-static {v3}, Ljava/lang/Boolean;->valueOf(Z)Ljava/lang/Boolean;
 
     move-result-object v3
@@ -2679,21 +2699,26 @@
     invoke-virtual {v3}, Landroid/os/Message;->sendToTarget()V
 
     .end local v0    # "args":Lcom/android/internal/os/SomeArgs;
-    :cond_4
+    :cond_5
     return-void
 
-    :cond_5
+    :cond_6
     const/4 v2, 0x0
 
     .restart local v2    # "lidOpen":Z
     goto :goto_0
 
+    :cond_7
+    move v7, v3
+
+    goto :goto_1
+
     .end local v2    # "lidOpen":Z
-    :cond_6
+    :cond_8
     const/4 v1, 0x0
 
     .restart local v1    # "lensCovered":Z
-    goto :goto_1
+    goto :goto_2
 .end method
 
 .method private onInputDevicesChangedListenerDied(I)V

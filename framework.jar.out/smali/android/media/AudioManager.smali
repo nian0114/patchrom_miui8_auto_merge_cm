@@ -3261,10 +3261,25 @@
 .end method
 
 .method public getStreamVolume(I)I
-    .locals 4
+    .locals 5
     .param p1, "streamType"    # I
 
     .prologue
+    const/4 v4, 0x0
+
+    const/16 v3, 0x8
+
+    invoke-static {v3, p1, v4, v4}, Lmiui/util/QuietUtils;->checkQuiet(IILjava/lang/String;Ljava/lang/CharSequence;)Z
+
+    move-result v3
+
+    if-eqz v3, :cond_0
+
+    const/4 v2, 0x0
+
+    return v2
+
+    :cond_0
     invoke-static {}, Landroid/media/AudioManager;->getService()Landroid/media/IAudioService;
 
     move-result-object v1

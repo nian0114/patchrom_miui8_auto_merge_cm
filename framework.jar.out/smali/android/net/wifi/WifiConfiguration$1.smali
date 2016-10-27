@@ -149,6 +149,30 @@
 
     iput-object v3, v0, Landroid/net/wifi/WifiConfiguration;->preSharedKey:Ljava/lang/String;
 
+    invoke-virtual {p1}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v3
+
+    iput-object v3, v0, Landroid/net/wifi/WifiConfiguration;->wapiASCert:Ljava/lang/String;
+
+    invoke-virtual {p1}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v3
+
+    iput-object v3, v0, Landroid/net/wifi/WifiConfiguration;->wapiUserCert:Ljava/lang/String;
+
+    invoke-virtual {p1}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v3
+
+    iput-object v3, v0, Landroid/net/wifi/WifiConfiguration;->wapiPsk:Ljava/lang/String;
+
+    invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
+
+    move-result v3
+
+    iput v3, v0, Landroid/net/wifi/WifiConfiguration;->wapiPskType:I
+
     const/4 v1, 0x0
 
     :goto_1

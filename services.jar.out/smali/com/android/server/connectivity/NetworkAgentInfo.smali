@@ -45,6 +45,8 @@
 
 .field public linkProperties:Landroid/net/LinkProperties;
 
+.field private final mContext:Landroid/content/Context;
+
 .field public final messenger:Landroid/os/Messenger;
 
 .field public final network:Landroid/net/Network;
@@ -133,6 +135,8 @@
 
     iput-object p10, p0, Lcom/android/server/connectivity/NetworkAgentInfo;->networkMisc:Landroid/net/NetworkMisc;
 
+    iput-object p8, p0, Lcom/android/server/connectivity/NetworkAgentInfo;->mContext:Landroid/content/Context;
+
     return-void
 .end method
 
@@ -186,6 +190,14 @@
     return v0
 
     :cond_4
+    iget-object v1, p0, Lcom/android/server/connectivity/NetworkAgentInfo;->mContext:Landroid/content/Context;
+
+    invoke-static {v1}, Lcom/android/server/connectivity/NetworkAgentInfoInjector;->enableDataAndWifiRoam(Landroid/content/Context;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_2
+
     add-int/lit8 v0, v0, -0x28
 
     goto :goto_0

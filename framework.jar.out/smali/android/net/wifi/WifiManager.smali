@@ -439,6 +439,16 @@
 
     iput v0, p0, Landroid/net/wifi/WifiManager;->mTargetSdkVersion:I
 
+    const-string v0, "appops"
+
+    invoke-virtual {p1, v0}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Landroid/app/AppOpsManager;
+
+    iput-object v0, p0, Landroid/net/wifi/WifiManager;->mAppOps:Landroid/app/AppOpsManager;
+
     invoke-direct {p0}, Landroid/net/wifi/WifiManager;->init()V
 
     const-string v0, "appops"
@@ -2576,6 +2586,40 @@
     return v1
 .end method
 
+.method public isMiWifi()Z
+    .locals 3
+
+    .prologue
+    invoke-virtual {p0}, Landroid/net/wifi/WifiManager;->getConnectionInfo()Landroid/net/wifi/WifiInfo;
+
+    move-result-object v0
+
+    .local v0, "wifiInfo":Landroid/net/wifi/WifiInfo;
+    if-eqz v0, :cond_0
+
+    const-string v1, "XIAOMI_ROUTER"
+
+    invoke-virtual {v0}, Landroid/net/wifi/WifiInfo;->getVendorInfo()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-virtual {v1, v2}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_0
+
+    const/4 v1, 0x1
+
+    :goto_0
+    return v1
+
+    :cond_0
+    const/4 v1, 0x0
+
+    goto :goto_0
+.end method
+
 .method public isMulticastEnabled()Z
     .locals 2
 
@@ -3214,6 +3258,25 @@
     .param p1, "enabled"    # Z
 
     .prologue
+    iget-object v2, p0, Landroid/net/wifi/WifiManager;->mAppOps:Landroid/app/AppOpsManager;
+
+    if-eqz v2, :cond_0
+
+    iget-object v2, p0, Landroid/net/wifi/WifiManager;->mAppOps:Landroid/app/AppOpsManager;
+
+    const/16 v3, 0x2711
+
+    invoke-virtual {v2, v3}, Landroid/app/AppOpsManager;->noteOp(I)I
+
+    move-result v2
+
+    if-eqz v2, :cond_0
+
+    const/4 v1, 0x0
+
+    return v1
+
+    :cond_0
     const/4 v3, 0x0
 
     iget-object v1, p0, Landroid/net/wifi/WifiManager;->mAppOps:Landroid/app/AppOpsManager;
@@ -3224,11 +3287,11 @@
 
     move-result v1
 
-    if-eqz v1, :cond_0
+    if-eqz v1, :cond_1
 
     return v3
 
-    :cond_0
+    :cond_1
     :try_start_0
     iget-object v1, p0, Landroid/net/wifi/WifiManager;->mService:Landroid/net/wifi/IWifiManager;
 

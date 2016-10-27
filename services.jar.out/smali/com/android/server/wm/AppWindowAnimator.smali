@@ -725,11 +725,7 @@
 
     iget-object v2, p0, Lcom/android/server/wm/AppWindowAnimator;->mService:Lcom/android/server/wm/WindowManagerService;
 
-    invoke-virtual {v2}, Lcom/android/server/wm/WindowManagerService;->getTransitionAnimationScaleLocked()F
-
-    move-result v2
-
-    invoke-virtual {p1, v2}, Landroid/view/animation/Animation;->scaleCurrentDuration(F)V
+    invoke-static {p1, v2}, Lcom/android/server/wm/AppWindowAnimatorInjector;->scaleCurrentDuration(Landroid/view/animation/Animation;Lcom/android/server/wm/WindowManagerService;)V
 
     invoke-virtual {p1}, Landroid/view/animation/Animation;->getZAdjustment()I
 

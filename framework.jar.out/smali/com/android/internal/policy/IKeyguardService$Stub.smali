@@ -26,6 +26,8 @@
 # static fields
 .field private static final DESCRIPTOR:Ljava/lang/String; = "com.android.internal.policy.IKeyguardService"
 
+.field static final TRANSACTION_OnDoubleClickHome:I = 0x16
+
 .field static final TRANSACTION_addStateMonitorCallback:I = 0x2
 
 .field static final TRANSACTION_dismiss:I = 0x5
@@ -548,6 +550,17 @@
 
     nop
 
+    :sswitch_16
+    const-string v5, "com.android.internal.policy.IKeyguardService"
+
+    invoke-virtual {p2, v5}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual {p0}, Lcom/android/internal/policy/IKeyguardService$Stub;->OnDoubleClickHome()V
+
+    const/4 v11, 0x1
+
+    return v11
+
     :sswitch_data_0
     .sparse-switch
         0x1 -> :sswitch_1
@@ -571,6 +584,7 @@
         0x13 -> :sswitch_13
         0x14 -> :sswitch_14
         0x15 -> :sswitch_15
+        0x16 -> :sswitch_16
         0x5f4e5446 -> :sswitch_0
     .end sparse-switch
 .end method

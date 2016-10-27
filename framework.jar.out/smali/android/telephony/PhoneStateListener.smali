@@ -157,6 +157,15 @@
 
 
 # virtual methods
+.method public getSubId()I
+    .locals 1
+
+    .prologue
+    iget v0, p0, Landroid/telephony/PhoneStateListener;->mSubId:I
+
+    return v0
+.end method
+
 .method public onCallForwardingIndicatorChanged(Z)V
     .locals 0
     .param p1, "cfi"    # Z
@@ -312,4 +321,27 @@
 
     .prologue
     return-void
+.end method
+
+.method public setSubId(I)V
+    .locals 0
+    .param p1, "mSubId"    # I
+
+    .prologue
+    iput p1, p0, Landroid/telephony/PhoneStateListener;->mSubId:I
+
+    return-void
+.end method
+
+.method public updateSubscription(I)I
+    .locals 1
+    .param p1, "subId"    # I
+
+    .prologue
+    iget v0, p0, Landroid/telephony/PhoneStateListener;->mSubId:I
+
+    .local v0, "old":I
+    iput p1, p0, Landroid/telephony/PhoneStateListener;->mSubId:I
+
+    return v0
 .end method

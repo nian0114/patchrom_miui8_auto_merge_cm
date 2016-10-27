@@ -13694,7 +13694,11 @@
     .prologue
     monitor-enter p0
 
+    const/4 v7, 0x0
+
     :try_start_0
+    invoke-static {v7, p1}, Landroid/view/ViewRootImplInjector;->transformWindowType(Landroid/view/View;Landroid/view/WindowManager$LayoutParams;)V
+
     iget-object v7, p0, Landroid/view/ViewRootImpl;->mWindowAttributes:Landroid/view/WindowManager$LayoutParams;
 
     iget-object v7, v7, Landroid/view/WindowManager$LayoutParams;->surfaceInsets:Landroid/graphics/Rect;
@@ -13918,7 +13922,9 @@
 
     iget-object v4, v0, Landroid/view/ViewRootImpl;->mView:Landroid/view/View;
 
-    if-nez v4, :cond_13
+    if-nez v4, :cond_14
+
+    invoke-static/range {p1 .. p2}, Landroid/view/ViewRootImplInjector;->transformWindowType(Landroid/view/View;Landroid/view/WindowManager$LayoutParams;)V
 
     move-object/from16 v0, p1
 
@@ -14230,7 +14236,7 @@
 
     iget-object v4, v0, Landroid/view/ViewRootImpl;->mTranslator:Landroid/content/res/CompatibilityInfo$Translator;
 
-    if-eqz v4, :cond_a
+    if-eqz v4, :cond_b
 
     const/4 v4, 0x1
 
@@ -14245,7 +14251,7 @@
 
     iget-object v4, v0, Landroid/view/ViewRootImpl;->mTranslator:Landroid/content/res/CompatibilityInfo$Translator;
 
-    if-nez v4, :cond_b
+    if-nez v4, :cond_c
 
     const/high16 v4, 0x3f800000    # 1.0f
 
@@ -14290,10 +14296,25 @@
     move-object/from16 v0, p0
 
     iput-object v4, v0, Landroid/view/ViewRootImpl;->mInputChannel:Landroid/view/InputChannel;
+
+    :cond_7
+    move-object/from16 v0, p0
+
+    iget-object v4, v0, Landroid/view/ViewRootImpl;->mInputChannel:Landroid/view/InputChannel;
+
+    if-nez v4, :cond_8
+
+    new-instance v4, Landroid/view/InputChannel;
+
+    invoke-direct {v4}, Landroid/view/InputChannel;-><init>()V
+
+    move-object/from16 v0, p0
+
+    iput-object v4, v0, Landroid/view/ViewRootImpl;->mInputChannel:Landroid/view/InputChannel;
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    :cond_7
+    :cond_8
     :try_start_1
     move-object/from16 v0, p0
 
@@ -14373,17 +14394,17 @@
     move-result v21
 
     .local v21, "res":I
-    if-eqz v22, :cond_8
+    if-eqz v22, :cond_9
 
     :try_start_2
     invoke-virtual/range {p2 .. p2}, Landroid/view/WindowManager$LayoutParams;->restore()V
 
-    :cond_8
+    :cond_9
     move-object/from16 v0, p0
 
     iget-object v4, v0, Landroid/view/ViewRootImpl;->mTranslator:Landroid/content/res/CompatibilityInfo$Translator;
 
-    if-eqz v4, :cond_9
+    if-eqz v4, :cond_a
 
     move-object/from16 v0, p0
 
@@ -14397,7 +14418,7 @@
 
     invoke-virtual {v4, v5}, Landroid/content/res/CompatibilityInfo$Translator;->translateRectInScreenToAppWindow(Landroid/graphics/Rect;)V
 
-    :cond_9
+    :cond_a
     move-object/from16 v0, p0
 
     iget-object v4, v0, Landroid/view/ViewRootImpl;->mPendingOverscanInsets:Landroid/graphics/Rect;
@@ -14450,7 +14471,7 @@
 
     invoke-virtual {v4, v5, v6, v7, v8}, Landroid/graphics/Rect;->set(IIII)V
 
-    if-gez v21, :cond_d
+    if-gez v21, :cond_e
 
     move-object/from16 v0, p0
 
@@ -14526,12 +14547,12 @@
 
     .restart local v14    # "compatibilityInfo":Landroid/content/res/CompatibilityInfo;
     .restart local v22    # "restore":Z
-    :cond_a
+    :cond_b
     const/4 v4, 0x0
 
     goto/16 :goto_0
 
-    :cond_b
+    :cond_c
     :try_start_3
     move-object/from16 v0, p0
 
@@ -14608,12 +14629,12 @@
     :catchall_1
     move-exception v4
 
-    if-eqz v22, :cond_c
+    if-eqz v22, :cond_d
 
     :try_start_5
     invoke-virtual/range {p2 .. p2}, Landroid/view/WindowManager$LayoutParams;->restore()V
 
-    :cond_c
+    :cond_d
     throw v4
 
     .restart local v21    # "res":I
@@ -14905,12 +14926,12 @@
 
     throw v4
 
-    :cond_d
+    :cond_e
     move-object/from16 v0, p1
 
     instance-of v4, v0, Lcom/android/internal/view/RootViewSurfaceTaker;
 
-    if-eqz v4, :cond_e
+    if-eqz v4, :cond_f
 
     move-object/from16 v0, p1
 
@@ -14926,18 +14947,18 @@
 
     iput-object v4, v0, Landroid/view/ViewRootImpl;->mInputQueueCallback:Landroid/view/InputQueue$Callback;
 
-    :cond_e
+    :cond_f
     move-object/from16 v0, p0
 
     iget-object v4, v0, Landroid/view/ViewRootImpl;->mInputChannel:Landroid/view/InputChannel;
 
-    if-eqz v4, :cond_10
+    if-eqz v4, :cond_11
 
     move-object/from16 v0, p0
 
     iget-object v4, v0, Landroid/view/ViewRootImpl;->mInputQueueCallback:Landroid/view/InputQueue$Callback;
 
-    if-eqz v4, :cond_f
+    if-eqz v4, :cond_10
 
     new-instance v4, Landroid/view/InputQueue;
 
@@ -14957,7 +14978,7 @@
 
     invoke-interface {v4, v5}, Landroid/view/InputQueue$Callback;->onInputQueueCreated(Landroid/view/InputQueue;)V
 
-    :cond_f
+    :cond_10
     new-instance v4, Landroid/view/ViewRootImpl$WindowInputEventReceiver;
 
     move-object/from16 v0, p0
@@ -14976,7 +14997,7 @@
 
     iput-object v4, v0, Landroid/view/ViewRootImpl;->mInputEventReceiver:Landroid/view/ViewRootImpl$WindowInputEventReceiver;
 
-    :cond_10
+    :cond_11
     move-object/from16 v0, p1
 
     move-object/from16 v1, p0
@@ -14985,7 +15006,7 @@
 
     and-int/lit8 v4, v21, 0x1
 
-    if-eqz v4, :cond_14
+    if-eqz v4, :cond_15
 
     const/4 v4, 0x1
 
@@ -14996,7 +15017,7 @@
 
     and-int/lit8 v4, v21, 0x2
 
-    if-eqz v4, :cond_15
+    if-eqz v4, :cond_16
 
     const/4 v4, 0x1
 
@@ -15013,7 +15034,7 @@
 
     move-result v4
 
-    if-eqz v4, :cond_11
+    if-eqz v4, :cond_12
 
     move-object/from16 v0, p0
 
@@ -15021,12 +15042,12 @@
 
     invoke-virtual {v4}, Landroid/view/ViewRootImpl$AccessibilityInteractionConnectionManager;->ensureConnection()V
 
-    :cond_11
+    :cond_12
     invoke-virtual/range {p1 .. p1}, Landroid/view/View;->getImportantForAccessibility()I
 
     move-result v4
 
-    if-nez v4, :cond_12
+    if-nez v4, :cond_13
 
     const/4 v4, 0x1
 
@@ -15034,7 +15055,7 @@
 
     invoke-virtual {v0, v4}, Landroid/view/View;->setImportantForAccessibility(I)V
 
-    :cond_12
+    :cond_13
     invoke-virtual/range {p2 .. p2}, Landroid/view/WindowManager$LayoutParams;->getTitle()Ljava/lang/CharSequence;
 
     move-result-object v15
@@ -15218,7 +15239,7 @@
     .end local v22    # "restore":Z
     .end local v24    # "viewPostImeStage":Landroid/view/ViewRootImpl$InputStage;
     .end local v25    # "viewPreImeStage":Landroid/view/ViewRootImpl$InputStage;
-    :cond_13
+    :cond_14
     monitor-exit p0
 
     return-void
@@ -15226,12 +15247,12 @@
     .restart local v14    # "compatibilityInfo":Landroid/content/res/CompatibilityInfo;
     .restart local v21    # "res":I
     .restart local v22    # "restore":Z
-    :cond_14
+    :cond_15
     const/4 v4, 0x0
 
     goto/16 :goto_2
 
-    :cond_15
+    :cond_16
     const/4 v4, 0x0
 
     goto/16 :goto_3

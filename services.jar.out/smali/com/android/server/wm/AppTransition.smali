@@ -21,7 +21,7 @@
 
 .field private static final DEBUG_APP_TRANSITIONS:Z = false
 
-.field private static final DEFAULT_APP_TRANSITION_DURATION:I = 0x150
+.field private static final DEFAULT_APP_TRANSITION_DURATION:I = 0xfa
 
 .field private static final NEXT_TRANSIT_TYPE_CLIP_REVEAL:I = 0x8
 
@@ -658,7 +658,7 @@
 
     invoke-virtual {v13, v0}, Landroid/view/animation/Animation;->setInterpolator(Landroid/view/animation/Interpolator;)V
 
-    const-wide/16 v22, 0x86
+    const-wide/16 v22, 0x64
 
     move-wide/from16 v0, v22
 
@@ -711,7 +711,7 @@
 
     invoke-virtual {v14, v0}, Landroid/view/animation/Animation;->setInterpolator(Landroid/view/animation/Interpolator;)V
 
-    const-wide/16 v22, 0x150
+    const-wide/16 v22, 0xfa
 
     move-wide/from16 v0, v22
 
@@ -756,7 +756,7 @@
 
     invoke-virtual {v0, v1}, Landroid/view/animation/TranslateYAnimation;->setInterpolator(Landroid/view/animation/Interpolator;)V
 
-    const-wide/16 v22, 0x150
+    const-wide/16 v22, 0xfa
 
     move-object/from16 v0, v19
 
@@ -764,7 +764,7 @@
 
     invoke-virtual {v0, v1, v2}, Landroid/view/animation/TranslateYAnimation;->setDuration(J)V
 
-    const/16 v7, 0x54
+    const/16 v7, 0x3e
 
     .local v7, "alphaDuration":I
     new-instance v6, Landroid/view/animation/AlphaAnimation;
@@ -780,7 +780,7 @@
     invoke-direct {v6, v0, v1}, Landroid/view/animation/AlphaAnimation;-><init>(FF)V
 
     .local v6, "alpha":Landroid/view/animation/AlphaAnimation;
-    const-wide/16 v22, 0x54
+    const-wide/16 v22, 0x3e
 
     move-wide/from16 v0, v22
 
@@ -845,7 +845,7 @@
     :cond_1
     packed-switch p1, :pswitch_data_0
 
-    const-wide/16 v16, 0x150
+    const-wide/16 v16, 0xfa
 
     .local v16, "duration":J
     :goto_1
@@ -1062,7 +1062,7 @@
     :goto_0
     packed-switch p1, :pswitch_data_0
 
-    const-wide/16 v14, 0x150
+    const-wide/16 v14, 0xfa
 
     .local v14, "duration":J
     :goto_1
@@ -4469,7 +4469,7 @@
     .prologue
     packed-switch p4, :pswitch_data_0
 
-    const/16 v4, 0x150
+    const/16 v4, 0xfa
 
     .local v4, "duration":I
     :goto_0

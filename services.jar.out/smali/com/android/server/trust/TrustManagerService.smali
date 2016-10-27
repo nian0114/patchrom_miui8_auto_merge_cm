@@ -2301,7 +2301,7 @@
 
     move/from16 v1, v24
 
-    if-ne v0, v1, :cond_5
+    if-ne v0, v1, :cond_6
 
     move-object/from16 v0, p0
 
@@ -2347,7 +2347,7 @@
 
     move-result v24
 
-    if-eqz v24, :cond_8
+    if-eqz v24, :cond_9
 
     invoke-interface/range {v22 .. v22}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
@@ -2384,8 +2384,15 @@
 
     move-result v24
 
+    if-nez v24, :cond_3
+
+    invoke-virtual/range {v21 .. v21}, Landroid/content/pm/UserInfo;->isSpace()Z
+
+    move-result v24
+
     if-eqz v24, :cond_2
 
+    :cond_3
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/trust/TrustManagerService;->mActivityManager:Landroid/app/ActivityManager;
@@ -2460,7 +2467,7 @@
     .local v8, "disabledFeatures":I
     and-int/lit8 v24, v8, 0x10
 
-    if-eqz v24, :cond_6
+    if-eqz v24, :cond_7
 
     const/4 v7, 0x1
 
@@ -2503,7 +2510,7 @@
     move-result-object v18
 
     .local v18, "resolveInfo$iterator":Ljava/util/Iterator;
-    :cond_3
+    :cond_4
     :goto_2
     invoke-interface/range {v18 .. v18}, Ljava/util/Iterator;->hasNext()Z
 
@@ -2531,9 +2538,9 @@
 
     move-result v24
 
-    if-eqz v24, :cond_3
+    if-eqz v24, :cond_4
 
-    if-eqz v7, :cond_4
+    if-eqz v7, :cond_5
 
     move-object/from16 v0, v21
 
@@ -2552,16 +2559,16 @@
     move-result-object v6
 
     .local v6, "config":Ljava/util/List;, "Ljava/util/List<Landroid/os/PersistableBundle;>;"
-    if-eqz v6, :cond_3
+    if-eqz v6, :cond_4
 
     invoke-interface {v6}, Ljava/util/List;->isEmpty()Z
 
     move-result v24
 
-    if-nez v24, :cond_3
+    if-nez v24, :cond_4
 
     .end local v6    # "config":Ljava/util/List;, "Ljava/util/List<Landroid/os/PersistableBundle;>;"
-    :cond_4
+    :cond_5
     new-instance v5, Lcom/android/server/trust/TrustManagerService$AgentInfo;
 
     const/16 v24, 0x0
@@ -2595,7 +2602,7 @@
 
     move-result v24
 
-    if-nez v24, :cond_7
+    if-nez v24, :cond_8
 
     move-object/from16 v0, v17
 
@@ -2699,7 +2706,7 @@
     .end local v21    # "userInfo":Landroid/content/pm/UserInfo;
     .end local v22    # "userInfo$iterator":Ljava/util/Iterator;
     .end local v23    # "userInfos":Ljava/util/List;, "Ljava/util/List<Landroid/content/pm/UserInfo;>;"
-    :cond_5
+    :cond_6
     new-instance v23, Ljava/util/ArrayList;
 
     invoke-direct/range {v23 .. v23}, Ljava/util/ArrayList;-><init>()V
@@ -2729,7 +2736,7 @@
     .restart local v15    # "obsoleteAgents":Landroid/util/ArraySet;, "Landroid/util/ArraySet<Lcom/android/server/trust/TrustManagerService$AgentInfo;>;"
     .restart local v21    # "userInfo":Landroid/content/pm/UserInfo;
     .restart local v22    # "userInfo$iterator":Ljava/util/Iterator;
-    :cond_6
+    :cond_7
     const/4 v7, 0x0
 
     .restart local v7    # "disableTrustAgents":Z
@@ -2741,7 +2748,7 @@
     .restart local v17    # "resolveInfo":Landroid/content/pm/ResolveInfo;
     .restart local v18    # "resolveInfo$iterator":Ljava/util/Iterator;
     .restart local v19    # "resolveInfos":Ljava/util/List;, "Ljava/util/List<Landroid/content/pm/ResolveInfo;>;"
-    :cond_7
+    :cond_8
     invoke-virtual {v15, v5}, Landroid/util/ArraySet;->remove(Ljava/lang/Object;)Z
 
     goto/16 :goto_2
@@ -2756,7 +2763,7 @@
     .end local v18    # "resolveInfo$iterator":Ljava/util/Iterator;
     .end local v19    # "resolveInfos":Ljava/util/List;, "Ljava/util/List<Landroid/content/pm/ResolveInfo;>;"
     .end local v21    # "userInfo":Landroid/content/pm/UserInfo;
-    :cond_8
+    :cond_9
     const/16 v20, 0x0
 
     .local v20, "trustMayHaveChanged":Z
@@ -2770,7 +2777,7 @@
 
     move/from16 v0, v24
 
-    if-ge v11, v0, :cond_c
+    if-ge v11, v0, :cond_d
 
     invoke-virtual {v15, v11}, Landroid/util/ArraySet;->valueAt(I)Ljava/lang/Object;
 
@@ -2785,7 +2792,7 @@
 
     move/from16 v1, v24
 
-    if-eq v0, v1, :cond_9
+    if-eq v0, v1, :cond_a
 
     iget v0, v12, Lcom/android/server/trust/TrustManagerService$AgentInfo;->userId:I
 
@@ -2795,9 +2802,9 @@
 
     move/from16 v1, v24
 
-    if-ne v0, v1, :cond_b
+    if-ne v0, v1, :cond_c
 
-    :cond_9
+    :cond_a
     iget-object v0, v12, Lcom/android/server/trust/TrustManagerService$AgentInfo;->agent:Lcom/android/server/trust/TrustAgentWrapper;
 
     move-object/from16 v24, v0
@@ -2806,11 +2813,11 @@
 
     move-result v24
 
-    if-eqz v24, :cond_a
+    if-eqz v24, :cond_b
 
     const/16 v20, 0x1
 
-    :cond_a
+    :cond_b
     iget-object v0, v12, Lcom/android/server/trust/TrustManagerService$AgentInfo;->agent:Lcom/android/server/trust/TrustAgentWrapper;
 
     move-object/from16 v24, v0
@@ -2827,14 +2834,14 @@
 
     invoke-virtual {v0, v12}, Landroid/util/ArraySet;->remove(Ljava/lang/Object;)Z
 
-    :cond_b
+    :cond_c
     add-int/lit8 v11, v11, 0x1
 
     goto :goto_3
 
     .end local v12    # "info":Lcom/android/server/trust/TrustManagerService$AgentInfo;
-    :cond_c
-    if-eqz v20, :cond_d
+    :cond_d
+    if-eqz v20, :cond_e
 
     const/16 v24, -0x1
 
@@ -2842,15 +2849,15 @@
 
     move/from16 v1, v24
 
-    if-ne v0, v1, :cond_e
+    if-ne v0, v1, :cond_f
 
     invoke-direct/range {p0 .. p0}, Lcom/android/server/trust/TrustManagerService;->updateTrustAll()V
 
-    :cond_d
+    :cond_e
     :goto_4
     return-void
 
-    :cond_e
+    :cond_f
     const/16 v24, 0x0
 
     move-object/from16 v0, p0

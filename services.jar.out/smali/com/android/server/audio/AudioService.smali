@@ -1846,6 +1846,10 @@
 
     iput v6, p0, Lcom/android/server/audio/AudioService;->mAudioPolicyCounter:I
 
+    sget-object v0, Lcom/android/server/audio/AudioService;->MAX_STREAM_VOLUME:[I
+
+    invoke-static {v0}, Landroid/media/AudioServiceInjector;->adjustMaxStreamVolume([I)V
+
     iput-object p1, p0, Lcom/android/server/audio/AudioService;->mContext:Landroid/content/Context;
 
     invoke-virtual {p1}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
@@ -2279,8 +2283,6 @@
     move v0, v6
 
     goto/16 :goto_2
-
-    nop
 
     :array_0
     .array-data 4
@@ -3135,6 +3137,21 @@
 
     invoke-direct {v0, v1, v2, v3, v4}, Lcom/android/server/audio/AudioService;->sendVolumeUpdate(IIII)V
 
+    if-nez v16, :cond_24
+
+    const/4 v5, 0x1
+
+    move/from16 v0, p2
+
+    if-ne v0, v5, :cond_24
+
+    const/4 v5, 0x1
+
+    :goto_9
+    move-object/from16 v0, p0
+
+    invoke-direct {v0, v12, v14, v5}, Lcom/android/server/audio/AudioService;->persistVolumeIfNeeded(ILcom/android/server/audio/AudioService$VolumeStreamState;Z)V
+
     return-void
 
     .end local v18    # "index":I
@@ -3211,7 +3228,7 @@
     const/16 v20, 0x18
 
     .restart local v20    # "keyCode":I
-    goto :goto_8
+    goto/16 :goto_8
 
     :catchall_2
     move-exception v5
@@ -3230,6 +3247,11 @@
     monitor-exit v6
 
     throw v5
+
+    :cond_24
+    const/4 v5, 0x0
+
+    goto :goto_9
 .end method
 
 .method private adjustSuggestedStreamVolume(IIILjava/lang/String;Ljava/lang/String;I)V
@@ -3681,6 +3703,16 @@
 
     :cond_0
     :goto_1
+    iget-object v5, p0, Lcom/android/server/audio/AudioService;->mContext:Landroid/content/Context;
+
+    invoke-virtual {p0}, Lcom/android/server/audio/AudioService;->getRingerModeInternal()I
+
+    move-result v6
+
+    invoke-static {v5, v6, v4, p2}, Landroid/media/AudioServiceInjector;->checkForRingerModeChange(Landroid/content/Context;III)I
+
+    move-result v4
+
     const-string v5, "AudioService.checkForRingerModeChange"
 
     const/4 v6, 0x0
@@ -3908,7 +3940,7 @@
 
     if-ne p2, v8, :cond_12
 
-    const/4 v4, 0x1
+    const/4 v4, 0x2
 
     goto :goto_5
 
@@ -3916,8 +3948,6 @@
     const/4 v4, 0x2
 
     goto :goto_5
-
-    nop
 
     :pswitch_data_0
     .packed-switch 0x0
@@ -6934,6 +6964,14 @@
 
     if-eqz v8, :cond_1
 
+    iget v8, p1, Landroid/content/pm/UserInfo;->id:I
+
+    invoke-static {v8, v5}, Landroid/media/AudioServiceInjector;->isPackageProtectedWhenUserBackground(ILandroid/content/pm/PackageInfo;)Z
+
+    move-result v8
+
+    if-nez v8, :cond_1
+
     if-eqz v1, :cond_3
 
     iget-object v8, v5, Landroid/content/pm/PackageInfo;->packageName:Ljava/lang/String;
@@ -9080,52 +9118,68 @@
 
     invoke-direct/range {v0 .. v5}, Lcom/android/server/audio/AudioService;->setStreamVolumeInt(IIIZLjava/lang/String;)V
 
+    invoke-static {p3}, Landroid/media/AudioServiceInjector;->isOnlyAdjustVolume(I)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_0
+
+    goto :goto_1
+
+    :cond_0
     and-int/lit8 v0, p3, 0x2
 
-    if-nez v0, :cond_0
+    if-nez v0, :cond_1
 
     invoke-virtual {p0}, Lcom/android/server/audio/AudioService;->getUiSoundsStreamType()I
 
     move-result v0
 
-    if-ne v1, v0, :cond_1
+    if-ne v1, v0, :cond_2
 
-    :cond_0
-    if-nez p2, :cond_5
+    :cond_1
+    if-nez p2, :cond_6
 
     iget-boolean v0, p0, Lcom/android/server/audio/AudioService;->mHasVibrator:Z
 
-    if-eqz v0, :cond_3
+    if-eqz v0, :cond_4
 
     const/4 v6, 0x1
 
     .local v6, "newRingerMode":I
     :goto_0
+    iget-object v0, p0, Lcom/android/server/audio/AudioService;->mContext:Landroid/content/Context;
+
+    invoke-static {v0, v6}, Lmiui/util/AudioManagerHelper;->getValidatedRingerMode(Landroid/content/Context;I)I
+
+    move-result v6
+
     const-string v0, "AudioService.onSetStreamVolume"
 
     invoke-direct {p0, v6, v0, v4}, Lcom/android/server/audio/AudioService;->setRingerMode(ILjava/lang/String;Z)V
 
     .end local v6    # "newRingerMode":I
-    :cond_1
+    :cond_2
     iget-object v0, p0, Lcom/android/server/audio/AudioService;->mStreamStates:[Lcom/android/server/audio/AudioService$VolumeStreamState;
 
     aget-object v0, v0, v1
 
-    if-nez p2, :cond_2
+    if-nez p2, :cond_3
 
     const/4 v4, 0x1
 
-    :cond_2
+    :cond_3
     invoke-virtual {v0, v4}, Lcom/android/server/audio/AudioService$VolumeStreamState;->mute(Z)V
 
+    :goto_1
     return-void
 
-    :cond_3
+    :cond_4
     iget-object v0, p0, Lcom/android/server/audio/AudioService;->mVolumePolicy:Landroid/media/VolumePolicy;
 
     iget-boolean v0, v0, Landroid/media/VolumePolicy;->volumeDownToEnterSilent:Z
 
-    if-eqz v0, :cond_4
+    if-eqz v0, :cond_5
 
     const/4 v6, 0x0
 
@@ -9133,14 +9187,14 @@
     goto :goto_0
 
     .end local v6    # "newRingerMode":I
-    :cond_4
+    :cond_5
     const/4 v6, 0x2
 
     .restart local v6    # "newRingerMode":I
     goto :goto_0
 
     .end local v6    # "newRingerMode":I
-    :cond_5
+    :cond_6
     const/4 v6, 0x2
 
     .restart local v6    # "newRingerMode":I
@@ -9534,6 +9588,35 @@
     .local v1, "index":I
     invoke-direct {p0, p1, v1, v1, p2}, Lcom/android/server/audio/AudioService;->sendVolumeUpdate(IIII)V
 
+    return-void
+.end method
+
+.method private persistVolumeIfNeeded(ILcom/android/server/audio/AudioService$VolumeStreamState;Z)V
+    .locals 7
+    .param p1, "device"    # I
+    .param p2, "streamState"    # Lcom/android/server/audio/AudioService$VolumeStreamState;
+    .param p3, "persist"    # Z
+
+    .prologue
+    const/4 v4, 0x0
+
+    if-eqz p3, :cond_0
+
+    iget-object v0, p0, Lcom/android/server/audio/AudioService;->mAudioHandler:Lcom/android/server/audio/AudioService$AudioHandler;
+
+    const/4 v1, 0x1
+
+    const/4 v2, 0x2
+
+    move v3, p1
+
+    move-object v5, p2
+
+    move v6, v4
+
+    invoke-static/range {v0 .. v6}, Lcom/android/server/audio/AudioService;->sendMsg(Landroid/os/Handler;IIIILjava/lang/Object;I)V
+
+    :cond_0
     return-void
 .end method
 
@@ -9935,9 +10018,9 @@
 
     iget v8, p0, Lcom/android/server/audio/AudioService;->mRingerModeExternal:I
 
-    const/4 v10, -0x1
+    iget v10, p0, Lcom/android/server/audio/AudioService;->mRingerMode:I
 
-    if-ne v8, v10, :cond_5
+    if-eq v8, v10, :cond_5
 
     iget v8, p0, Lcom/android/server/audio/AudioService;->mRingerMode:I
 
@@ -11140,6 +11223,8 @@
     const/4 v3, 0x0
 
     invoke-interface {v2, v10, v3}, Landroid/os/IBinder;->unlinkToDeath(Landroid/os/IBinder$DeathRecipient;I)Z
+
+    const/4 v11, 0x0
 
     .end local v9    # "h":Lcom/android/server/audio/AudioService$SetModeDeathHandler;
     .end local v10    # "hdlr":Lcom/android/server/audio/AudioService$SetModeDeathHandler;
@@ -16558,8 +16643,6 @@
     monitor-exit v8
 
     throw v7
-
-    nop
 
     :sswitch_data_0
     .sparse-switch

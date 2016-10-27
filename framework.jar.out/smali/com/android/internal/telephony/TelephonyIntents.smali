@@ -42,6 +42,8 @@
 
 .field public static final ACTION_SIGNAL_STRENGTH_CHANGED:Ljava/lang/String; = "android.intent.action.SIG_STR"
 
+.field public static final ACTION_SIM_HOT_SWAP:Ljava/lang/String; = "android.intent.action.SIM_HOT_SWAP"
+
 .field public static final ACTION_SIM_STATE_CHANGED:Ljava/lang/String; = "android.intent.action.SIM_STATE_CHANGED"
 
 .field public static final ACTION_SUBINFO_CONTENT_CHANGE:Ljava/lang/String; = "android.intent.action.ACTION_SUBINFO_CONTENT_CHANGE"
@@ -49,6 +51,8 @@
 .field public static final ACTION_SUBINFO_RECORD_UPDATED:Ljava/lang/String; = "android.intent.action.ACTION_SUBINFO_RECORD_UPDATED"
 
 .field public static final EXTRA_DATA_SPN:Ljava/lang/String; = "spnData"
+
+.field public static final EXTRA_IS_SIM_ADDED:Ljava/lang/String; = "is_sim_added"
 
 .field public static final EXTRA_PLMN:Ljava/lang/String; = "plmn"
 

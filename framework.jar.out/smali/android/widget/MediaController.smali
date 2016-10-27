@@ -811,11 +811,11 @@
 
     iput-object v0, p0, Landroid/widget/MediaController;->mWindowManager:Landroid/view/WindowManager;
 
-    new-instance v0, Lcom/android/internal/policy/PhoneWindow;
+    new-instance v0, Lcom/android/internal/policy/MiuiPhoneWindow;
 
     iget-object v1, p0, Landroid/widget/MediaController;->mContext:Landroid/content/Context;
 
-    invoke-direct {v0, v1}, Lcom/android/internal/policy/PhoneWindow;-><init>(Landroid/content/Context;)V
+    invoke-direct {v0, v1}, Lcom/android/internal/policy/MiuiPhoneWindow;-><init>(Landroid/content/Context;)V
 
     iput-object v0, p0, Landroid/widget/MediaController;->mWindow:Landroid/view/Window;
 

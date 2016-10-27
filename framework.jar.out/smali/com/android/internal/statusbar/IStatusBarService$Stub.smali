@@ -84,6 +84,8 @@
 
 .field static final TRANSACTION_setImeWindowStatus:I = 0xb
 
+.field static final TRANSACTION_setStatus:I = 0x24
+
 .field static final TRANSACTION_setSystemUiVisibility:I = 0x19
 
 .field static final TRANSACTION_setWindowState:I = 0x1a
@@ -1443,7 +1445,62 @@
     .local v21, "_arg0":Landroid/os/Bundle;
     goto :goto_b
 
-    nop
+    :sswitch_24
+    const-string v2, "com.android.internal.statusbar.IStatusBarService"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v2}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v3
+
+    .local v3, "_arg0":I
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readStrongBinder()Landroid/os/IBinder;
+
+    move-result-object v4
+
+    .local v4, "_arg1":Landroid/os/IBinder;
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v5
+
+    .local v5, "_arg2":Ljava/lang/String;
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v2
+
+    if-eqz v2, :cond_c
+
+    sget-object v2, Landroid/os/Bundle;->CREATOR:Landroid/os/Parcelable$Creator;
+
+    move-object/from16 v0, p2
+
+    invoke-interface {v2, v0}, Landroid/os/Parcelable$Creator;->createFromParcel(Landroid/os/Parcel;)Ljava/lang/Object;
+
+    move-result-object v6
+
+    check-cast v6, Landroid/os/Bundle;
+
+    .local v6, "_arg3":Landroid/os/Bundle;
+    :goto_c
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v3, v4, v5, v6}, Lcom/android/internal/statusbar/IStatusBarService$Stub;->setStatus(ILandroid/os/IBinder;Ljava/lang/String;Landroid/os/Bundle;)V
+
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    const/4 v6, 0x1
+
+    return v6
+
+    .end local v6    # "_arg3":Landroid/os/Bundle;
+    :cond_c
+    const/4 v6, 0x0
+
+    .restart local v6    # "_arg3":Landroid/os/Bundle;
+    goto :goto_c
 
     :sswitch_data_0
     .sparse-switch
@@ -1482,6 +1539,7 @@
         0x21 -> :sswitch_21
         0x22 -> :sswitch_22
         0x23 -> :sswitch_23
+        0x24 -> :sswitch_24
         0x5f4e5446 -> :sswitch_0
     .end sparse-switch
 .end method

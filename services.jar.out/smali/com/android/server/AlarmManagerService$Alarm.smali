@@ -9,7 +9,7 @@
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
-    accessFlags = 0xa
+    accessFlags = 0x8
     name = "Alarm"
 .end annotation
 
@@ -119,6 +119,12 @@
     move-result v1
 
     iput v1, p0, Lcom/android/server/AlarmManagerService$Alarm;->uid:I
+
+    invoke-static {}, Landroid/os/Binder;->getCallingPid()I
+
+    move-result v1
+
+    iput v1, p0, Lcom/android/server/AlarmManagerService$Alarm;->pid:I
 
     invoke-static {}, Landroid/os/Binder;->getCallingPid()I
 

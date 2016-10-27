@@ -106,6 +106,8 @@
 
 .field static final TRANSACTION_mount:I = 0x30
 
+.field static final TRANSACTION_mountCIFS:I = 0x42
+
 .field static final TRANSACTION_mountObb:I = 0x16
 
 .field static final TRANSACTION_mountSecureContainer:I = 0xe
@@ -141,6 +143,8 @@
 .field static final TRANSACTION_shutdown:I = 0x14
 
 .field static final TRANSACTION_unmount:I = 0x31
+
+.field static final TRANSACTION_unmountCIFS:I = 0x43
 
 .field static final TRANSACTION_unmountObb:I = 0x17
 
@@ -2467,6 +2471,102 @@
 
     return v4
 
+    :sswitch_40
+    const-string v4, "IMountService"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v58
+
+    .local v58, "ip":Ljava/lang/String;
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v59
+
+    .local v59, "user":Ljava/lang/String;
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v60
+
+    .restart local v60    # "volId":Ljava/lang/String;
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v61
+
+    .local v61, "remotepath":Ljava/lang/String;
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v62
+
+    .local v62, "localpath":Ljava/lang/String;
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v63
+
+    .local v63, "options":Ljava/lang/String;
+    move-object/from16 v57, p0
+
+    invoke-virtual/range {v57 .. v63}, Landroid/os/storage/IMountService$Stub;->mountCIFS(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)I
+
+    move-result v49
+
+    .restart local v49
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    move-object/from16 v0, p3
+
+    move/from16 v1, v49
+
+    invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeInt(I)V
+
+    const/4 v4, 0x1
+
+    return v4
+
+    .end local v58    # "ip":Ljava/lang/String;
+    .end local v59    # "user":Ljava/lang/String;
+    .end local v60    # "volId":Ljava/lang/String;
+    .end local v61    # "remotepath":Ljava/lang/String;
+    .end local v62    # "localpath":Ljava/lang/String;
+    .end local v63    # "options":Ljava/lang/String;
+    .end local v49
+    :sswitch_41
+    const-string v4, "IMountService"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v4}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v34
+
+    .restart local v34    # "listener":Landroid/os/storage/IMountServiceListener;
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, v34
+
+    invoke-virtual {v0, v1}, Landroid/os/storage/IMountService$Stub;->unmountCIFS(Ljava/lang/String;)I
+
+    move-result v49
+
+    .restart local v49
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    move-object/from16 v0, p3
+
+    move/from16 v1, v49
+
+    invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeInt(I)V
+
+    const/4 v4, 0x1
+
+    return v4
+
     :sswitch_data_0
     .sparse-switch
         0x1 -> :sswitch_1
@@ -2532,6 +2632,8 @@
         0x3e -> :sswitch_1d
         0x3f -> :sswitch_3e
         0x40 -> :sswitch_3f
+        0x42 -> :sswitch_40
+        0x43 -> :sswitch_41
         0x5f4e5446 -> :sswitch_0
     .end sparse-switch
 .end method

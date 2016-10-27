@@ -40,6 +40,8 @@
 
 .field public static final METADATA_KEY_LOCATION:I = 0x17
 
+.field public static final METADATA_KEY_LYRIC:I = 0x3e8
+
 .field public static final METADATA_KEY_MIMETYPE:I = 0xc
 
 .field public static final METADATA_KEY_NUM_TRACKS:I = 0xa

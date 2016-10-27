@@ -305,7 +305,7 @@
     .prologue
     if-eqz p1, :cond_0
 
-    if-nez p2, :cond_1
+    if-nez p2, :cond_2
 
     :cond_0
     sget-object v0, Lcom/android/server/TextServicesManagerService;->TAG:Ljava/lang/String;
@@ -342,9 +342,24 @@
 
     const/4 v0, 0x0
 
+    :cond_1
     return v0
 
-    :cond_1
+    :cond_2
+    iget-object v0, p0, Lcom/android/server/TextServicesManagerService;->mContext:Landroid/content/Context;
+
+    iget-object v1, p0, Lcom/android/server/TextServicesManagerService;->mSettings:Lcom/android/server/TextServicesManagerService$TextServicesSettings;
+
+    invoke-virtual {v1}, Lcom/android/server/TextServicesManagerService$TextServicesSettings;->getCurrentUserId()I
+
+    move-result v1
+
+    invoke-static {v0, p1, v1}, Lcom/android/server/am/AutoStartManagerService;->isAllowStartService(Landroid/content/Context;Landroid/content/Intent;I)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_1
+
     iget-object v0, p0, Lcom/android/server/TextServicesManagerService;->mContext:Landroid/content/Context;
 
     new-instance v1, Landroid/os/UserHandle;

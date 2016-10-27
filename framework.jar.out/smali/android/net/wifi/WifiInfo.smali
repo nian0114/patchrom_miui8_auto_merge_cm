@@ -80,6 +80,8 @@
 
 .field private mSupplicantState:Landroid/net/wifi/SupplicantState;
 
+.field private mVendorInfo:Ljava/lang/String;
+
 .field private mWifiSsid:Landroid/net/wifi/WifiSsid;
 
 .field public rxSuccess:J
@@ -415,8 +417,23 @@
 
     iput v0, p0, Landroid/net/wifi/WifiInfo;->linkStuckCount:I
 
+    iget-object v0, p1, Landroid/net/wifi/WifiInfo;->mVendorInfo:Ljava/lang/String;
+
+    iput-object v0, p0, Landroid/net/wifi/WifiInfo;->mVendorInfo:Ljava/lang/String;
+
     :cond_0
     return-void
+.end method
+
+.method static synthetic access$mVendorInfo(Landroid/net/wifi/WifiInfo;Ljava/lang/String;)Ljava/lang/String;
+    .locals 0
+    .param p0, "x0"    # Landroid/net/wifi/WifiInfo;
+    .param p1, "x1"    # Ljava/lang/String;
+
+    .prologue
+    iput-object p1, p0, Landroid/net/wifi/WifiInfo;->mVendorInfo:Ljava/lang/String;
+
+    return-object p1
 .end method
 
 .method public static getDetailedStateOf(Landroid/net/wifi/SupplicantState;)Landroid/net/NetworkInfo$DetailedState;
@@ -721,6 +738,15 @@
     return-object v0
 .end method
 
+.method public getVendorInfo()Ljava/lang/String;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Landroid/net/wifi/WifiInfo;->mVendorInfo:Ljava/lang/String;
+
+    return-object v0
+.end method
+
 .method public getWifiSsid()Landroid/net/wifi/WifiSsid;
     .locals 1
 
@@ -822,6 +848,10 @@
     iput v1, p0, Landroid/net/wifi/WifiInfo;->linkStuckCount:I
 
     iput v1, p0, Landroid/net/wifi/WifiInfo;->score:I
+
+    const/4 v0, 0x0
+
+    iput-object v0, p0, Landroid/net/wifi/WifiInfo;->mVendorInfo:Ljava/lang/String;
 
     return-void
 .end method
@@ -960,6 +990,16 @@
     move-result-object v0
 
     iput-object v0, p0, Landroid/net/wifi/WifiInfo;->mSupplicantState:Landroid/net/wifi/SupplicantState;
+
+    return-void
+.end method
+
+.method public setVendorInfo(Ljava/lang/String;)V
+    .locals 0
+    .param p1, "vendorInfo"    # Ljava/lang/String;
+
+    .prologue
+    iput-object p1, p0, Landroid/net/wifi/WifiInfo;->mVendorInfo:Ljava/lang/String;
 
     return-void
 .end method
@@ -1589,6 +1629,10 @@
     iget v0, p0, Landroid/net/wifi/WifiInfo;->lowRssiCount:I
 
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
+
+    iget-object v0, p0, Landroid/net/wifi/WifiInfo;->mVendorInfo:Ljava/lang/String;
+
+    invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
     iget-object v0, p0, Landroid/net/wifi/WifiInfo;->mSupplicantState:Landroid/net/wifi/SupplicantState;
 

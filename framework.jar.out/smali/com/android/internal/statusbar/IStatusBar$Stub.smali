@@ -60,6 +60,8 @@
 
 .field static final TRANSACTION_setImeWindowStatus:I = 0x9
 
+.field static final TRANSACTION_setStatus:I = 0x20
+
 .field static final TRANSACTION_setSystemUiVisibility:I = 0x7
 
 .field static final TRANSACTION_setWindowState:I = 0xa
@@ -761,6 +763,61 @@
 
     return v15
 
+    :sswitch_1a
+    const-string v7, "com.android.internal.statusbar.IStatusBar"
+
+    move-object/from16 v1, p2
+
+    invoke-virtual {v1, v7}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v0
+
+    .local v0, "_arg0":I
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v2
+
+    .local v2, "_arg1":Ljava/lang/String;
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v7
+
+    if-eqz v7, :cond_7
+
+    sget-object v7, Landroid/os/Bundle;->CREATOR:Landroid/os/Parcelable$Creator;
+
+    move-object/from16 v1, p2
+
+    invoke-interface {v7, v1}, Landroid/os/Parcelable$Creator;->createFromParcel(Landroid/os/Parcel;)Ljava/lang/Object;
+
+    move-result-object v4
+
+    check-cast v4, Landroid/os/Bundle;
+
+    .local v4, "_arg2":Landroid/os/Bundle;
+    :goto_7
+    move-object/from16 v1, p0
+
+    invoke-virtual {v1, v0, v2, v4}, Lcom/android/internal/statusbar/IStatusBar$Stub;->setStatus(ILjava/lang/String;Landroid/os/Bundle;)V
+
+    const/4 v15, 0x1
+
+    return v15
+
+    .end local v4    # "_arg2":Landroid/os/Bundle;
+    :cond_7
+    const/4 v4, 0x0
+
+    .restart local v4    # "_arg2":Landroid/os/Bundle;
+    goto :goto_7
+
+    nop
+
+    .end local v0    # "_arg0":I
+    .end local v2    # "_arg1":Ljava/lang/String;
+    .end local v4    # "_arg2":Landroid/os/Bundle;
     :sswitch_data_0
     .sparse-switch
         0x1 -> :sswitch_1
@@ -788,6 +845,7 @@
         0x17 -> :sswitch_17
         0x18 -> :sswitch_18
         0x19 -> :sswitch_19
+        0x20 -> :sswitch_1a
         0x5f4e5446 -> :sswitch_0
     .end sparse-switch
 .end method

@@ -1595,12 +1595,10 @@
     invoke-virtual {v3, v1}, Landroid/util/SparseArray;->keyAt(I)I
 
     move-result v2
-
-    .local v2, "userId":I
-    invoke-direct {p0, v2}, Lcom/android/server/AlarmManagerService;->publishNextAlarmCustomTile(I)V
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
+    .local v2, "userId":I
     add-int/lit8 v1, v1, 0x1
 
     goto :goto_0
@@ -2506,8 +2504,6 @@
     invoke-static {}, Landroid/os/UserHandle;->myUserId()I
 
     move-result v7
-
-    invoke-direct {p0, v7}, Lcom/android/server/AlarmManagerService;->publishNextAlarmCustomTile(I)V
 
     :cond_4
     const/4 v3, 0x0
@@ -7003,6 +6999,16 @@
     throw v8
 
     :cond_4
+    invoke-virtual/range {p0 .. p0}, Lcom/android/server/AlarmManagerService;->getContext()Landroid/content/Context;
+
+    move-result-object v8
+
+    move/from16 v0, p1
+
+    invoke-static {v8, v0}, Lcom/android/server/AlarmManagerServiceInjector;->adjustWakeUpAlarmType(Landroid/content/Context;I)I
+
+    move-result p1
+
     const-wide/16 v8, 0x0
 
     cmp-long v8, p2, v8
@@ -7619,25 +7625,38 @@
 
     iput v4, v0, Lcom/android/server/AlarmManagerService$Alarm;->count:I
 
+    invoke-virtual/range {p0 .. p0}, Lcom/android/server/AlarmManagerService;->getContext()Landroid/content/Context;
+
+    move-result-object v4
+
+    move-object/from16 v0, v27
+
+    invoke-static {v4, v0}, Lcom/android/server/AlarmManagerServiceInjector;->checkAlarmIsAllowedSend(Landroid/content/Context;Lcom/android/server/AlarmManagerService$Alarm;)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_6
+
     move-object/from16 v0, p1
 
     move-object/from16 v1, v27
 
     invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
+    :cond_6
     move-object/from16 v0, v27
 
     iget v4, v0, Lcom/android/server/AlarmManagerService$Alarm;->flags:I
 
     and-int/lit8 v4, v4, 0x2
 
-    if-eqz v4, :cond_6
+    if-eqz v4, :cond_7
 
     move-object/from16 v0, p0
 
     iget-object v4, v0, Lcom/android/server/AlarmManagerService;->mPendingIdleUntil:Lcom/android/server/AlarmManagerService$Alarm;
 
-    if-eqz v4, :cond_b
+    if-eqz v4, :cond_c
 
     const/4 v4, 0x1
 
@@ -7648,14 +7667,14 @@
 
     invoke-static {v4, v5}, Lcom/android/server/EventLogTags;->writeDeviceIdleWakeFromIdle(ILjava/lang/String;)V
 
-    :cond_6
+    :cond_7
     move-object/from16 v0, p0
 
     iget-object v4, v0, Lcom/android/server/AlarmManagerService;->mPendingIdleUntil:Lcom/android/server/AlarmManagerService$Alarm;
 
     move-object/from16 v0, v27
 
-    if-ne v4, v0, :cond_7
+    if-ne v4, v0, :cond_8
 
     const/4 v4, 0x0
 
@@ -7671,14 +7690,14 @@
 
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/AlarmManagerService;->restorePendingWhileIdleAlarmsLocked()V
 
-    :cond_7
+    :cond_8
     move-object/from16 v0, p0
 
     iget-object v4, v0, Lcom/android/server/AlarmManagerService;->mNextWakeFromIdle:Lcom/android/server/AlarmManagerService$Alarm;
 
     move-object/from16 v0, v27
 
-    if-ne v4, v0, :cond_8
+    if-ne v4, v0, :cond_9
 
     const/4 v4, 0x0
 
@@ -7692,7 +7711,7 @@
 
     invoke-virtual {v0, v4}, Lcom/android/server/AlarmManagerService;->rebatchAllAlarmsLocked(Z)V
 
-    :cond_8
+    :cond_9
     move-object/from16 v0, v27
 
     iget-wide v4, v0, Lcom/android/server/AlarmManagerService$Alarm;->repeatInterval:J
@@ -7701,7 +7720,7 @@
 
     cmp-long v4, v4, v8
 
-    if-lez v4, :cond_9
+    if-lez v4, :cond_a
 
     move-object/from16 v0, v27
 
@@ -7821,16 +7840,16 @@
 
     .end local v6    # "nextElapsed":J
     .end local v30    # "delta":J
-    :cond_9
+    :cond_a
     move-object/from16 v0, v27
 
     iget-boolean v4, v0, Lcom/android/server/AlarmManagerService$Alarm;->wakeup:Z
 
-    if-eqz v4, :cond_a
+    if-eqz v4, :cond_b
 
     const/16 v29, 0x1
 
-    :cond_a
+    :cond_b
     move-object/from16 v0, v27
 
     iget-object v4, v0, Lcom/android/server/AlarmManagerService$Alarm;->alarmClock:Landroid/app/AlarmManager$AlarmClockInfo;
@@ -7845,7 +7864,7 @@
 
     goto/16 :goto_1
 
-    :cond_b
+    :cond_c
     const/4 v4, 0x0
 
     goto/16 :goto_2

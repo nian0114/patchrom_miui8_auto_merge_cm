@@ -1023,7 +1023,7 @@
 .method static synthetic -wrap42(Lcom/android/server/power/PowerManagerService;)V
     .locals 0
 
-    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
+    invoke-virtual {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
 
     return-void
 .end method
@@ -1436,11 +1436,11 @@
 
     iput v2, p0, Lcom/android/server/power/PowerManagerService;->mDirty:I
 
-    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
+    invoke-virtual {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
 
     if-eqz v13, :cond_1
 
-    invoke-direct {p0, v1}, Lcom/android/server/power/PowerManagerService;->notifyWakeLockAcquiredLocked(Lcom/android/server/power/PowerManagerService$WakeLock;)V
+    invoke-virtual {p0, v1}, Lcom/android/server/power/PowerManagerService;->notifyWakeLockAcquiredLocked(Lcom/android/server/power/PowerManagerService$WakeLock;)V
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
@@ -1522,6 +1522,10 @@
     invoke-direct {p0, v1, v2}, Lcom/android/server/power/PowerManagerService;->updateBlockedWakelock(Lcom/android/server/power/PowerManagerService$WakeLock;Z)Z
 
     :cond_3
+    const/4 v2, 0x0
+
+    invoke-static {v1, v2}, Lcom/android/server/power/PowerManagerServiceInjector;->updateWakeLockDisabledStateLocked(Lcom/android/server/power/PowerManagerService$WakeLock;Z)V
+
     const/4 v13, 0x1
 
     .restart local v13    # "notifyAcquire":Z
@@ -1776,7 +1780,7 @@
 
     invoke-direct/range {v1 .. v6}, Lcom/android/server/power/PowerManagerService;->userActivityNoUpdateLocked(JIII)Z
 
-    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
+    invoke-virtual {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
@@ -4481,7 +4485,7 @@
 
     if-eqz v0, :cond_0
 
-    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
+    invoke-virtual {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
@@ -4886,7 +4890,7 @@
 
     iput v0, p0, Lcom/android/server/power/PowerManagerService;->mDirty:I
 
-    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
+    invoke-virtual {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
 
     return-void
 .end method
@@ -4983,7 +4987,7 @@
 
     iput v3, p0, Lcom/android/server/power/PowerManagerService;->mDirty:I
 
-    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
+    invoke-virtual {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
@@ -5256,7 +5260,7 @@
 
     invoke-direct/range {v1 .. v7}, Lcom/android/server/power/PowerManagerService;->wakeUpNoUpdateLocked(JLjava/lang/String;ILjava/lang/String;I)Z
 
-    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
+    invoke-virtual {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
     :try_end_5
     .catchall {:try_start_5 .. :try_end_5} :catchall_1
 
@@ -5289,7 +5293,7 @@
 
     invoke-direct/range {v1 .. v6}, Lcom/android/server/power/PowerManagerService;->goToSleepNoUpdateLocked(JIII)Z
 
-    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
+    invoke-virtual {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
     :try_end_6
     .catchall {:try_start_6 .. :try_end_6} :catchall_1
 
@@ -5314,7 +5318,7 @@
 
     invoke-direct {p0, v2, v3, v1}, Lcom/android/server/power/PowerManagerService;->reallyGoToSleepNoUpdateLocked(JI)Z
 
-    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
+    invoke-virtual {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
     :try_end_7
     .catchall {:try_start_7 .. :try_end_7} :catchall_1
 
@@ -5336,7 +5340,7 @@
 
     iput v0, p0, Lcom/android/server/power/PowerManagerService;->mDirty:I
 
-    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
+    invoke-virtual {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
@@ -5358,7 +5362,7 @@
     .prologue
     invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->updateSettingsLocked()V
 
-    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
+    invoke-virtual {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
 
     return-void
 .end method
@@ -5378,7 +5382,9 @@
 
     iput v0, p0, Lcom/android/server/power/PowerManagerService;->mDirty:I
 
-    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
+    invoke-static {}, Lcom/android/server/power/PowerManagerServiceInjector;->updateAllScreenWakeLockDisabledStateLocked()V
+
+    invoke-virtual {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
@@ -5907,7 +5913,7 @@
 
     if-eqz v0, :cond_0
 
-    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
+    invoke-virtual {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
@@ -6097,49 +6103,6 @@
     return v0
 .end method
 
-.method private notifyWakeLockAcquiredLocked(Lcom/android/server/power/PowerManagerService$WakeLock;)V
-    .locals 8
-    .param p1, "wakeLock"    # Lcom/android/server/power/PowerManagerService$WakeLock;
-
-    .prologue
-    iget-boolean v0, p0, Lcom/android/server/power/PowerManagerService;->mSystemReady:Z
-
-    if-eqz v0, :cond_0
-
-    iget-boolean v0, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mDisabled:Z
-
-    if-eqz v0, :cond_1
-
-    :cond_0
-    :goto_0
-    return-void
-
-    :cond_1
-    const/4 v0, 0x1
-
-    iput-boolean v0, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mNotifiedAcquired:Z
-
-    iget-object v0, p0, Lcom/android/server/power/PowerManagerService;->mNotifier:Lcom/android/server/power/Notifier;
-
-    iget v1, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mFlags:I
-
-    iget-object v2, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mTag:Ljava/lang/String;
-
-    iget-object v3, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mPackageName:Ljava/lang/String;
-
-    iget v4, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mOwnerUid:I
-
-    iget v5, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mOwnerPid:I
-
-    iget-object v6, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mWorkSource:Landroid/os/WorkSource;
-
-    iget-object v7, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mHistoryTag:Ljava/lang/String;
-
-    invoke-virtual/range {v0 .. v7}, Lcom/android/server/power/Notifier;->onWakeLockAcquired(ILjava/lang/String;Ljava/lang/String;IILandroid/os/WorkSource;Ljava/lang/String;)V
-
-    goto :goto_0
-.end method
-
 .method private notifyWakeLockChangingLocked(Lcom/android/server/power/PowerManagerService$WakeLock;ILjava/lang/String;Ljava/lang/String;IILandroid/os/WorkSource;Ljava/lang/String;)V
     .locals 16
     .param p1, "wakeLock"    # Lcom/android/server/power/PowerManagerService$WakeLock;
@@ -6211,45 +6174,6 @@
     move-object/from16 v15, p8
 
     invoke-virtual/range {v1 .. v15}, Lcom/android/server/power/Notifier;->onWakeLockChanging(ILjava/lang/String;Ljava/lang/String;IILandroid/os/WorkSource;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;IILandroid/os/WorkSource;Ljava/lang/String;)V
-
-    :cond_0
-    return-void
-.end method
-
-.method private notifyWakeLockReleasedLocked(Lcom/android/server/power/PowerManagerService$WakeLock;)V
-    .locals 8
-    .param p1, "wakeLock"    # Lcom/android/server/power/PowerManagerService$WakeLock;
-
-    .prologue
-    iget-boolean v0, p0, Lcom/android/server/power/PowerManagerService;->mSystemReady:Z
-
-    if-eqz v0, :cond_0
-
-    iget-boolean v0, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mNotifiedAcquired:Z
-
-    if-eqz v0, :cond_0
-
-    const/4 v0, 0x0
-
-    iput-boolean v0, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mNotifiedAcquired:Z
-
-    iget-object v0, p0, Lcom/android/server/power/PowerManagerService;->mNotifier:Lcom/android/server/power/Notifier;
-
-    iget v1, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mFlags:I
-
-    iget-object v2, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mTag:Ljava/lang/String;
-
-    iget-object v3, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mPackageName:Ljava/lang/String;
-
-    iget v4, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mOwnerUid:I
-
-    iget v5, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mOwnerPid:I
-
-    iget-object v6, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mWorkSource:Landroid/os/WorkSource;
-
-    iget-object v7, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mHistoryTag:Ljava/lang/String;
-
-    invoke-virtual/range {v0 .. v7}, Lcom/android/server/power/Notifier;->onWakeLockReleased(ILjava/lang/String;Ljava/lang/String;IILandroid/os/WorkSource;Ljava/lang/String;)V
 
     :cond_0
     return-void
@@ -6640,7 +6564,7 @@
 
     invoke-virtual {v0, p2}, Ljava/util/ArrayList;->remove(I)Ljava/lang/Object;
 
-    invoke-direct {p0, p1}, Lcom/android/server/power/PowerManagerService;->notifyWakeLockReleasedLocked(Lcom/android/server/power/PowerManagerService$WakeLock;)V
+    invoke-virtual {p0, p1}, Lcom/android/server/power/PowerManagerService;->notifyWakeLockReleasedLocked(Lcom/android/server/power/PowerManagerService$WakeLock;)V
 
     invoke-direct {p0, p1}, Lcom/android/server/power/PowerManagerService;->applyWakeLockFlagsOnReleaseLocked(Lcom/android/server/power/PowerManagerService$WakeLock;)V
 
@@ -6650,7 +6574,7 @@
 
     iput v0, p0, Lcom/android/server/power/PowerManagerService;->mDirty:I
 
-    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
+    invoke-virtual {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
 
     return-void
 .end method
@@ -6781,7 +6705,7 @@
 
     iput v0, p0, Lcom/android/server/power/PowerManagerService;->mDirty:I
 
-    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
+    invoke-virtual {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
@@ -6828,7 +6752,7 @@
 
     iput v0, p0, Lcom/android/server/power/PowerManagerService;->mDirty:I
 
-    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
+    invoke-virtual {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
@@ -7076,7 +7000,7 @@
 
     iput v0, p0, Lcom/android/server/power/PowerManagerService;->mDirty:I
 
-    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
+    invoke-virtual {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
@@ -7117,7 +7041,7 @@
 
     iput v0, p0, Lcom/android/server/power/PowerManagerService;->mDirty:I
 
-    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
+    invoke-virtual {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
@@ -7156,7 +7080,7 @@
 
     iput v0, p0, Lcom/android/server/power/PowerManagerService;->mDirty:I
 
-    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
+    invoke-virtual {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
@@ -7197,7 +7121,7 @@
 
     iput v0, p0, Lcom/android/server/power/PowerManagerService;->mDirty:I
 
-    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
+    invoke-virtual {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
@@ -7233,7 +7157,7 @@
 
     iput v0, p0, Lcom/android/server/power/PowerManagerService;->mDirty:I
 
-    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
+    invoke-virtual {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
@@ -7604,7 +7528,7 @@
     return v2
 
     :cond_0
-    invoke-direct {p0, p1}, Lcom/android/server/power/PowerManagerService;->notifyWakeLockAcquiredLocked(Lcom/android/server/power/PowerManagerService$WakeLock;)V
+    invoke-virtual {p0, p1}, Lcom/android/server/power/PowerManagerService;->notifyWakeLockAcquiredLocked(Lcom/android/server/power/PowerManagerService$WakeLock;)V
 
     goto :goto_0
 
@@ -8075,113 +7999,6 @@
     iput-boolean v1, p0, Lcom/android/server/power/PowerManagerService;->mAutoLowPowerModeSnoozing:Z
 
     goto :goto_0
-.end method
-
-.method private updatePowerStateLocked()V
-    .locals 10
-
-    .prologue
-    const-wide/32 v8, 0x20000
-
-    iget-boolean v3, p0, Lcom/android/server/power/PowerManagerService;->mSystemReady:Z
-
-    if-eqz v3, :cond_0
-
-    iget v3, p0, Lcom/android/server/power/PowerManagerService;->mDirty:I
-
-    if-nez v3, :cond_1
-
-    :cond_0
-    return-void
-
-    :cond_1
-    iget-object v3, p0, Lcom/android/server/power/PowerManagerService;->mLock:Ljava/lang/Object;
-
-    invoke-static {v3}, Ljava/lang/Thread;->holdsLock(Ljava/lang/Object;)Z
-
-    move-result v3
-
-    if-nez v3, :cond_2
-
-    const-string v3, "PowerManagerService"
-
-    const-string v6, "Power manager lock was not held when calling updatePowerStateLocked"
-
-    invoke-static {v3, v6}, Landroid/util/Slog;->wtf(Ljava/lang/String;Ljava/lang/String;)I
-
-    :cond_2
-    const-string v3, "updatePowerState"
-
-    invoke-static {v8, v9, v3}, Landroid/os/Trace;->traceBegin(JLjava/lang/String;)V
-
-    :try_start_0
-    iget v3, p0, Lcom/android/server/power/PowerManagerService;->mDirty:I
-
-    invoke-direct {p0, v3}, Lcom/android/server/power/PowerManagerService;->updateIsPoweredLocked(I)V
-
-    iget v3, p0, Lcom/android/server/power/PowerManagerService;->mDirty:I
-
-    invoke-direct {p0, v3}, Lcom/android/server/power/PowerManagerService;->updateStayOnLocked(I)V
-
-    iget v3, p0, Lcom/android/server/power/PowerManagerService;->mDirty:I
-
-    invoke-direct {p0, v3}, Lcom/android/server/power/PowerManagerService;->updateScreenBrightnessBoostLocked(I)V
-
-    invoke-static {}, Landroid/os/SystemClock;->uptimeMillis()J
-
-    move-result-wide v4
-
-    .local v4, "now":J
-    const/4 v1, 0x0
-
-    .local v1, "dirtyPhase2":I
-    :cond_3
-    iget v0, p0, Lcom/android/server/power/PowerManagerService;->mDirty:I
-
-    .local v0, "dirtyPhase1":I
-    or-int/2addr v1, v0
-
-    const/4 v3, 0x0
-
-    iput v3, p0, Lcom/android/server/power/PowerManagerService;->mDirty:I
-
-    invoke-direct {p0, v0}, Lcom/android/server/power/PowerManagerService;->updateWakeLockSummaryLocked(I)V
-
-    invoke-direct {p0, v4, v5, v0}, Lcom/android/server/power/PowerManagerService;->updateUserActivitySummaryLocked(JI)V
-
-    invoke-direct {p0, v0}, Lcom/android/server/power/PowerManagerService;->updateWakefulnessLocked(I)Z
-
-    move-result v3
-
-    if-nez v3, :cond_3
-
-    invoke-direct {p0, v1}, Lcom/android/server/power/PowerManagerService;->updateDisplayPowerStateLocked(I)Z
-
-    move-result v2
-
-    .local v2, "displayBecameReady":Z
-    invoke-direct {p0, v1, v2}, Lcom/android/server/power/PowerManagerService;->updateDreamLocked(IZ)V
-
-    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->finishWakefulnessChangeIfNeededLocked()V
-
-    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->updateSuspendBlockerLocked()V
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
-
-    invoke-static {v8, v9}, Landroid/os/Trace;->traceEnd(J)V
-
-    return-void
-
-    .end local v0    # "dirtyPhase1":I
-    .end local v1    # "dirtyPhase2":I
-    .end local v2    # "displayBecameReady":Z
-    .end local v4    # "now":J
-    :catchall_0
-    move-exception v3
-
-    invoke-static {v8, v9}, Landroid/os/Trace;->traceEnd(J)V
-
-    throw v3
 .end method
 
 .method private updateScreenBrightnessBoostLocked(I)V
@@ -9515,7 +9332,7 @@
 
     if-eqz v4, :cond_1
 
-    invoke-direct {p0, v3}, Lcom/android/server/power/PowerManagerService;->notifyWakeLockReleasedLocked(Lcom/android/server/power/PowerManagerService$WakeLock;)V
+    invoke-virtual {p0, v3}, Lcom/android/server/power/PowerManagerService;->notifyWakeLockReleasedLocked(Lcom/android/server/power/PowerManagerService$WakeLock;)V
 
     :cond_0
     :goto_1
@@ -9524,7 +9341,7 @@
     goto :goto_0
 
     :cond_1
-    invoke-direct {p0, v3}, Lcom/android/server/power/PowerManagerService;->notifyWakeLockAcquiredLocked(Lcom/android/server/power/PowerManagerService$WakeLock;)V
+    invoke-virtual {p0, v3}, Lcom/android/server/power/PowerManagerService;->notifyWakeLockAcquiredLocked(Lcom/android/server/power/PowerManagerService$WakeLock;)V
 
     goto :goto_1
 
@@ -9538,7 +9355,7 @@
 
     iput v4, p0, Lcom/android/server/power/PowerManagerService;->mDirty:I
 
-    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
+    invoke-virtual {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
 
     :cond_3
     return-void
@@ -9607,6 +9424,10 @@
     goto :goto_1
 
     :sswitch_1
+    iget-boolean v3, v2, Lcom/android/server/power/PowerManagerService$WakeLock;->mDisabled:Z
+
+    if-nez v3, :cond_0
+
     iget v3, p0, Lcom/android/server/power/PowerManagerService;->mWakeLockSummary:I
 
     or-int/lit8 v3, v3, 0xa
@@ -9616,6 +9437,10 @@
     goto :goto_1
 
     :sswitch_2
+    iget-boolean v3, v2, Lcom/android/server/power/PowerManagerService$WakeLock;->mDisabled:Z
+
+    if-nez v3, :cond_0
+
     iget v3, p0, Lcom/android/server/power/PowerManagerService;->mWakeLockSummary:I
 
     or-int/lit8 v3, v3, 0x2
@@ -9625,6 +9450,10 @@
     goto :goto_1
 
     :sswitch_3
+    iget-boolean v3, v2, Lcom/android/server/power/PowerManagerService$WakeLock;->mDisabled:Z
+
+    if-nez v3, :cond_0
+
     iget v3, p0, Lcom/android/server/power/PowerManagerService;->mWakeLockSummary:I
 
     or-int/lit8 v3, v3, 0x4
@@ -9875,6 +9704,10 @@
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
+    const/4 v0, 0x1
+
+    invoke-static {v1, v0}, Lcom/android/server/power/PowerManagerServiceInjector;->updateWakeLockDisabledStateLocked(Lcom/android/server/power/PowerManagerService$WakeLock;Z)V
+
     :cond_1
     monitor-exit v10
 
@@ -9986,7 +9819,7 @@
 
     if-eqz v0, :cond_0
 
-    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
+    invoke-virtual {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
@@ -10186,7 +10019,7 @@
 
     if-eqz v0, :cond_0
 
-    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
+    invoke-virtual {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
@@ -10417,6 +10250,88 @@
     return-void
 .end method
 
+.method notifyWakeLockAcquiredLocked(Lcom/android/server/power/PowerManagerService$WakeLock;)V
+    .locals 8
+    .param p1, "wakeLock"    # Lcom/android/server/power/PowerManagerService$WakeLock;
+
+    .prologue
+    iget-boolean v0, p0, Lcom/android/server/power/PowerManagerService;->mSystemReady:Z
+
+    if-eqz v0, :cond_0
+
+    iget-boolean v0, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mDisabled:Z
+
+    if-eqz v0, :cond_1
+
+    :cond_0
+    :goto_0
+    return-void
+
+    :cond_1
+    const/4 v0, 0x1
+
+    iput-boolean v0, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mNotifiedAcquired:Z
+
+    iget-object v0, p0, Lcom/android/server/power/PowerManagerService;->mNotifier:Lcom/android/server/power/Notifier;
+
+    iget v1, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mFlags:I
+
+    iget-object v2, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mTag:Ljava/lang/String;
+
+    iget-object v3, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mPackageName:Ljava/lang/String;
+
+    iget v4, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mOwnerUid:I
+
+    iget v5, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mOwnerPid:I
+
+    iget-object v6, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mWorkSource:Landroid/os/WorkSource;
+
+    iget-object v7, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mHistoryTag:Ljava/lang/String;
+
+    invoke-virtual/range {v0 .. v7}, Lcom/android/server/power/Notifier;->onWakeLockAcquired(ILjava/lang/String;Ljava/lang/String;IILandroid/os/WorkSource;Ljava/lang/String;)V
+
+    goto :goto_0
+.end method
+
+.method notifyWakeLockReleasedLocked(Lcom/android/server/power/PowerManagerService$WakeLock;)V
+    .locals 8
+    .param p1, "wakeLock"    # Lcom/android/server/power/PowerManagerService$WakeLock;
+
+    .prologue
+    iget-boolean v0, p0, Lcom/android/server/power/PowerManagerService;->mSystemReady:Z
+
+    if-eqz v0, :cond_0
+
+    iget-boolean v0, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mNotifiedAcquired:Z
+
+    if-eqz v0, :cond_0
+
+    const/4 v0, 0x0
+
+    iput-boolean v0, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mNotifiedAcquired:Z
+
+    iget-object v0, p0, Lcom/android/server/power/PowerManagerService;->mNotifier:Lcom/android/server/power/Notifier;
+
+    iget v1, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mFlags:I
+
+    iget-object v2, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mTag:Ljava/lang/String;
+
+    iget-object v3, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mPackageName:Ljava/lang/String;
+
+    iget v4, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mOwnerUid:I
+
+    iget v5, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mOwnerPid:I
+
+    iget-object v6, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mWorkSource:Landroid/os/WorkSource;
+
+    iget-object v7, p1, Lcom/android/server/power/PowerManagerService$WakeLock;->mHistoryTag:Ljava/lang/String;
+
+    invoke-virtual/range {v0 .. v7}, Lcom/android/server/power/Notifier;->onWakeLockReleased(ILjava/lang/String;Ljava/lang/String;IILandroid/os/WorkSource;Ljava/lang/String;)V
+
+    :cond_0
+    return-void
+.end method
+
 .method public onBootPhase(I)V
     .locals 8
     .param p1, "phase"    # I
@@ -10456,7 +10371,7 @@
 
     invoke-direct/range {v1 .. v6}, Lcom/android/server/power/PowerManagerService;->userActivityNoUpdateLocked(JIII)Z
 
-    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
+    invoke-virtual {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
 
     const-class v0, Lcyanogenmod/power/PerformanceManagerInternal;
 
@@ -10657,7 +10572,7 @@
 
     iput v0, p0, Lcom/android/server/power/PowerManagerService;->mDirty:I
 
-    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
+    invoke-virtual {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
@@ -10687,6 +10602,19 @@
     const-string v1, "stay_on_while_plugged_in"
 
     invoke-static {v0, v1, p1}, Landroid/provider/Settings$Global;->putInt(Landroid/content/ContentResolver;Ljava/lang/String;I)Z
+
+    return-void
+.end method
+
+.method setWakeLockDirtyLocked()V
+    .locals 1
+
+    .prologue
+    iget v0, p0, Lcom/android/server/power/PowerManagerService;->mDirty:I
+
+    or-int/lit8 v0, v0, 0x1
+
+    iput v0, p0, Lcom/android/server/power/PowerManagerService;->mDirty:I
 
     return-void
 .end method
@@ -10922,6 +10850,12 @@
     iget-object v2, p0, Lcom/android/server/power/PowerManagerService;->mHandler:Lcom/android/server/power/PowerManagerService$PowerManagerHandler;
 
     invoke-virtual {v0, v1, v2, v10}, Landroid/hardware/display/DisplayManagerInternal;->initPowerManagement(Landroid/hardware/display/DisplayManagerInternal$DisplayPowerCallbacks;Landroid/os/Handler;Landroid/hardware/SensorManager;)V
+
+    iget-object v0, p0, Lcom/android/server/power/PowerManagerService;->mWakeLocks:Ljava/util/ArrayList;
+
+    iget-object v1, p0, Lcom/android/server/power/PowerManagerService;->mLock:Ljava/lang/Object;
+
+    invoke-static {p0, v0, v1}, Lcom/android/server/power/PowerManagerServiceInjector;->init(Lcom/android/server/power/PowerManagerService;Ljava/util/ArrayList;Ljava/lang/Object;)V
 
     iget-object v0, p0, Lcom/android/server/power/PowerManagerService;->mContext:Landroid/content/Context;
 
@@ -11324,7 +11258,7 @@
 
     iput v0, p0, Lcom/android/server/power/PowerManagerService;->mDirty:I
 
-    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
+    invoke-virtual {p0}, Lcom/android/server/power/PowerManagerService;->updatePowerStateLocked()V
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_1
 
@@ -11479,6 +11413,113 @@
 
     .local v1, "lowPowerModeEnabled":Z
     goto :goto_1
+.end method
+
+.method updatePowerStateLocked()V
+    .locals 10
+
+    .prologue
+    const-wide/32 v8, 0x20000
+
+    iget-boolean v3, p0, Lcom/android/server/power/PowerManagerService;->mSystemReady:Z
+
+    if-eqz v3, :cond_0
+
+    iget v3, p0, Lcom/android/server/power/PowerManagerService;->mDirty:I
+
+    if-nez v3, :cond_1
+
+    :cond_0
+    return-void
+
+    :cond_1
+    iget-object v3, p0, Lcom/android/server/power/PowerManagerService;->mLock:Ljava/lang/Object;
+
+    invoke-static {v3}, Ljava/lang/Thread;->holdsLock(Ljava/lang/Object;)Z
+
+    move-result v3
+
+    if-nez v3, :cond_2
+
+    const-string v3, "PowerManagerService"
+
+    const-string v6, "Power manager lock was not held when calling updatePowerStateLocked"
+
+    invoke-static {v3, v6}, Landroid/util/Slog;->wtf(Ljava/lang/String;Ljava/lang/String;)I
+
+    :cond_2
+    const-string v3, "updatePowerState"
+
+    invoke-static {v8, v9, v3}, Landroid/os/Trace;->traceBegin(JLjava/lang/String;)V
+
+    :try_start_0
+    iget v3, p0, Lcom/android/server/power/PowerManagerService;->mDirty:I
+
+    invoke-direct {p0, v3}, Lcom/android/server/power/PowerManagerService;->updateIsPoweredLocked(I)V
+
+    iget v3, p0, Lcom/android/server/power/PowerManagerService;->mDirty:I
+
+    invoke-direct {p0, v3}, Lcom/android/server/power/PowerManagerService;->updateStayOnLocked(I)V
+
+    iget v3, p0, Lcom/android/server/power/PowerManagerService;->mDirty:I
+
+    invoke-direct {p0, v3}, Lcom/android/server/power/PowerManagerService;->updateScreenBrightnessBoostLocked(I)V
+
+    invoke-static {}, Landroid/os/SystemClock;->uptimeMillis()J
+
+    move-result-wide v4
+
+    .local v4, "now":J
+    const/4 v1, 0x0
+
+    .local v1, "dirtyPhase2":I
+    :cond_3
+    iget v0, p0, Lcom/android/server/power/PowerManagerService;->mDirty:I
+
+    .local v0, "dirtyPhase1":I
+    or-int/2addr v1, v0
+
+    const/4 v3, 0x0
+
+    iput v3, p0, Lcom/android/server/power/PowerManagerService;->mDirty:I
+
+    invoke-direct {p0, v0}, Lcom/android/server/power/PowerManagerService;->updateWakeLockSummaryLocked(I)V
+
+    invoke-direct {p0, v4, v5, v0}, Lcom/android/server/power/PowerManagerService;->updateUserActivitySummaryLocked(JI)V
+
+    invoke-direct {p0, v0}, Lcom/android/server/power/PowerManagerService;->updateWakefulnessLocked(I)Z
+
+    move-result v3
+
+    if-nez v3, :cond_3
+
+    invoke-direct {p0, v1}, Lcom/android/server/power/PowerManagerService;->updateDisplayPowerStateLocked(I)Z
+
+    move-result v2
+
+    .local v2, "displayBecameReady":Z
+    invoke-direct {p0, v1, v2}, Lcom/android/server/power/PowerManagerService;->updateDreamLocked(IZ)V
+
+    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->finishWakefulnessChangeIfNeededLocked()V
+
+    invoke-direct {p0}, Lcom/android/server/power/PowerManagerService;->updateSuspendBlockerLocked()V
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    invoke-static {v8, v9}, Landroid/os/Trace;->traceEnd(J)V
+
+    return-void
+
+    .end local v0    # "dirtyPhase1":I
+    .end local v1    # "dirtyPhase2":I
+    .end local v2    # "displayBecameReady":Z
+    .end local v4    # "now":J
+    :catchall_0
+    move-exception v3
+
+    invoke-static {v8, v9}, Landroid/os/Trace;->traceEnd(J)V
+
+    throw v3
 .end method
 
 .method updateUidProcStateInternal(II)V

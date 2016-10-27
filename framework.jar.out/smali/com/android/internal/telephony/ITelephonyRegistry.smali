@@ -23,6 +23,14 @@
     .end annotation
 .end method
 
+.method public abstract getMiuiTelephony()Lmiui/telephony/IMiuiTelephony;
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
 .method public abstract listen(Ljava/lang/String;Lcom/android/internal/telephony/IPhoneStateListener;IZ)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -284,6 +292,14 @@
 .end method
 
 .method public abstract removeOnSubscriptionsChangedListener(Ljava/lang/String;Lcom/android/internal/telephony/IOnSubscriptionsChangedListener;)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract setMiuiTelephony(Lmiui/telephony/IMiuiTelephony;)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;

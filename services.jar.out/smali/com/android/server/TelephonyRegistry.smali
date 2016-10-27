@@ -112,6 +112,8 @@
 
 .field private mMessageWaiting:[Z
 
+.field private mMiuiTelephony:Lmiui/telephony/IMiuiTelephony;
+
 .field private mNumPhones:I
 
 .field private mOtaspMode:I
@@ -329,6 +331,8 @@
     iput-object v3, p0, Lcom/android/server/TelephonyRegistry;->logSSC:[Lcom/android/server/TelephonyRegistry$LogSSC;
 
     iput v5, p0, Lcom/android/server/TelephonyRegistry;->next:I
+
+    iput-object v7, p0, Lcom/android/server/TelephonyRegistry;->mMiuiTelephony:Lmiui/telephony/IMiuiTelephony;
 
     invoke-static {}, Landroid/telephony/CellLocation;->getEmpty()Landroid/telephony/CellLocation;
 
@@ -3706,6 +3710,15 @@
     return-void
 .end method
 
+.method public getMiuiTelephony()Lmiui/telephony/IMiuiTelephony;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Lcom/android/server/TelephonyRegistry;->mMiuiTelephony:Lmiui/telephony/IMiuiTelephony;
+
+    return-object v0
+.end method
+
 .method idMatch(III)Z
     .locals 3
     .param p1, "rSubId"    # I
@@ -3749,15 +3762,21 @@
     goto :goto_1
 
     :cond_3
-    if-ne p1, p2, :cond_4
+    if-eq p1, p2, :cond_4
 
-    :goto_2
-    return v0
+    invoke-static {p1}, Landroid/telephony/SubscriptionManager;->getPhoneId(I)I
+
+    move-result v2
+
+    if-ne v2, p3, :cond_5
 
     :cond_4
+    move v1, v0
+
+    :cond_5
     move v0, v1
 
-    goto :goto_2
+    return v0
 .end method
 
 .method public listen(Ljava/lang/String;Lcom/android/internal/telephony/IPhoneStateListener;IZ)V
@@ -7091,6 +7110,16 @@
     move-result-object v0
 
     invoke-direct {p0, v0}, Lcom/android/server/TelephonyRegistry;->remove(Landroid/os/IBinder;)V
+
+    return-void
+.end method
+
+.method public setMiuiTelephony(Lmiui/telephony/IMiuiTelephony;)V
+    .locals 0
+    .param p1, "telephony"    # Lmiui/telephony/IMiuiTelephony;
+
+    .prologue
+    iput-object p1, p0, Lcom/android/server/TelephonyRegistry;->mMiuiTelephony:Lmiui/telephony/IMiuiTelephony;
 
     return-void
 .end method

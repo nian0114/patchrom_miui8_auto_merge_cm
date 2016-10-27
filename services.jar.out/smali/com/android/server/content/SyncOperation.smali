@@ -71,7 +71,7 @@
     .locals 3
 
     .prologue
-    const/16 v0, 0x8
+    const/16 v0, 0x9
 
     new-array v0, v0, [Ljava/lang/String;
 
@@ -122,6 +122,12 @@
     const/4 v2, 0x7
 
     aput-object v1, v0, v2
+
+    const/16 v1, 0x8
+
+    const-string v2, "NetReachableChanged"
+
+    aput-object v2, v0, v1
 
     sput-object v0, Lcom/android/server/content/SyncOperation;->REASON_NAMES:[Ljava/lang/String;
 

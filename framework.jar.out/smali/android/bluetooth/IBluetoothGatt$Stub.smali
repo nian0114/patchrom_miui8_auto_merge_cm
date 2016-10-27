@@ -74,6 +74,8 @@
 
 .field static final TRANSACTION_registerServer:I = 0x17
 
+.field static final TRANSACTION_registerStatisticsClient:I = 0x27
+
 .field static final TRANSACTION_removeService:I = 0x20
 
 .field static final TRANSACTION_sendNotification:I = 0x23
@@ -97,6 +99,8 @@
 .field static final TRANSACTION_unregisterClient:I = 0x8
 
 .field static final TRANSACTION_unregisterServer:I = 0x18
+
+.field static final TRANSACTION_unregisterStatisticsClient:I = 0x28
 
 .field static final TRANSACTION_writeCharacteristic:I = 0xe
 
@@ -2396,6 +2400,60 @@
 
     nop
 
+    .end local v22
+    :sswitch_27
+    const-string v2, "android.bluetooth.IBluetoothGatt"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v2}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readStrongBinder()Landroid/os/IBinder;
+
+    move-result-object v2
+
+    invoke-static {v2}, Landroid/bluetooth/IBluetoothGattCallback$Stub;->asInterface(Landroid/os/IBinder;)Landroid/bluetooth/IBluetoothGattCallback;
+
+    move-result-object v3
+
+    .local v3, "_arg0":Landroid/bluetooth/IBluetoothGattCallback;
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v3}, Landroid/bluetooth/IBluetoothGatt$Stub;->registerStatisticsClient(Landroid/bluetooth/IBluetoothGattCallback;)V
+
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    const/4 v4, 0x1
+
+    return v4
+
+    .end local v3    # "_arg0":Landroid/bluetooth/IBluetoothGattCallback;
+    :sswitch_28
+    const-string v2, "android.bluetooth.IBluetoothGatt"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v2}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readStrongBinder()Landroid/os/IBinder;
+
+    move-result-object v2
+
+    invoke-static {v2}, Landroid/bluetooth/IBluetoothGattCallback$Stub;->asInterface(Landroid/os/IBinder;)Landroid/bluetooth/IBluetoothGattCallback;
+
+    move-result-object v3
+
+    .restart local v3    # "_arg0":Landroid/bluetooth/IBluetoothGattCallback;
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v3}, Landroid/bluetooth/IBluetoothGatt$Stub;->unregisterStatisticsClient(Landroid/bluetooth/IBluetoothGattCallback;)V
+
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    const/4 v4, 0x1
+
+    return v4
+
     :sswitch_data_0
     .sparse-switch
         0x1 -> :sswitch_1
@@ -2436,6 +2494,8 @@
         0x24 -> :sswitch_24
         0x25 -> :sswitch_25
         0x26 -> :sswitch_26
+        0x27 -> :sswitch_27
+        0x28 -> :sswitch_28
         0x5f4e5446 -> :sswitch_0
     .end sparse-switch
 .end method

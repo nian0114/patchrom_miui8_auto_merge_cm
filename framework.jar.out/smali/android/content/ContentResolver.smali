@@ -4758,7 +4758,7 @@
     .end local v12    # "stableProvider":Landroid/content/IContentProvider;
     .local v22, "qCursor":Landroid/database/Cursor;
     :goto_0
-    if-nez v22, :cond_a
+    if-nez v22, :cond_b
 
     const/4 v5, 0x0
 
@@ -4803,6 +4803,37 @@
 
     invoke-virtual {v0, v4}, Landroid/content/ContentResolver;->unstableProviderDied(Landroid/content/IContentProvider;)V
 
+    move-object/from16 v0, p0
+
+    iget-object v5, v0, Landroid/content/ContentResolver;->mPackageName:Ljava/lang/String;
+
+    move-object/from16 v0, p1
+
+    invoke-static {v5, v0}, Landroid/content/ContentResolverInjector;->isForceAcquireUnstableProvider(Ljava/lang/String;Landroid/net/Uri;)Z
+
+    move-result v5
+
+    if-eqz v5, :cond_6
+
+    move-object/from16 v5, p0
+
+    move-object/from16 v6, p1
+
+    move-object/from16 v7, p2
+
+    move-object/from16 v8, p3
+
+    move-object/from16 v9, p4
+
+    move-object/from16 v10, p5
+
+    invoke-static/range {v5 .. v11}, Landroid/content/ContentResolverInjector;->unstableQuery(Landroid/content/ContentResolver;Landroid/net/Uri;[Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Landroid/os/ICancellationSignal;)Landroid/database/Cursor;
+
+    move-result-object v22
+
+    goto :goto_0
+
+    :cond_6
     invoke-virtual/range {p0 .. p1}, Landroid/content/ContentResolver;->acquireProvider(Landroid/net/Uri;)Landroid/content/IContentProvider;
     :try_end_2
     .catch Landroid/os/RemoteException; {:try_start_2 .. :try_end_2} :catch_1
@@ -4811,11 +4842,11 @@
     move-result-object v12
 
     .local v12, "stableProvider":Landroid/content/IContentProvider;
-    if-nez v12, :cond_9
+    if-nez v12, :cond_a
 
     const/4 v5, 0x0
 
-    if-eqz p6, :cond_6
+    if-eqz p6, :cond_7
 
     const/4 v6, 0x0
 
@@ -4823,24 +4854,24 @@
 
     invoke-virtual {v0, v6}, Landroid/os/CancellationSignal;->setRemote(Landroid/os/ICancellationSignal;)V
 
-    :cond_6
-    if-eqz v4, :cond_7
+    :cond_7
+    if-eqz v4, :cond_8
 
     move-object/from16 v0, p0
 
     invoke-virtual {v0, v4}, Landroid/content/ContentResolver;->releaseUnstableProvider(Landroid/content/IContentProvider;)Z
 
-    :cond_7
-    if-eqz v12, :cond_8
+    :cond_8
+    if-eqz v12, :cond_9
 
     move-object/from16 v0, p0
 
     invoke-virtual {v0, v12}, Landroid/content/ContentResolver;->releaseProvider(Landroid/content/IContentProvider;)Z
 
-    :cond_8
+    :cond_9
     return-object v5
 
-    :cond_9
+    :cond_a
     :try_start_3
     move-object/from16 v0, p0
 
@@ -4867,7 +4898,7 @@
 
     .end local v12    # "stableProvider":Landroid/content/IContentProvider;
     .end local v20    # "e":Landroid/os/DeadObjectException;
-    :cond_a
+    :cond_b
     invoke-interface/range {v22 .. v22}, Landroid/database/Cursor;->getCount()I
 
     invoke-static {}, Landroid/os/SystemClock;->uptimeMillis()J
@@ -4891,7 +4922,7 @@
 
     new-instance v23, Landroid/content/ContentResolver$CursorWrapperInner;
 
-    if-eqz v12, :cond_d
+    if-eqz v12, :cond_e
 
     move-object v5, v12
 
@@ -4914,7 +4945,7 @@
     const/16 v22, 0x0
 
     .local v22, "qCursor":Landroid/database/Cursor;
-    if-eqz p6, :cond_b
+    if-eqz p6, :cond_c
 
     const/4 v5, 0x0
 
@@ -4922,20 +4953,20 @@
 
     invoke-virtual {v0, v5}, Landroid/os/CancellationSignal;->setRemote(Landroid/os/ICancellationSignal;)V
 
-    :cond_b
-    if-eqz v4, :cond_c
+    :cond_c
+    if-eqz v4, :cond_d
 
     move-object/from16 v0, p0
 
     invoke-virtual {v0, v4}, Landroid/content/ContentResolver;->releaseUnstableProvider(Landroid/content/IContentProvider;)Z
 
-    :cond_c
+    :cond_d
     return-object v23
 
     .end local v12    # "stableProvider":Landroid/content/IContentProvider;
     .end local v23    # "wrapper":Landroid/content/ContentResolver$CursorWrapperInner;
     .local v22, "qCursor":Landroid/database/Cursor;
-    :cond_d
+    :cond_e
     :try_start_4
     invoke-virtual/range {p0 .. p1}, Landroid/content/ContentResolver;->acquireProvider(Landroid/net/Uri;)Landroid/content/IContentProvider;
     :try_end_4
@@ -4955,12 +4986,12 @@
     .local v21, "e":Landroid/os/RemoteException;
     const/4 v5, 0x0
 
-    if-eqz v22, :cond_e
+    if-eqz v22, :cond_f
 
     invoke-interface/range {v22 .. v22}, Landroid/database/Cursor;->close()V
 
-    :cond_e
-    if-eqz p6, :cond_f
+    :cond_f
+    if-eqz p6, :cond_10
 
     const/4 v6, 0x0
 
@@ -4968,33 +4999,33 @@
 
     invoke-virtual {v0, v6}, Landroid/os/CancellationSignal;->setRemote(Landroid/os/ICancellationSignal;)V
 
-    :cond_f
-    if-eqz v4, :cond_10
+    :cond_10
+    if-eqz v4, :cond_11
 
     move-object/from16 v0, p0
 
     invoke-virtual {v0, v4}, Landroid/content/ContentResolver;->releaseUnstableProvider(Landroid/content/IContentProvider;)Z
 
-    :cond_10
-    if-eqz v12, :cond_11
+    :cond_11
+    if-eqz v12, :cond_12
 
     move-object/from16 v0, p0
 
     invoke-virtual {v0, v12}, Landroid/content/ContentResolver;->releaseProvider(Landroid/content/IContentProvider;)Z
 
-    :cond_11
+    :cond_12
     return-object v5
 
     .end local v21    # "e":Landroid/os/RemoteException;
     :catchall_0
     move-exception v5
 
-    if-eqz v22, :cond_12
+    if-eqz v22, :cond_13
 
     invoke-interface/range {v22 .. v22}, Landroid/database/Cursor;->close()V
 
-    :cond_12
-    if-eqz p6, :cond_13
+    :cond_13
+    if-eqz p6, :cond_14
 
     const/4 v6, 0x0
 
@@ -5002,21 +5033,21 @@
 
     invoke-virtual {v0, v6}, Landroid/os/CancellationSignal;->setRemote(Landroid/os/ICancellationSignal;)V
 
-    :cond_13
-    if-eqz v4, :cond_14
+    :cond_14
+    if-eqz v4, :cond_15
 
     move-object/from16 v0, p0
 
     invoke-virtual {v0, v4}, Landroid/content/ContentResolver;->releaseUnstableProvider(Landroid/content/IContentProvider;)Z
 
-    :cond_14
-    if-eqz v12, :cond_15
+    :cond_15
+    if-eqz v12, :cond_16
 
     move-object/from16 v0, p0
 
     invoke-virtual {v0, v12}, Landroid/content/ContentResolver;->releaseProvider(Landroid/content/IContentProvider;)Z
 
-    :cond_15
+    :cond_16
     throw v5
 .end method
 

@@ -881,6 +881,8 @@
 
 .field mGhostView:Landroid/view/GhostView;
 
+.field mHapticEnabledExplicitly:Z
+
 .field private mHasPerformedLongPress:Z
 
 .field mID:I
@@ -3011,6 +3013,20 @@
     goto/16 :goto_1
 
     :pswitch_29
+    const/16 v52, 0x0
+
+    move/from16 v0, v52
+
+    invoke-virtual {v6, v7, v0}, Landroid/content/res/TypedArray;->getBoolean(IZ)Z
+
+    move-result v52
+
+    move/from16 v0, v52
+
+    move-object/from16 v1, p0
+
+    iput-boolean v0, v1, Landroid/view/View;->mHapticEnabledExplicitly:Z
+
     const/16 v52, 0x1
 
     move/from16 v0, v52
@@ -28890,6 +28906,10 @@
 
     invoke-direct {p0, v8}, Landroid/view/View;->checkForLongClick(I)V
 
+    const/4 v8, 0x4
+
+    invoke-virtual {p0, v7, v8}, Landroid/view/View;->performHapticFeedback(II)Z
+
     goto/16 :goto_1
 
     .end local v2    # "isInScrollingContainer":Z
@@ -30078,40 +30098,50 @@
 
     iget-object v1, p0, Landroid/view/View;->mAttachInfo:Landroid/view/View$AttachInfo;
 
-    if-nez v1, :cond_0
-
-    return v0
+    if-nez v1, :cond_1
 
     :cond_0
+    return v0
+
+    :cond_1
+    and-int/lit8 v1, p2, 0x4
+
+    if-eqz v1, :cond_2
+
+    iget-boolean v1, p0, Landroid/view/View;->mHapticEnabledExplicitly:Z
+
+    if-eqz v1, :cond_0
+
+    :cond_2
     and-int/lit8 v1, p2, 0x1
 
-    if-nez v1, :cond_1
+    if-nez v1, :cond_3
 
     invoke-virtual {p0}, Landroid/view/View;->isHapticFeedbackEnabled()Z
 
     move-result v1
 
-    if-eqz v1, :cond_3
+    if-eqz v1, :cond_5
 
-    :cond_1
+    :cond_3
     iget-object v1, p0, Landroid/view/View;->mAttachInfo:Landroid/view/View$AttachInfo;
 
     iget-object v1, v1, Landroid/view/View$AttachInfo;->mRootCallbacks:Landroid/view/View$AttachInfo$Callbacks;
 
     and-int/lit8 v2, p2, 0x2
 
-    if-eqz v2, :cond_2
+    if-eqz v2, :cond_4
 
     const/4 v0, 0x1
 
-    :cond_2
+    :cond_4
     invoke-interface {v1, p1, v0}, Landroid/view/View$AttachInfo$Callbacks;->performHapticFeedback(IZ)Z
 
     move-result v0
 
     return v0
 
-    :cond_3
+    :cond_5
     return v0
 .end method
 
@@ -35429,6 +35459,8 @@
     :goto_0
     invoke-virtual {p0, v0, v1}, Landroid/view/View;->setFlags(II)V
 
+    iput-boolean p1, p0, Landroid/view/View;->mHapticEnabledExplicitly:Z
+
     return-void
 
     :cond_0
@@ -39501,6 +39533,8 @@
 
     .local v0, "e":Landroid/content/res/Resources$NotFoundException;
     goto :goto_12
+
+    nop
 
     :sswitch_data_0
     .sparse-switch

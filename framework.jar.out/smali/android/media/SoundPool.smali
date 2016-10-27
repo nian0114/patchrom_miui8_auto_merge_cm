@@ -590,7 +590,7 @@
 .end method
 
 .method public final play(IFFIIF)I
-    .locals 1
+    .locals 3
     .param p1, "soundID"    # I
     .param p2, "leftVolume"    # F
     .param p3, "rightVolume"    # F
@@ -599,21 +599,37 @@
     .param p6, "rate"    # F
 
     .prologue
+    const/4 v2, 0x0
+
+    const/4 v0, 0x0
+
+    const/4 v1, 0x6
+
+    invoke-static {v1, v0, v2, v2}, Lmiui/util/QuietUtils;->checkQuiet(IILjava/lang/String;Ljava/lang/CharSequence;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_0
+
+    goto :goto_0
+
+    :cond_0
     invoke-direct {p0}, Landroid/media/SoundPool;->isRestricted()Z
 
     move-result v0
 
-    if-eqz v0, :cond_0
+    if-eqz v0, :cond_1
 
     const/4 p3, 0x0
 
     const/4 p2, 0x0
 
-    :cond_0
+    :cond_1
     invoke-direct/range {p0 .. p6}, Landroid/media/SoundPool;->_play(IFFIIF)I
 
     move-result v0
 
+    :goto_0
     return v0
 .end method
 

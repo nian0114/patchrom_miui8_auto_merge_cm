@@ -239,6 +239,8 @@
 
 .field private static final NS_PER_MS:J = 0xf4240L
 
+.field public static final TOOL_TYPE_EDGE_TOUCH:I = 0x5
+
 .field public static final TOOL_TYPE_ERASER:I = 0x4
 
 .field public static final TOOL_TYPE_FINGER:I = 0x1
@@ -768,6 +770,12 @@
     const-string v1, "TOOL_TYPE_ERASER"
 
     invoke-virtual {v0, v8, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
+
+    const/4 v1, 0x5
+
+    const-string v2, "TOOL_TYPE_EDGE_TOUCH"
+
+    invoke-virtual {v0, v1, v2}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
     new-instance v1, Ljava/lang/Object;
 
@@ -3840,6 +3848,28 @@
     const/4 v0, 0x1
 
     :cond_1
+    return v0
+.end method
+
+.method public final isEdgeTouchEvent()Z
+    .locals 4
+
+    .prologue
+    const/4 v0, 0x0
+
+    iget-wide v2, p0, Landroid/view/MotionEvent;->mNativePtr:J
+
+    invoke-static {v2, v3, v0}, Landroid/view/MotionEvent;->nativeGetToolType(JI)I
+
+    move-result v1
+
+    const/4 v2, 0x5
+
+    if-ne v1, v2, :cond_0
+
+    const/4 v0, 0x1
+
+    :cond_0
     return v0
 .end method
 

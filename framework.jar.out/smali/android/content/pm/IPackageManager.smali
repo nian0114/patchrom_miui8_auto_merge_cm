@@ -175,6 +175,14 @@
     .end annotation
 .end method
 
+.method public abstract deleteApplicationCacheFilesForUser(Ljava/lang/String;ILandroid/content/pm/IPackageDataObserver;)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
 .method public abstract deletePackage(Ljava/lang/String;Landroid/content/pm/IPackageDeleteObserver2;II)V
     .annotation system Ldalvik/annotation/Throws;
         value = {

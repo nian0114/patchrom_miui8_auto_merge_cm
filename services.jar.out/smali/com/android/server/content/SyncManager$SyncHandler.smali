@@ -147,7 +147,7 @@
 
     iget-object v4, p0, Lcom/android/server/content/SyncManager$SyncHandler;->this$0:Lcom/android/server/content/SyncManager;
 
-    iget-object v4, v4, Lcom/android/server/content/SyncManager;->mActiveSyncContexts:Ljava/util/ArrayList;
+    iget-object v4, v4, Lcom/android/server/content/SyncManager;->mActiveSyncContexts:Ljava/util/concurrent/CopyOnWriteArrayList;
 
     invoke-direct {v2, v4}, Ljava/util/ArrayList;-><init>(Ljava/util/Collection;)V
 
@@ -219,9 +219,9 @@
 
     iget-object v0, p0, Lcom/android/server/content/SyncManager$SyncHandler;->this$0:Lcom/android/server/content/SyncManager;
 
-    iget-object v0, v0, Lcom/android/server/content/SyncManager;->mActiveSyncContexts:Ljava/util/ArrayList;
+    iget-object v0, v0, Lcom/android/server/content/SyncManager;->mActiveSyncContexts:Ljava/util/concurrent/CopyOnWriteArrayList;
 
-    invoke-virtual {v0, p1}, Ljava/util/ArrayList;->remove(Ljava/lang/Object;)Z
+    invoke-virtual {v0, p1}, Ljava/util/concurrent/CopyOnWriteArrayList;->remove(Ljava/lang/Object;)Z
 
     iget-object v0, p0, Lcom/android/server/content/SyncManager$SyncHandler;->this$0:Lcom/android/server/content/SyncManager;
 
@@ -350,9 +350,9 @@
 
     iget-object v4, p0, Lcom/android/server/content/SyncManager$SyncHandler;->this$0:Lcom/android/server/content/SyncManager;
 
-    iget-object v4, v4, Lcom/android/server/content/SyncManager;->mActiveSyncContexts:Ljava/util/ArrayList;
+    iget-object v4, v4, Lcom/android/server/content/SyncManager;->mActiveSyncContexts:Ljava/util/concurrent/CopyOnWriteArrayList;
 
-    invoke-virtual {v4}, Ljava/util/ArrayList;->size()I
+    invoke-virtual {v4}, Ljava/util/concurrent/CopyOnWriteArrayList;->size()I
 
     move-result v4
 
@@ -368,9 +368,9 @@
 
     iget-object v2, p0, Lcom/android/server/content/SyncManager$SyncHandler;->this$0:Lcom/android/server/content/SyncManager;
 
-    iget-object v2, v2, Lcom/android/server/content/SyncManager;->mActiveSyncContexts:Ljava/util/ArrayList;
+    iget-object v2, v2, Lcom/android/server/content/SyncManager;->mActiveSyncContexts:Ljava/util/concurrent/CopyOnWriteArrayList;
 
-    invoke-interface {v2}, Ljava/lang/Iterable;->iterator()Ljava/util/Iterator;
+    invoke-virtual {v2}, Ljava/util/concurrent/CopyOnWriteArrayList;->iterator()Ljava/util/Iterator;
 
     move-result-object v11
 
@@ -543,9 +543,9 @@
 
     iget-object v2, p0, Lcom/android/server/content/SyncManager$SyncHandler;->this$0:Lcom/android/server/content/SyncManager;
 
-    iget-object v2, v2, Lcom/android/server/content/SyncManager;->mActiveSyncContexts:Ljava/util/ArrayList;
+    iget-object v2, v2, Lcom/android/server/content/SyncManager;->mActiveSyncContexts:Ljava/util/concurrent/CopyOnWriteArrayList;
 
-    invoke-virtual {v2, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
+    invoke-virtual {v2, v1}, Ljava/util/concurrent/CopyOnWriteArrayList;->add(Ljava/lang/Object;)Z
 
     iget-object v2, v1, Lcom/android/server/content/SyncManager$ActiveSyncContext;->mSyncOperation:Lcom/android/server/content/SyncOperation;
 
@@ -1973,11 +1973,18 @@
 
     move-result v17
 
-    if-eqz v17, :cond_2
-
-    return-void
+    if-eqz v17, :cond_3
 
     :cond_2
+    return-void
+
+    :cond_3
+    invoke-static {}, Lcom/android/server/content/SyncManagerInjector;->isNetReachable()Z
+
+    move-result v17
+
+    if-eqz v17, :cond_2
+
     const-wide v12, 0x7fffffffffffffffL
 
     .local v12, "earliestTimeoutTime":J
@@ -1989,22 +1996,22 @@
 
     move-object/from16 v0, v17
 
-    iget-object v0, v0, Lcom/android/server/content/SyncManager;->mActiveSyncContexts:Ljava/util/ArrayList;
+    iget-object v0, v0, Lcom/android/server/content/SyncManager;->mActiveSyncContexts:Ljava/util/concurrent/CopyOnWriteArrayList;
 
     move-object/from16 v17, v0
 
-    invoke-interface/range {v17 .. v17}, Ljava/lang/Iterable;->iterator()Ljava/util/Iterator;
+    invoke-virtual/range {v17 .. v17}, Ljava/util/concurrent/CopyOnWriteArrayList;->iterator()Ljava/util/Iterator;
 
     move-result-object v8
 
     .local v8, "currentSyncContext$iterator":Ljava/util/Iterator;
-    :cond_3
+    :cond_4
     :goto_0
     invoke-interface {v8}, Ljava/util/Iterator;->hasNext()Z
 
     move-result v17
 
-    if-eqz v17, :cond_5
+    if-eqz v17, :cond_6
 
     invoke-interface {v8}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
@@ -2032,7 +2039,7 @@
 
     move-result v17
 
-    if-eqz v17, :cond_4
+    if-eqz v17, :cond_5
 
     const-string v17, "SyncManager"
 
@@ -2058,10 +2065,10 @@
 
     invoke-static/range {v17 .. v18}, Landroid/util/Log;->v(Ljava/lang/String;Ljava/lang/String;)I
 
-    :cond_4
+    :cond_5
     cmp-long v17, v12, v10
 
-    if-lez v17, :cond_3
+    if-lez v17, :cond_4
 
     move-wide v12, v10
 
@@ -2069,7 +2076,7 @@
 
     .end local v5    # "currentSyncContext":Lcom/android/server/content/SyncManager$ActiveSyncContext;
     .end local v10    # "currentSyncTimeoutTime":J
-    :cond_5
+    :cond_6
     const-string v17, "SyncManager"
 
     const/16 v18, 0x2
@@ -2078,7 +2085,7 @@
 
     move-result v17
 
-    if-eqz v17, :cond_6
+    if-eqz v17, :cond_7
 
     const-string v17, "SyncManager"
 
@@ -2156,7 +2163,7 @@
 
     invoke-static/range {v17 .. v18}, Landroid/util/Log;->v(Ljava/lang/String;Ljava/lang/String;)I
 
-    :cond_6
+    :cond_7
     move-wide/from16 v0, p1
 
     invoke-static {v12, v13, v0, v1}, Ljava/lang/Math;->min(JJ)J
@@ -2181,7 +2188,7 @@
 
     cmp-long v17, v6, v18
 
-    if-gez v17, :cond_8
+    if-gez v17, :cond_9
 
     const-string v17, "SyncManager"
 
@@ -2191,7 +2198,7 @@
 
     move-result v17
 
-    if-eqz v17, :cond_7
+    if-eqz v17, :cond_8
 
     const-string v17, "SyncManager"
 
@@ -2235,12 +2242,12 @@
 
     invoke-static/range {v17 .. v18}, Landroid/util/Log;->v(Ljava/lang/String;Ljava/lang/String;)I
 
-    :cond_7
+    :cond_8
     const-wide/16 v18, 0x7530
 
     add-long v6, v14, v18
 
-    :cond_8
+    :cond_9
     const/16 v16, 0x0
 
     .local v16, "shouldSet":Z
@@ -2253,7 +2260,7 @@
 
     move-object/from16 v17, v0
 
-    if-eqz v17, :cond_d
+    if-eqz v17, :cond_e
 
     move-object/from16 v0, p0
 
@@ -2267,7 +2274,7 @@
 
     cmp-long v17, v14, v18
 
-    if-gez v17, :cond_d
+    if-gez v17, :cond_e
 
     const/4 v4, 0x1
 
@@ -2277,9 +2284,9 @@
 
     cmp-long v17, v6, v18
 
-    if-eqz v17, :cond_e
+    if-eqz v17, :cond_f
 
-    if-eqz v4, :cond_9
+    if-eqz v4, :cond_a
 
     move-object/from16 v0, p0
 
@@ -2293,13 +2300,13 @@
 
     cmp-long v17, v6, v18
 
-    if-eqz v17, :cond_a
+    if-eqz v17, :cond_b
 
-    :cond_9
+    :cond_a
     const/16 v16, 0x1
 
     .end local v9    # "shouldCancel":Z
-    :cond_a
+    :cond_b
     :goto_2
     move-object/from16 v0, p0
 
@@ -2309,7 +2316,7 @@
 
     invoke-static/range {v17 .. v17}, Lcom/android/server/content/SyncManager;->-wrap9(Lcom/android/server/content/SyncManager;)V
 
-    if-eqz v16, :cond_f
+    if-eqz v16, :cond_10
 
     const-string v17, "SyncManager"
 
@@ -2319,7 +2326,7 @@
 
     move-result v17
 
-    if-eqz v17, :cond_b
+    if-eqz v17, :cond_c
 
     const-string v17, "SyncManager"
 
@@ -2383,7 +2390,7 @@
 
     invoke-static/range {v17 .. v18}, Landroid/util/Log;->v(Ljava/lang/String;Ljava/lang/String;)I
 
-    :cond_b
+    :cond_c
     invoke-static {v6, v7}, Ljava/lang/Long;->valueOf(J)Ljava/lang/Long;
 
     move-result-object v17
@@ -2424,27 +2431,27 @@
 
     invoke-virtual {v0, v1, v6, v7, v2}, Landroid/app/AlarmManager;->setExact(IJLandroid/app/PendingIntent;)V
 
-    :cond_c
+    :cond_d
     :goto_3
     return-void
 
     .end local v4    # "alarmIsActive":Z
     .restart local v9    # "shouldCancel":Z
-    :cond_d
+    :cond_e
     const/4 v4, 0x0
 
     .restart local v4    # "alarmIsActive":Z
     goto/16 :goto_1
 
-    :cond_e
+    :cond_f
     move v9, v4
 
     .local v9, "shouldCancel":Z
     goto/16 :goto_2
 
     .end local v9    # "shouldCancel":Z
-    :cond_f
-    if-eqz v9, :cond_c
+    :cond_10
+    if-eqz v9, :cond_d
 
     const/16 v17, 0x0
 
@@ -2647,6 +2654,26 @@
     return-wide v34
 
     :cond_6
+    invoke-static {}, Lcom/android/server/content/SyncManagerInjector;->isNetReachable()Z
+
+    move-result v34
+
+    if-nez v34, :cond_8
+
+    if-eqz v15, :cond_7
+
+    const-string v34, "SyncManager"
+
+    const-string v35, "maybeStartNextSync: device is not net reachable, skipping"
+
+    invoke-static/range {v34 .. v35}, Landroid/util/Log;->v(Ljava/lang/String;Ljava/lang/String;)I
+
+    :cond_7
+    const-wide v34, 0x7fffffffffffffffL
+
+    return-wide v34
+
+    :cond_8
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/content/SyncManager$SyncHandler;->this$0:Lcom/android/server/content/SyncManager;
@@ -2665,9 +2692,9 @@
 
     move-object/from16 v1, v35
 
-    if-ne v0, v1, :cond_8
+    if-ne v0, v1, :cond_a
 
-    if-eqz v15, :cond_7
+    if-eqz v15, :cond_9
 
     const-string v34, "SyncManager"
 
@@ -2675,12 +2702,12 @@
 
     invoke-static/range {v34 .. v35}, Landroid/util/Log;->v(Ljava/lang/String;Ljava/lang/String;)I
 
-    :cond_7
+    :cond_9
     const-wide v34, 0x7fffffffffffffffL
 
     return-wide v34
 
-    :cond_8
+    :cond_a
     invoke-static {}, Landroid/os/SystemClock;->elapsedRealtime()J
 
     move-result-wide v20
@@ -2706,7 +2733,7 @@
 
     monitor-enter v35
 
-    if-eqz v15, :cond_9
+    if-eqz v15, :cond_b
 
     :try_start_0
     const-string v34, "SyncManager"
@@ -2753,7 +2780,7 @@
 
     invoke-static {v0, v1}, Landroid/util/Log;->v(Ljava/lang/String;Ljava/lang/String;)I
 
-    :cond_9
+    :cond_b
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/content/SyncManager$SyncHandler;->this$0:Lcom/android/server/content/SyncManager;
@@ -2801,13 +2828,13 @@
     move-result-object v28
 
     .local v28, "removedUsers":Ljava/util/Set;, "Ljava/util/Set<Ljava/lang/Integer;>;"
-    :cond_a
+    :cond_c
     :goto_0
     invoke-interface/range {v25 .. v25}, Ljava/util/Iterator;->hasNext()Z
 
     move-result v34
 
-    if-eqz v34, :cond_12
+    if-eqz v34, :cond_14
 
     invoke-interface/range {v25 .. v25}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
@@ -2834,7 +2861,7 @@
 
     move-result v34
 
-    if-nez v34, :cond_c
+    if-nez v34, :cond_e
 
     move-object/from16 v0, p0
 
@@ -2867,7 +2894,7 @@
     move-result-object v33
 
     .local v33, "userInfo":Landroid/content/pm/UserInfo;
-    if-nez v33, :cond_b
+    if-nez v33, :cond_d
 
     move-object/from16 v0, v24
 
@@ -2891,8 +2918,8 @@
 
     invoke-interface {v0, v1}, Ljava/util/Set;->add(Ljava/lang/Object;)Z
 
-    :cond_b
-    if-eqz v15, :cond_a
+    :cond_d
+    if-eqz v15, :cond_c
 
     const-string v34, "SyncManager"
 
@@ -2958,7 +2985,7 @@
     .restart local v24    # "op":Lcom/android/server/content/SyncOperation;
     .restart local v25    # "operationIterator":Ljava/util/Iterator;, "Ljava/util/Iterator<Lcom/android/server/content/SyncOperation;>;"
     .restart local v28    # "removedUsers":Ljava/util/Set;, "Ljava/util/Set<Ljava/lang/Integer;>;"
-    :cond_c
+    :cond_e
     :try_start_1
     move-object/from16 v0, p0
 
@@ -2986,7 +3013,7 @@
     const/4 v9, 0x0
 
     .local v9, "ai":Landroid/content/pm/ApplicationInfo;
-    if-eqz v27, :cond_d
+    if-eqz v27, :cond_f
 
     :try_start_2
     move-object/from16 v0, p0
@@ -3019,8 +3046,8 @@
     move-result-object v9
 
     .end local v9    # "ai":Landroid/content/pm/ApplicationInfo;
-    :cond_d
-    if-eqz v9, :cond_e
+    :cond_f
+    if-eqz v9, :cond_10
 
     :try_start_3
     move-object/from16 v0, p0
@@ -3061,7 +3088,7 @@
 
     move-result v34
 
-    if-eqz v34, :cond_e
+    if-eqz v34, :cond_10
 
     move-object/from16 v0, p0
 
@@ -3083,7 +3110,7 @@
 
     iput-boolean v0, v1, Lcom/android/server/content/SyncOperation;->appIdle:Z
 
-    if-eqz v15, :cond_a
+    if-eqz v15, :cond_c
 
     const-string v34, "SyncManager"
 
@@ -3150,7 +3177,7 @@
 
     .end local v9    # "ai":Landroid/content/pm/ApplicationInfo;
     .end local v13    # "e":Landroid/content/pm/PackageManager$NameNotFoundException;
-    :cond_e
+    :cond_10
     const/16 v34, 0x0
 
     move/from16 v0, v34
@@ -3167,7 +3194,7 @@
 
     move-result v34
 
-    if-nez v34, :cond_f
+    if-nez v34, :cond_11
 
     invoke-interface/range {v25 .. v25}, Ljava/util/Iterator;->remove()V
 
@@ -3195,7 +3222,7 @@
 
     goto/16 :goto_0
 
-    :cond_f
+    :cond_11
     move-object/from16 v0, v24
 
     iget-wide v0, v0, Lcom/android/server/content/SyncOperation;->effectiveRunTime:J
@@ -3212,7 +3239,7 @@
 
     cmp-long v34, v36, v20
 
-    if-lez v34, :cond_11
+    if-lez v34, :cond_13
 
     move-object/from16 v0, v24
 
@@ -3222,7 +3249,7 @@
 
     cmp-long v34, v18, v36
 
-    if-lez v34, :cond_10
+    if-lez v34, :cond_12
 
     move-object/from16 v0, v24
 
@@ -3230,8 +3257,8 @@
 
     move-wide/from16 v18, v0
 
-    :cond_10
-    if-eqz v15, :cond_a
+    :cond_12
+    if-eqz v15, :cond_c
 
     const-string v34, "SyncManager"
 
@@ -3305,7 +3332,24 @@
 
     goto/16 :goto_0
 
-    :cond_11
+    :cond_13
+    move-object/from16 v0, p0
+
+    iget-object v0, v0, Lcom/android/server/content/SyncManager$SyncHandler;->this$0:Lcom/android/server/content/SyncManager;
+
+    move-object/from16 v34, v0
+
+    move-object/from16 v0, v34
+
+    move-object/from16 v1, v24
+
+    # invokes: Lcom/android/server/content/SyncManager;->isTrafficForbidden(Lcom/android/server/content/SyncOperation;)Z
+    invoke-static {v0, v1}, Lcom/android/server/content/SyncManager;->access$isTrafficForbidden(Lcom/android/server/content/SyncManager;Lcom/android/server/content/SyncOperation;)Z
+
+    move-result v34
+
+    if-nez v34, :cond_d
+
     move-object/from16 v0, v26
 
     move-object/from16 v1, v24
@@ -3316,19 +3360,19 @@
 
     .end local v24    # "op":Lcom/android/server/content/SyncOperation;
     .end local v27    # "packageName":Ljava/lang/String;
-    :cond_12
+    :cond_14
     invoke-interface/range {v28 .. v28}, Ljava/lang/Iterable;->iterator()Ljava/util/Iterator;
 
     move-result-object v32
 
     .local v32, "user$iterator":Ljava/util/Iterator;
-    :cond_13
+    :cond_15
     :goto_1
     invoke-interface/range {v32 .. v32}, Ljava/util/Iterator;->hasNext()Z
 
     move-result v34
 
-    if-eqz v34, :cond_14
+    if-eqz v34, :cond_16
 
     invoke-interface/range {v32 .. v32}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
@@ -3359,7 +3403,7 @@
 
     move-result-object v34
 
-    if-nez v34, :cond_13
+    if-nez v34, :cond_15
 
     move-object/from16 v0, p0
 
@@ -3382,10 +3426,10 @@
     goto :goto_1
 
     .end local v31    # "user":Ljava/lang/Integer;
-    :cond_14
+    :cond_16
     monitor-exit v35
 
-    if-eqz v15, :cond_15
+    if-eqz v15, :cond_17
 
     const-string v34, "SyncManager"
 
@@ -3413,10 +3457,10 @@
 
     invoke-static/range {v34 .. v35}, Landroid/util/Log;->v(Ljava/lang/String;Ljava/lang/String;)I
 
-    :cond_15
+    :cond_17
     invoke-static/range {v26 .. v26}, Ljava/util/Collections;->sort(Ljava/util/List;)V
 
-    if-eqz v15, :cond_16
+    if-eqz v15, :cond_18
 
     const-string v34, "SyncManager"
 
@@ -3424,7 +3468,7 @@
 
     invoke-static/range {v34 .. v35}, Landroid/util/Log;->v(Ljava/lang/String;Ljava/lang/String;)I
 
-    :cond_16
+    :cond_18
     const/4 v14, 0x0
 
     .local v14, "i":I
@@ -3434,7 +3478,7 @@
 
     .local v4, "N":I
     :goto_2
-    if-ge v14, v4, :cond_2a
+    if-ge v14, v4, :cond_2c
 
     move-object/from16 v0, v26
 
@@ -3476,11 +3520,11 @@
 
     move-object/from16 v0, v34
 
-    iget-object v0, v0, Lcom/android/server/content/SyncManager;->mActiveSyncContexts:Ljava/util/ArrayList;
+    iget-object v0, v0, Lcom/android/server/content/SyncManager;->mActiveSyncContexts:Ljava/util/concurrent/CopyOnWriteArrayList;
 
     move-object/from16 v34, v0
 
-    invoke-interface/range {v34 .. v34}, Ljava/lang/Iterable;->iterator()Ljava/util/Iterator;
+    invoke-virtual/range {v34 .. v34}, Ljava/util/concurrent/CopyOnWriteArrayList;->iterator()Ljava/util/Iterator;
 
     move-result-object v7
 
@@ -3488,13 +3532,13 @@
     .end local v16    # "longRunning":Lcom/android/server/content/SyncManager$ActiveSyncContext;
     .end local v23    # "oldestNonExpeditedRegular":Lcom/android/server/content/SyncManager$ActiveSyncContext;
     .local v7, "activeSyncContext$iterator":Ljava/util/Iterator;
-    :cond_17
+    :cond_19
     :goto_3
     invoke-interface {v7}, Ljava/util/Iterator;->hasNext()Z
 
     move-result v34
 
-    if-eqz v34, :cond_1c
+    if-eqz v34, :cond_1e
 
     invoke-interface {v7}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
@@ -3510,17 +3554,17 @@
 
     move-result v34
 
-    if-eqz v34, :cond_19
+    if-eqz v34, :cond_1b
 
     add-int/lit8 v17, v17, 0x1
 
-    :cond_18
+    :cond_1a
     :goto_4
     invoke-virtual {v5, v10}, Lcom/android/server/content/SyncOperation;->isConflict(Lcom/android/server/content/SyncOperation;)Z
 
     move-result v34
 
-    if-eqz v34, :cond_1b
+    if-eqz v34, :cond_1d
 
     move-object v12, v6
 
@@ -3528,16 +3572,16 @@
     goto :goto_3
 
     .end local v12    # "conflict":Lcom/android/server/content/SyncManager$ActiveSyncContext;
-    :cond_19
+    :cond_1b
     add-int/lit8 v22, v22, 0x1
 
     invoke-virtual {v5}, Lcom/android/server/content/SyncOperation;->isExpedited()Z
 
     move-result v34
 
-    if-nez v34, :cond_18
+    if-nez v34, :cond_1a
 
-    if-eqz v23, :cond_1a
+    if-eqz v23, :cond_1c
 
     move-object/from16 v0, v23
 
@@ -3551,23 +3595,23 @@
 
     cmp-long v34, v34, v36
 
-    if-lez v34, :cond_18
+    if-lez v34, :cond_1a
 
-    :cond_1a
+    :cond_1c
     move-object/from16 v23, v6
 
     .local v23, "oldestNonExpeditedRegular":Lcom/android/server/content/SyncManager$ActiveSyncContext;
     goto :goto_4
 
     .end local v23    # "oldestNonExpeditedRegular":Lcom/android/server/content/SyncManager$ActiveSyncContext;
-    :cond_1b
+    :cond_1d
     invoke-virtual {v5}, Lcom/android/server/content/SyncOperation;->isInitialization()Z
 
     move-result v34
 
     move/from16 v0, v34
 
-    if-ne v11, v0, :cond_17
+    if-ne v11, v0, :cond_19
 
     iget-wide v0, v6, Lcom/android/server/content/SyncManager$ActiveSyncContext;->mStartTime:J
 
@@ -3581,7 +3625,7 @@
 
     cmp-long v34, v34, v20
 
-    if-gez v34, :cond_17
+    if-gez v34, :cond_19
 
     move-object/from16 v16, v6
 
@@ -3591,8 +3635,8 @@
     .end local v5    # "activeOp":Lcom/android/server/content/SyncOperation;
     .end local v6    # "activeSyncContext":Lcom/android/server/content/SyncManager$ActiveSyncContext;
     .end local v16    # "longRunning":Lcom/android/server/content/SyncManager$ActiveSyncContext;
-    :cond_1c
-    if-eqz v15, :cond_1d
+    :cond_1e
+    if-eqz v15, :cond_1f
 
     const-string v34, "SyncManager"
 
@@ -3758,8 +3802,8 @@
 
     invoke-static/range {v34 .. v35}, Landroid/util/Log;->v(Ljava/lang/String;Ljava/lang/String;)I
 
-    :cond_1d
-    if-eqz v11, :cond_21
+    :cond_1f
+    if-eqz v11, :cond_23
 
     invoke-static {}, Lcom/android/server/content/SyncManager;->-get1()I
 
@@ -3769,15 +3813,15 @@
 
     move/from16 v1, v34
 
-    if-ge v0, v1, :cond_20
+    if-ge v0, v1, :cond_22
 
     const/16 v29, 0x1
 
     .local v29, "roomAvailable":Z
     :goto_5
-    if-eqz v12, :cond_27
+    if-eqz v12, :cond_29
 
-    if-eqz v11, :cond_1e
+    if-eqz v11, :cond_20
 
     iget-object v0, v12, Lcom/android/server/content/SyncManager$ActiveSyncContext;->mSyncOperation:Lcom/android/server/content/SyncOperation;
 
@@ -3787,14 +3831,14 @@
 
     move-result v34
 
-    if-eqz v34, :cond_23
+    if-eqz v34, :cond_25
 
-    :cond_1e
+    :cond_20
     invoke-virtual {v10}, Lcom/android/server/content/SyncOperation;->isExpedited()Z
 
     move-result v34
 
-    if-eqz v34, :cond_1f
+    if-eqz v34, :cond_21
 
     iget-object v0, v12, Lcom/android/server/content/SyncManager$ActiveSyncContext;->mSyncOperation:Lcom/android/server/content/SyncOperation;
 
@@ -3804,10 +3848,10 @@
 
     move-result v34
 
-    if-eqz v34, :cond_26
+    if-eqz v34, :cond_28
 
     .end local v30    # "toReschedule":Lcom/android/server/content/SyncManager$ActiveSyncContext;
-    :cond_1f
+    :cond_21
     :goto_6
     add-int/lit8 v14, v14, 0x1
 
@@ -3815,14 +3859,14 @@
 
     .end local v29    # "roomAvailable":Z
     .restart local v30    # "toReschedule":Lcom/android/server/content/SyncManager$ActiveSyncContext;
-    :cond_20
+    :cond_22
     const/16 v29, 0x0
 
     .restart local v29    # "roomAvailable":Z
     goto :goto_5
 
     .end local v29    # "roomAvailable":Z
-    :cond_21
+    :cond_23
     invoke-static {}, Lcom/android/server/content/SyncManager;->-get2()I
 
     move-result v34
@@ -3831,7 +3875,7 @@
 
     move/from16 v1, v34
 
-    if-ge v0, v1, :cond_22
+    if-ge v0, v1, :cond_24
 
     const/16 v29, 0x1
 
@@ -3839,13 +3883,13 @@
     goto :goto_5
 
     .end local v29    # "roomAvailable":Z
-    :cond_22
+    :cond_24
     const/16 v29, 0x0
 
     .restart local v29    # "roomAvailable":Z
     goto :goto_5
 
-    :cond_23
+    :cond_25
     invoke-static {}, Lcom/android/server/content/SyncManager;->-get1()I
 
     move-result v34
@@ -3854,7 +3898,7 @@
 
     move/from16 v1, v34
 
-    if-ge v0, v1, :cond_1e
+    if-ge v0, v1, :cond_20
 
     move-object/from16 v30, v12
 
@@ -3867,7 +3911,7 @@
 
     move-result v34
 
-    if-eqz v34, :cond_24
+    if-eqz v34, :cond_26
 
     const-string v34, "SyncManager"
 
@@ -3894,9 +3938,9 @@
     invoke-static/range {v34 .. v35}, Landroid/util/Log;->v(Ljava/lang/String;Ljava/lang/String;)I
 
     .end local v30    # "toReschedule":Lcom/android/server/content/SyncManager$ActiveSyncContext;
-    :cond_24
+    :cond_26
     :goto_7
-    if-eqz v30, :cond_25
+    if-eqz v30, :cond_27
 
     const/16 v34, 0x0
 
@@ -3922,7 +3966,7 @@
 
     invoke-virtual/range {v34 .. v35}, Lcom/android/server/content/SyncManager;->scheduleSyncOperation(Lcom/android/server/content/SyncOperation;)V
 
-    :cond_25
+    :cond_27
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/content/SyncManager$SyncHandler;->this$0:Lcom/android/server/content/SyncManager;
@@ -3961,7 +4005,7 @@
     goto/16 :goto_6
 
     .local v30, "toReschedule":Lcom/android/server/content/SyncManager$ActiveSyncContext;
-    :cond_26
+    :cond_28
     iget-object v0, v12, Lcom/android/server/content/SyncManager$ActiveSyncContext;->mSyncOperation:Lcom/android/server/content/SyncOperation;
 
     move-object/from16 v34, v0
@@ -3972,7 +4016,7 @@
 
     move/from16 v0, v34
 
-    if-ne v11, v0, :cond_1f
+    if-ne v11, v0, :cond_21
 
     move-object/from16 v30, v12
 
@@ -3985,7 +4029,7 @@
 
     move-result v34
 
-    if-eqz v34, :cond_24
+    if-eqz v34, :cond_26
 
     const-string v34, "SyncManager"
 
@@ -4014,21 +4058,21 @@
     goto :goto_7
 
     .local v30, "toReschedule":Lcom/android/server/content/SyncManager$ActiveSyncContext;
-    :cond_27
-    if-nez v29, :cond_24
+    :cond_29
+    if-nez v29, :cond_26
 
     invoke-virtual {v10}, Lcom/android/server/content/SyncOperation;->isExpedited()Z
 
     move-result v34
 
-    if-eqz v34, :cond_28
+    if-eqz v34, :cond_2a
 
-    if-eqz v23, :cond_28
+    if-eqz v23, :cond_2a
 
-    if-eqz v11, :cond_29
+    if-eqz v11, :cond_2b
 
-    :cond_28
-    if-eqz v16, :cond_1f
+    :cond_2a
+    if-eqz v16, :cond_21
 
     move-object/from16 v0, v16
 
@@ -4042,7 +4086,7 @@
 
     move/from16 v0, v34
 
-    if-ne v11, v0, :cond_1f
+    if-ne v11, v0, :cond_21
 
     move-object/from16 v30, v16
 
@@ -4055,7 +4099,7 @@
 
     move-result v34
 
-    if-eqz v34, :cond_24
+    if-eqz v34, :cond_26
 
     const-string v34, "SyncManager"
 
@@ -4086,7 +4130,7 @@
     goto/16 :goto_7
 
     .local v30, "toReschedule":Lcom/android/server/content/SyncManager$ActiveSyncContext;
-    :cond_29
+    :cond_2b
     move-object/from16 v30, v23
 
     .local v30, "toReschedule":Lcom/android/server/content/SyncManager$ActiveSyncContext;
@@ -4098,7 +4142,7 @@
 
     move-result v34
 
-    if-eqz v34, :cond_24
+    if-eqz v34, :cond_26
 
     const-string v34, "SyncManager"
 
@@ -4142,7 +4186,7 @@
     .end local v17    # "numInit":I
     .end local v22    # "numRegular":I
     .end local v29    # "roomAvailable":Z
-    :cond_2a
+    :cond_2c
     return-wide v18
 .end method
 
@@ -4402,6 +4446,12 @@
     const-string v7, "success"
 
     .local v7, "historyMessage":Ljava/lang/String;
+    move-object/from16 v0, p0
+
+    iget-object v3, v0, Lcom/android/server/content/SyncManager$SyncHandler;->this$0:Lcom/android/server/content/SyncManager;
+
+    invoke-virtual {v3, v6}, Lcom/android/server/content/SyncManager;->removeIgnoreSettingsFlag(Lcom/android/server/content/SyncOperation;)V
+
     const/4 v9, 0x0
 
     .local v9, "downstreamActivity":I

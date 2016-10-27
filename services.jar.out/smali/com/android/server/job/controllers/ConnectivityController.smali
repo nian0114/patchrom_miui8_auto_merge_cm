@@ -128,7 +128,11 @@
 
     sget-object v2, Landroid/os/UserHandle;->ALL:Landroid/os/UserHandle;
 
-    move-object v5, v4
+    const/4 v4, 0x0
+
+    invoke-static {}, Lcom/android/internal/os/BackgroundThread;->getHandler()Landroid/os/Handler;
+
+    move-result-object v5
 
     invoke-virtual/range {v0 .. v5}, Landroid/content/Context;->registerReceiverAsUser(Landroid/content/BroadcastReceiver;Landroid/os/UserHandle;Landroid/content/IntentFilter;Ljava/lang/String;Landroid/os/Handler;)Landroid/content/Intent;
 

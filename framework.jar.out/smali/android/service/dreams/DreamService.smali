@@ -420,9 +420,9 @@
 
     if-nez v3, :cond_6
 
-    new-instance v3, Lcom/android/internal/policy/PhoneWindow;
+    new-instance v3, Lcom/android/internal/policy/MiuiPhoneWindow;
 
-    invoke-direct {v3, p0}, Lcom/android/internal/policy/PhoneWindow;-><init>(Landroid/content/Context;)V
+    invoke-direct {v3, p0}, Lcom/android/internal/policy/MiuiPhoneWindow;-><init>(Landroid/content/Context;)V
 
     iput-object v3, p0, Landroid/service/dreams/DreamService;->mWindow:Landroid/view/Window;
 

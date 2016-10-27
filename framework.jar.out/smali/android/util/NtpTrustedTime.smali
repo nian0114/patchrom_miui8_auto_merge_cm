@@ -258,7 +258,7 @@
 
     long-to-int v3, v4
 
-    invoke-virtual {v0, v2, v3}, Landroid/net/SntpClient;->requestTime(Ljava/lang/String;I)Z
+    invoke-static {v0, v2, v3}, Landroid/util/NtpTrustedTimeInjector;->requestTime(Landroid/net/SntpClient;Ljava/lang/String;I)Z
 
     move-result v2
 

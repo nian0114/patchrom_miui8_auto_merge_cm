@@ -217,7 +217,7 @@
 
     iput-object v8, p0, Landroid/text/SpanSet;->spanFlags:[I
 
-    :cond_1
+    :goto_0
     iget v3, p0, Landroid/text/SpanSet;->numberOfSpans:I
 
     .local v3, "prevNumberOfSpans":I
@@ -226,7 +226,7 @@
     const/4 v1, 0x0
 
     .local v1, "i":I
-    :goto_0
+    :goto_1
     if-ge v1, v2, :cond_3
 
     aget-object v4, v0, v1
@@ -244,8 +244,13 @@
     .local v5, "spanEnd":I
     if-ne v7, v5, :cond_2
 
-    :goto_1
+    :goto_2
     add-int/lit8 v1, v1, 0x1
+
+    goto :goto_1
+
+    :cond_1
+    invoke-virtual {p0}, Landroid/text/SpanSet;->recycle()V
 
     goto :goto_0
 
@@ -285,7 +290,7 @@
 
     iput v8, p0, Landroid/text/SpanSet;->numberOfSpans:I
 
-    goto :goto_1
+    goto :goto_2
 
     .end local v4    # "span":Ljava/lang/Object;, "TE;"
     .end local v5    # "spanEnd":I

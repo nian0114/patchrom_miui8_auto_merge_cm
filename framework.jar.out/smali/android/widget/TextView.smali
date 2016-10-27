@@ -8957,6 +8957,10 @@
     packed-switch p2, :pswitch_data_0
 
     :goto_0
+    invoke-static {v0, p2, p3}, Landroid/graphics/MiuiTypeface;->getChangedTypeface(Landroid/graphics/Typeface;II)Landroid/graphics/Typeface;
+
+    move-result-object v0
+
     invoke-virtual {p0, v0, p3}, Landroid/widget/TextView;->setTypeface(Landroid/graphics/Typeface;I)V
 
     return-void
@@ -19552,29 +19556,38 @@
     .prologue
     iget-boolean v0, p0, Landroid/widget/TextView;->mTemporaryDetach:Z
 
-    if-eqz v0, :cond_0
+    if-eqz v0, :cond_1
 
     invoke-super {p0, p1, p2, p3}, Landroid/view/View;->onFocusChanged(ZILandroid/graphics/Rect;)V
 
-    return-void
-
-    :cond_0
     iget-object v0, p0, Landroid/widget/TextView;->mEditor:Landroid/widget/Editor;
 
-    if-eqz v0, :cond_1
+    if-eqz v0, :cond_0
+
+    iget-object v0, p0, Landroid/widget/TextView;->mEditor:Landroid/widget/Editor;
+
+    invoke-virtual {v0}, Landroid/widget/Editor;->stopSelectionActionMode()V
+
+    :cond_0
+    return-void
+
+    :cond_1
+    iget-object v0, p0, Landroid/widget/TextView;->mEditor:Landroid/widget/Editor;
+
+    if-eqz v0, :cond_2
 
     iget-object v0, p0, Landroid/widget/TextView;->mEditor:Landroid/widget/Editor;
 
     invoke-virtual {v0, p1, p2}, Landroid/widget/Editor;->onFocusChanged(ZI)V
 
-    :cond_1
-    if-eqz p1, :cond_2
+    :cond_2
+    if-eqz p1, :cond_3
 
     iget-object v0, p0, Landroid/widget/TextView;->mText:Ljava/lang/CharSequence;
 
     instance-of v0, v0, Landroid/text/Spannable;
 
-    if-eqz v0, :cond_2
+    if-eqz v0, :cond_3
 
     iget-object v6, p0, Landroid/widget/TextView;->mText:Ljava/lang/CharSequence;
 
@@ -19584,12 +19597,12 @@
     invoke-static {v6}, Landroid/text/method/MetaKeyKeyListener;->resetMetaState(Landroid/text/Spannable;)V
 
     .end local v6    # "sp":Landroid/text/Spannable;
-    :cond_2
+    :cond_3
     invoke-direct {p0, p1}, Landroid/widget/TextView;->startStopMarquee(Z)V
 
     iget-object v0, p0, Landroid/widget/TextView;->mTransformation:Landroid/text/method/TransformationMethod;
 
-    if-eqz v0, :cond_3
+    if-eqz v0, :cond_4
 
     iget-object v0, p0, Landroid/widget/TextView;->mTransformation:Landroid/text/method/TransformationMethod;
 
@@ -19605,7 +19618,7 @@
 
     invoke-interface/range {v0 .. v5}, Landroid/text/method/TransformationMethod;->onFocusChanged(Landroid/view/View;Ljava/lang/CharSequence;ZILandroid/graphics/Rect;)V
 
-    :cond_3
+    :cond_4
     invoke-super {p0, p1, p2, p3}, Landroid/view/View;->onFocusChanged(ZILandroid/graphics/Rect;)V
 
     return-void
@@ -22605,7 +22618,7 @@
 .end method
 
 .method public onTextContextMenuItem(I)Z
-    .locals 9
+    .locals 10
     .param p1, "id"    # I
 
     .prologue
@@ -22764,6 +22777,24 @@
 
     invoke-virtual {p0}, Landroid/widget/TextView;->stopTextActionMode()V
 
+    :try_start_0
+    iget-object v5, p0, Landroid/widget/TextView;->mText:Ljava/lang/CharSequence;
+
+    check-cast v5, Landroid/text/Spannable;
+
+    invoke-virtual {p0}, Landroid/widget/TextView;->getSelectionEnd()I
+
+    move-result v7
+
+    invoke-static {v5, v7}, Landroid/text/Selection;->setSelection(Landroid/text/Spannable;I)V
+    :try_end_0
+    .catch Ljava/lang/ClassCastException; {:try_start_0 .. :try_end_0} :catch_0
+
+    return v6
+
+    :catch_0
+    move-exception v8
+
     return v6
 
     :sswitch_7
@@ -22782,6 +22813,8 @@
     invoke-direct {p0}, Landroid/widget/TextView;->shareSelectedText()V
 
     return v6
+
+    nop
 
     :sswitch_data_0
     .sparse-switch
@@ -22868,15 +22901,7 @@
 
     iget-object v7, p0, Landroid/widget/TextView;->mEditor:Landroid/widget/Editor;
 
-    iget-object v7, v7, Landroid/widget/Editor;->mSelectionModifierCursorController:Landroid/widget/Editor$SelectionModifierCursorController;
-
-    if-eqz v7, :cond_3
-
-    iget-object v7, p0, Landroid/widget/TextView;->mEditor:Landroid/widget/Editor;
-
-    iget-object v7, v7, Landroid/widget/Editor;->mSelectionModifierCursorController:Landroid/widget/Editor$SelectionModifierCursorController;
-
-    invoke-virtual {v7}, Landroid/widget/Editor$SelectionModifierCursorController;->isDragAcceleratorActive()Z
+    invoke-virtual {v7}, Landroid/widget/Editor;->isInSwipeSelectionMode()Z
 
     move-result v7
 
@@ -25487,6 +25512,45 @@
 
     :cond_3
     invoke-virtual {p0, p1, p2, p3, p4}, Landroid/widget/TextView;->setCompoundDrawables(Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;Landroid/graphics/drawable/Drawable;)V
+
+    return-void
+.end method
+
+.method public setCursorDrawableRes(I)V
+    .locals 3
+    .param p1, "cursorDrawableRes"    # I
+
+    .prologue
+    iput p1, p0, Landroid/widget/TextView;->mCursorDrawableRes:I
+
+    const/4 v0, 0x0
+
+    .local v0, "i":I
+    :goto_0
+    iget-object v1, p0, Landroid/widget/TextView;->mEditor:Landroid/widget/Editor;
+
+    iget v1, v1, Landroid/widget/Editor;->mCursorCount:I
+
+    if-ge v0, v1, :cond_0
+
+    iget-object v1, p0, Landroid/widget/TextView;->mEditor:Landroid/widget/Editor;
+
+    iget-object v1, v1, Landroid/widget/Editor;->mCursorDrawable:[Landroid/graphics/drawable/Drawable;
+
+    const/4 v2, 0x0
+
+    aput-object v2, v1, v0
+
+    add-int/lit8 v0, v0, 0x1
+
+    goto :goto_0
+
+    :cond_0
+    iget-object v1, p0, Landroid/widget/TextView;->mEditor:Landroid/widget/Editor;
+
+    const/4 v2, 0x0
+
+    iput v2, v1, Landroid/widget/Editor;->mCursorCount:I
 
     return-void
 .end method
@@ -28348,6 +28412,14 @@
     .param p1, "tf"    # Landroid/graphics/Typeface;
 
     .prologue
+    invoke-virtual {p0}, Landroid/widget/TextView;->getContext()Landroid/content/Context;
+
+    move-result-object v0
+
+    invoke-static {v0, p1}, Lmiui/util/TypefaceUtils;->replaceTypeface(Landroid/content/Context;Landroid/graphics/Typeface;)Landroid/graphics/Typeface;
+
+    move-result-object p1
+
     iget-object v0, p0, Landroid/widget/TextView;->mTextPaint:Landroid/text/TextPaint;
 
     invoke-virtual {v0}, Landroid/text/TextPaint;->getTypeface()Landroid/graphics/Typeface;
@@ -28394,6 +28466,10 @@
 
     :goto_0
     invoke-virtual {p0, p1}, Landroid/widget/TextView;->setTypeface(Landroid/graphics/Typeface;)V
+
+    invoke-virtual {p0}, Landroid/widget/TextView;->getTypeface()Landroid/graphics/Typeface;
+
+    move-result-object p1
 
     if-eqz p1, :cond_2
 
@@ -28464,6 +28540,10 @@
     iget-object v2, p0, Landroid/widget/TextView;->mTextPaint:Landroid/text/TextPaint;
 
     invoke-virtual {v2, v3}, Landroid/text/TextPaint;->setTextSkewX(F)V
+
+    invoke-static {p1}, Landroid/graphics/MiuiTypeface;->getDefaultTypeface(Landroid/graphics/Typeface;)Landroid/graphics/Typeface;
+
+    move-result-object p1
 
     invoke-virtual {p0, p1}, Landroid/widget/TextView;->setTypeface(Landroid/graphics/Typeface;)V
 

@@ -217,6 +217,14 @@
     .end annotation
 .end method
 
+.method public abstract registerStatisticsClient(Landroid/bluetooth/IBluetoothGattCallback;)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
 .method public abstract removeService(IIILandroid/os/ParcelUuid;)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -320,6 +328,14 @@
 .end method
 
 .method public abstract unregisterServer(I)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract unregisterStatisticsClient(Landroid/bluetooth/IBluetoothGattCallback;)V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;

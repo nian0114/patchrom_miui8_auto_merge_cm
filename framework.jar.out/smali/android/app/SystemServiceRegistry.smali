@@ -834,6 +834,8 @@
 
     invoke-static {v0, v1, v2}, Landroid/app/SystemServiceRegistry;->registerService(Ljava/lang/String;Ljava/lang/Class;Landroid/app/SystemServiceRegistry$ServiceFetcher;)V
 
+    invoke-static {}, Landroid/app/ContextImplInjector;->registerMiuiServices()V
+
     return-void
 .end method
 
@@ -934,6 +936,33 @@
     sget-object v0, Landroid/app/SystemServiceRegistry;->SYSTEM_SERVICE_FETCHERS:Ljava/util/HashMap;
 
     invoke-virtual {v0, p0, p2}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
+    return-void
+.end method
+
+.method static varargs registerService(Ljava/lang/String;Ljava/lang/Class;Landroid/app/SystemServiceRegistry$ServiceFetcher;[Ljava/lang/Object;)V
+    .locals 0
+    .param p0, "serviceName"    # Ljava/lang/String;
+    .param p3, "unuse"    # [Ljava/lang/Object;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "<T:",
+            "Ljava/lang/Object;",
+            ">(",
+            "Ljava/lang/String;",
+            "Ljava/lang/Class",
+            "<TT;>;",
+            "Landroid/app/SystemServiceRegistry$ServiceFetcher",
+            "<TT;>;[",
+            "Ljava/lang/Object;",
+            ")V"
+        }
+    .end annotation
+
+    .prologue
+    .local p1, "serviceClass":Ljava/lang/Class;, "Ljava/lang/Class<TT;>;"
+    .local p2, "serviceFetcher":Landroid/app/SystemServiceRegistry$ServiceFetcher;, "Landroid/app/SystemServiceRegistry$ServiceFetcher<TT;>;"
+    invoke-static {p0, p1, p2}, Landroid/app/SystemServiceRegistry;->registerService(Ljava/lang/String;Ljava/lang/Class;Landroid/app/SystemServiceRegistry$ServiceFetcher;)V
 
     return-void
 .end method
