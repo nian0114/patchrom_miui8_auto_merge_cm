@@ -60,5 +60,10 @@ fi
 
 if [ $2 = "$BUILD_OUT/telephony-common" ]
 then
-    appendSmaliPart "telephony-common"
+  rm -rf $2/smali/com/android/internal/telephony/SubscriptionController*.smali
+  rm -rf $2/smali/com/android/internal/telephony/SubscriptionInfoUpdater＊.smali
+  rm -rf $2/smali/com/android/internal/telephony/UiccSmsController.smali
+  cp -rf $1/smali/com/android/internal/telephony/SubscriptionController*.smali $2/smali/com/android/internal/telephony/
+  cp -rf $1/smali/com/android/internal/telephony/SubscriptionInfoUpdater＊.smali $2/smali/com/android/internal/telephony/
+  cp -rf $1/smali/com/android/internal/telephony/UiccSmsController.smali $2/smali/com/android/internal/telephony/
 fi

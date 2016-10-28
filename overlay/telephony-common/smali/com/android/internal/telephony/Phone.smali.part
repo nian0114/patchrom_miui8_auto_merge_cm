@@ -1,3 +1,0 @@
-
-.method public abstract selectNetworkManually(Lcom/android/internal/telephony/OperatorInfo;Landroid/os/Message;)V
-.end method
