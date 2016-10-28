@@ -14,12 +14,12 @@ local-previous-target-dir :=
 # All apps from original ZIP, but has smali files chanded
 local-modified-apps :=
 
-local-modified-jars := 
+local-modified-jars :=
 
 # All apks from MIUI
 local-miui-removed-apps := FM
 
-local-miui-modified-apps := TeleService
+local-miui-modified-apps := TeleService SecurityCoreAdd
 
 PORT_PRODUCT := nian_m7
 
