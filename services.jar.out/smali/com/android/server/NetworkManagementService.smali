@@ -976,32 +976,28 @@
 
     move-result v0
 
-    packed-switch v0, :pswitch_data_0
+    sparse-switch v0, :sswitch_data_0
 
-    :pswitch_0
     const-string v0, "open"
 
+    :goto_0
     return-object v0
 
-    :pswitch_1
+    :sswitch_0
     const-string v0, "wpa-psk"
 
-    return-object v0
+    goto :goto_0
 
-    :pswitch_2
+    :sswitch_1
     const-string v0, "wpa2-psk"
 
-    return-object v0
+    goto :goto_0
 
-    nop
-
-    :pswitch_data_0
-    .packed-switch 0x1
-        :pswitch_1
-        :pswitch_0
-        :pswitch_0
-        :pswitch_2
-    .end packed-switch
+    :sswitch_data_0
+    .sparse-switch
+        0x1 -> :sswitch_0
+        0x6 -> :sswitch_1
+    .end sparse-switch
 .end method
 
 .method private getUidFirewallRules(I)Landroid/util/SparseIntArray;
