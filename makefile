@@ -12,7 +12,7 @@ local-out-zip-file := MIUI_m7.zip
 local-previous-target-dir :=
 
 # All apps from original ZIP, but has smali files chanded
-local-modified-apps :=
+local-modified-apps := Bluetooth
 
 local-modified-jars :=
 
