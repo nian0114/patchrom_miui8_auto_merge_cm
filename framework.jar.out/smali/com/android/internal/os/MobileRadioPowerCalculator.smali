@@ -30,7 +30,7 @@
     .prologue
     invoke-direct {p0}, Lcom/android/internal/os/PowerCalculator;-><init>()V
 
-    const/4 v1, 0x5
+    const/4 v1, 0x6
 
     new-array v1, v1, [D
 
