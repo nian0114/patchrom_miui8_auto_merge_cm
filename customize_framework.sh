@@ -64,6 +64,6 @@ then
   rm -rf $2/smali/com/android/internal/telephony/SubscriptionInfoUpdater＊.smali
   rm -rf $2/smali/com/android/internal/telephony/UiccSmsController.smali
   cp -rf $1/smali/com/android/internal/telephony/SubscriptionController*.smali $2/smali/com/android/internal/telephony/
-  cp -rf $1/smali/com/android/internal/telephony/SubscriptionInfoUpdater＊.smali $2/smali/com/android/internal/telephony/
+  cp -rf $1/smali/com/android/internal/telephony/SubscriptionInfoUpdater*.smali $2/smali/com/android/internal/telephony/
   cp -rf $1/smali/com/android/internal/telephony/UiccSmsController.smali $2/smali/com/android/internal/telephony/
 fi
