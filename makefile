@@ -1,6 +1,7 @@
 #
 # Makefile for HTC One
 #
+#It is Only to test git pull normally
 
 # The original zip file, MUST be specified by each product
 local-zip-file     := stockrom.zip
