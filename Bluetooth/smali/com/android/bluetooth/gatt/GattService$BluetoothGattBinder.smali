@@ -1417,3 +1417,29 @@
     .line 421
     return-void
 .end method
+
+.method public registerStatisticsClient(Landroid/bluetooth/IBluetoothGattCallback;)V
+    .locals 0
+    .param p1, "callback"    # Landroid/bluetooth/IBluetoothGattCallback;
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+
+    .prologue
+    return-void
+.end method
+
+.method public unregisterStatisticsClient(Landroid/bluetooth/IBluetoothGattCallback;)V
+    .locals 0
+    .param p1, "callback"    # Landroid/bluetooth/IBluetoothGattCallback;
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+
+    .prologue
+    return-void
+.end method
