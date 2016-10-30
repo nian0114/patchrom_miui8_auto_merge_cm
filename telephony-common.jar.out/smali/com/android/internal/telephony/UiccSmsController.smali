@@ -779,19 +779,19 @@
 .end method
 
 .method public isSmsSimPickActivityNeeded(I)Z
-    .locals 13
+    .locals 12
     .param p1, "subId"    # I
 
     .prologue
     const/4 v10, 0x1
 
-    const/4 v11, 0x0
+    const/4 v9, 0x0
 
     invoke-static {}, Landroid/app/ActivityThread;->currentApplication()Landroid/app/Application;
 
-    move-result-object v12
+    move-result-object v11
 
-    invoke-virtual {v12}, Landroid/app/Application;->getApplicationContext()Landroid/content/Context;
+    invoke-virtual {v11}, Landroid/app/Application;->getApplicationContext()Landroid/content/Context;
 
     move-result-object v1
 
@@ -801,32 +801,15 @@
     move-result v0
 
     .local v0, "canCurrentAppHandleAlwaysAsk":Z
-    invoke-virtual {p0}, Lcom/android/internal/telephony/UiccSmsController;->isSMSPromptEnabled()Z
+    const-string v11, "phone"
 
-    move-result v12
+    invoke-virtual {v1, v11}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
 
-    if-nez v12, :cond_0
+    move-result-object v8
 
-    if-eqz v0, :cond_0
+    check-cast v8, Landroid/telephony/TelephonyManager;
 
-    const-string v10, "RIL_UiccSmsController"
-
-    const-string v12, "isSmsSimPickActivityNeeded: false, sms prompt disabled."
-
-    invoke-static {v10, v12}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
-
-    return v11
-
-    :cond_0
-    const-string v12, "phone"
-
-    invoke-virtual {v1, v12}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
-
-    move-result-object v9
-
-    check-cast v9, Landroid/telephony/TelephonyManager;
-
-    .local v9, "telephonyManager":Landroid/telephony/TelephonyManager;
+    .local v8, "telephonyManager":Landroid/telephony/TelephonyManager;
     invoke-static {}, Landroid/os/Binder;->clearCallingIdentity()J
 
     move-result-wide v4
@@ -835,9 +818,9 @@
     :try_start_0
     invoke-static {v1}, Landroid/telephony/SubscriptionManager;->from(Landroid/content/Context;)Landroid/telephony/SubscriptionManager;
 
-    move-result-object v12
+    move-result-object v11
 
-    invoke-virtual {v12}, Landroid/telephony/SubscriptionManager;->getActiveSubscriptionInfoList()Ljava/util/List;
+    invoke-virtual {v11}, Landroid/telephony/SubscriptionManager;->getActiveSubscriptionInfoList()Ljava/util/List;
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
@@ -846,7 +829,7 @@
     .local v7, "subInfoList":Ljava/util/List;, "Ljava/util/List<Landroid/telephony/SubscriptionInfo;>;"
     invoke-static {v4, v5}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    if-eqz v7, :cond_5
+    if-eqz v7, :cond_2
 
     invoke-interface {v7}, Ljava/util/List;->size()I
 
@@ -857,7 +840,7 @@
 
     .local v2, "i":I
     :goto_0
-    if-ge v2, v6, :cond_2
+    if-ge v2, v6, :cond_1
 
     invoke-interface {v7, v2}, Ljava/util/List;->get(I)Ljava/lang/Object;
 
@@ -866,83 +849,60 @@
     check-cast v3, Landroid/telephony/SubscriptionInfo;
 
     .local v3, "sir":Landroid/telephony/SubscriptionInfo;
-    if-eqz v3, :cond_1
+    if-eqz v3, :cond_0
 
     invoke-virtual {v3}, Landroid/telephony/SubscriptionInfo;->getSubscriptionId()I
 
-    move-result v12
+    move-result v11
 
-    if-ne v12, p1, :cond_1
+    if-ne v11, p1, :cond_0
 
-    return v11
+    return v9
 
     .end local v2    # "i":I
     .end local v3    # "sir":Landroid/telephony/SubscriptionInfo;
     .end local v6    # "subInfoLength":I
     .end local v7    # "subInfoList":Ljava/util/List;, "Ljava/util/List<Landroid/telephony/SubscriptionInfo;>;"
     :catchall_0
-    move-exception v10
+    move-exception v9
 
     invoke-static {v4, v5}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    throw v10
+    throw v9
 
     .restart local v2    # "i":I
     .restart local v3    # "sir":Landroid/telephony/SubscriptionInfo;
     .restart local v6    # "subInfoLength":I
     .restart local v7    # "subInfoList":Ljava/util/List;, "Ljava/util/List<Landroid/telephony/SubscriptionInfo;>;"
-    :cond_1
+    :cond_0
     add-int/lit8 v2, v2, 0x1
 
     goto :goto_0
 
     .end local v3    # "sir":Landroid/telephony/SubscriptionInfo;
-    :cond_2
-    if-lez v6, :cond_5
+    :cond_1
+    if-lez v6, :cond_2
 
-    invoke-virtual {v9}, Landroid/telephony/TelephonyManager;->getSimCount()I
+    invoke-virtual {v8}, Landroid/telephony/TelephonyManager;->getSimCount()I
 
-    move-result v12
+    move-result v11
 
-    if-le v12, v10, :cond_5
+    if-le v11, v10, :cond_2
 
-    invoke-static {}, Lcom/android/internal/telephony/PhoneFactory;->getSubscriptionInfoUpdater()Lcom/android/internal/telephony/SubscriptionInfoUpdater;
-
-    move-result-object v8
-
-    .local v8, "subscriptionInfoUpdater":Lcom/android/internal/telephony/SubscriptionInfoUpdater;
-    if-eqz v8, :cond_4
-
-    invoke-virtual {v8}, Lcom/android/internal/telephony/SubscriptionInfoUpdater;->getInsertedSimCount()I
-
-    move-result v12
-
-    if-le v12, v10, :cond_3
-
-    :goto_1
-    return v10
-
-    :cond_3
-    move v10, v11
-
-    goto :goto_1
-
-    :cond_4
     return v10
 
     .end local v2    # "i":I
     .end local v6    # "subInfoLength":I
-    .end local v8    # "subscriptionInfoUpdater":Lcom/android/internal/telephony/SubscriptionInfoUpdater;
-    :cond_5
-    if-eqz v0, :cond_6
+    :cond_2
+    if-eqz v0, :cond_3
 
-    :goto_2
-    return v11
+    :goto_1
+    return v9
 
-    :cond_6
-    move v11, v10
+    :cond_3
+    move v9, v10
 
-    goto :goto_2
+    goto :goto_1
 .end method
 
 .method public sendDataForSubscriber(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;I[BLandroid/app/PendingIntent;Landroid/app/PendingIntent;)V
