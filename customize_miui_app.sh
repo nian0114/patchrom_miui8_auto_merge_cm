@@ -38,3 +38,6 @@ function mergyXmlPart() {
 	done
 }
 
+if [ $1 = "TeleService" ];then
+    applyPatch $1 $2
+fi
