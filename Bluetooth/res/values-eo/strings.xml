@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="upload_fail_waiting">Ne eblas sendi dosieron, reprovanta…</string>
+    <string name="unknown_device">Nekonata aparato</string>
+    <string name="unknownNumber">Nekonata</string>
+    <string name="airplane_error_title">Aviadila reĝimo</string>
+    <string name="bt_enable_cancel">Nuligi</string>
+    <string name="download_line2">Dosiero: %1$s</string>
+    <string name="download_succ_ok">Malfermi</string>
+    <string name="upload_fail_line1_2">Dosiero: %1$s</string>
+    <string name="upload_fail_ok">Reprovi</string>
+    <string name="upload_fail_cancel">Fermi</string>
+    <string name="status_unknown_error">Nekonata eraro.</string>
+    <string name="transfer_menu_open">Malfermi</string>
+    <string name="bluetooth_map_settings_cancel">Nuligi</string>
+</resources>
