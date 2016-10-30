@@ -115,47 +115,40 @@
     .param p2, "service"    # Landroid/location/ILocationManager;
 
     .prologue
-    .line 315
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    .line 69
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 68
     iput-object v0, p0, Landroid/location/LocationManager;->mGpsStatusListeners:Ljava/util/HashMap;
 
-    .line 71
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 70
     iput-object v0, p0, Landroid/location/LocationManager;->mNmeaListeners:Ljava/util/HashMap;
 
-    .line 72
     new-instance v0, Landroid/location/GpsStatus;
 
     invoke-direct {v0}, Landroid/location/GpsStatus;-><init>()V
 
     iput-object v0, p0, Landroid/location/LocationManager;->mGpsStatus:Landroid/location/GpsStatus;
 
-    .line 212
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 211
     iput-object v0, p0, Landroid/location/LocationManager;->mListeners:Ljava/util/HashMap;
 
-    .line 316
-    iput-object p2, p0, Landroid/location/LocationManager;->mService:Landroid/location/ILocationManager;
+    invoke-static {p2}, Landroid/location/MiuiLocationManagerProxy;->getProxy(Landroid/location/ILocationManager;)Landroid/location/ILocationManager;
 
-    .line 317
+    move-result-object v0
+
+    iput-object v0, p0, Landroid/location/LocationManager;->mService:Landroid/location/ILocationManager;
+
     iput-object p1, p0, Landroid/location/LocationManager;->mContext:Landroid/content/Context;
 
-    .line 318
     new-instance v0, Landroid/location/GpsMeasurementListenerTransport;
 
     iget-object v1, p0, Landroid/location/LocationManager;->mContext:Landroid/content/Context;

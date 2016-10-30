@@ -195,22 +195,33 @@
     .param p5, "attributes"    # Landroid/media/AudioAttributes;
 
     .prologue
-    .line 63
+    const/4 v3, 0x0
+
+    const/4 v1, 0x4
+
+    const/4 v2, 0x0
+
+    invoke-static {v1, v2, v3, v3}, Lmiui/util/QuietUtils;->checkQuiet(IILjava/lang/String;Ljava/lang/CharSequence;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_miui_0
+
+    goto :goto_0
+
+    :cond_miui_0
     iget-object v1, p0, Landroid/os/SystemVibrator;->mService:Landroid/os/IVibratorService;
 
     if-nez v1, :cond_0
 
-    .line 64
-    const-string/jumbo v1, "Vibrator"
+    const-string v1, "Vibrator"
 
-    const-string/jumbo v2, "Failed to vibrate; no vibrator service."
+    const-string v2, "Failed to vibrate; no vibrator service."
 
     invoke-static {v1, v2}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 65
     return-void
 
-    .line 68
     :cond_0
     :try_start_0
     iget-object v1, p0, Landroid/os/SystemVibrator;->mService:Landroid/os/IVibratorService;
@@ -259,28 +270,38 @@
     .param p5, "attributes"    # Landroid/media/AudioAttributes;
 
     .prologue
-    .line 80
+    const/4 v2, 0x0
+
+    const/4 v0, 0x4
+
+    const/4 v1, 0x0
+
+    invoke-static {v0, v1, v2, v2}, Lmiui/util/QuietUtils;->checkQuiet(IILjava/lang/String;Ljava/lang/CharSequence;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_miui_0
+
+    goto :goto_0
+
+    :cond_miui_0
     iget-object v0, p0, Landroid/os/SystemVibrator;->mService:Landroid/os/IVibratorService;
 
     if-nez v0, :cond_0
 
-    .line 81
-    const-string/jumbo v0, "Vibrator"
+    const-string v0, "Vibrator"
 
-    const-string/jumbo v1, "Failed to vibrate; no vibrator service."
+    const-string v1, "Failed to vibrate; no vibrator service."
 
     invoke-static {v0, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 82
     return-void
 
-    .line 87
     :cond_0
     array-length v0, p3
 
     if-ge p4, v0, :cond_1
 
-    .line 89
     :try_start_0
     iget-object v0, p0, Landroid/os/SystemVibrator;->mService:Landroid/os/IVibratorService;
 

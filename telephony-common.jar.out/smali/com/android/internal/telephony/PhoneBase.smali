@@ -201,6 +201,8 @@
 
 .field protected mLooper:Landroid/os/Looper;
 
+.field protected mMiuiIccPhoneBookInterfaceManager:Lcom/android/internal/telephony/MiuiIccPhoneBookInterfaceManager;
+
 .field protected final mMmiCompleteRegistrants:Landroid/os/RegistrantList;
 
 .field protected final mMmiRegistrants:Landroid/os/RegistrantList;
@@ -4914,6 +4916,15 @@
     return v0
 .end method
 
+.method public getMiuiIccPhoneBookInterfaceManager()Lcom/android/internal/telephony/MiuiIccPhoneBookInterfaceManager;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Lcom/android/internal/telephony/PhoneBase;->mMiuiIccPhoneBookInterfaceManager:Lcom/android/internal/telephony/MiuiIccPhoneBookInterfaceManager;
+
+    return-object v0
+.end method
+
 .method public getModemActivityInfo(Landroid/os/Message;)V
     .locals 1
     .param p1, "response"    # Landroid/os/Message;
@@ -5521,7 +5532,9 @@
 
     .line 331
     :cond_0
-    invoke-static {p1, p2}, Landroid/os/SystemProperties;->get(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+    iget v0, p0, Lcom/android/internal/telephony/PhoneBase;->mPhoneId:I
+
+    invoke-static {v0, p1, p2}, Landroid/telephony/TelephonyManager;->getTelephonyProperty(ILjava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v0
 
@@ -9688,21 +9701,19 @@
     .param p2, "value"    # Ljava/lang/String;
 
     .prologue
-    .line 317
     invoke-virtual {p0}, Lcom/android/internal/telephony/PhoneBase;->getUnitTestMode()Z
 
     move-result v0
 
     if-eqz v0, :cond_0
 
-    .line 318
     return-void
 
-    .line 320
     :cond_0
-    invoke-static {p1, p2}, Landroid/os/SystemProperties;->set(Ljava/lang/String;Ljava/lang/String;)V
+    iget v0, p0, Lcom/android/internal/telephony/PhoneBase;->mPhoneId:I
 
-    .line 316
+    invoke-static {v0, p1, p2}, Landroid/telephony/TelephonyManager;->setTelephonyProperty(ILjava/lang/String;Ljava/lang/String;)V
+
     return-void
 .end method
 

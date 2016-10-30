@@ -24,7 +24,7 @@
 
 .field private static final ENABLED_TRUST_AGENTS:Ljava/lang/String; = "lockscreen.enabledtrustagents"
 
-.field public static final FAILED_ATTEMPTS_BEFORE_RESET:I = 0x14
+.field public static final FAILED_ATTEMPTS_BEFORE_RESET:I = 0x9
 
 .field public static final FAILED_ATTEMPTS_BEFORE_WIPE_GRACE:I = 0x5
 
@@ -917,6 +917,29 @@
     return-object v4
 .end method
 
+.method public static patternToHash(Ljava/util/List;)[B
+    .locals 2
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Ljava/util/List",
+            "<",
+            "Lcom/android/internal/widget/LockPatternView$Cell;",
+            ">;)[B"
+        }
+    .end annotation
+
+    .prologue
+    .local p0, "pattern":Ljava/util/List;, "Ljava/util/List<Lcom/android/internal/widget/LockPatternView$Cell;>;"
+    const/4 v0, 0x3
+
+    invoke-static {p0, v0}, Lcom/android/internal/widget/LockPatternUtils;->patternToHash(Ljava/util/List;B)[B
+
+    move-result-object v1
+
+    return-object v1
+.end method
+
 .method public static patternToHash(Ljava/util/List;B)[B
     .locals 9
     .param p1, "gridSize"    # B
@@ -1019,6 +1042,30 @@
     .line 941
     .local v4, "nsa":Ljava/security/NoSuchAlgorithmException;
     return-object v6
+.end method
+
+.method public static patternToString(Ljava/util/List;)Ljava/lang/String;
+    .locals 2
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Ljava/util/List",
+            "<",
+            "Lcom/android/internal/widget/LockPatternView$Cell;",
+            ">;)",
+            "Ljava/lang/String;"
+        }
+    .end annotation
+
+    .prologue
+    .local p0, "pattern":Ljava/util/List;, "Ljava/util/List<Lcom/android/internal/widget/LockPatternView$Cell;>;"
+    const/4 v0, 0x3
+
+    invoke-static {p0, v0}, Lcom/android/internal/widget/LockPatternUtils;->patternToString(Ljava/util/List;B)Ljava/lang/String;
+
+    move-result-object v1
+
+    return-object v1
 .end method
 
 .method public static patternToString(Ljava/util/List;B)Ljava/lang/String;
@@ -1196,6 +1243,31 @@
     const/4 v0, 0x1
 
     goto :goto_0
+.end method
+
+.method public static stringToPattern(Ljava/lang/String;)Ljava/util/List;
+    .locals 2
+    .param p0, "string"    # Ljava/lang/String;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Ljava/lang/String;",
+            ")",
+            "Ljava/util/List",
+            "<",
+            "Lcom/android/internal/widget/LockPatternView$Cell;",
+            ">;"
+        }
+    .end annotation
+
+    .prologue
+    const/4 v0, 0x3
+
+    invoke-static {p0, v0}, Lcom/android/internal/widget/LockPatternUtils;->stringToPattern(Ljava/lang/String;B)Ljava/util/List;
+
+    move-result-object v1
+
+    return-object v1
 .end method
 
 .method public static stringToPattern(Ljava/lang/String;B)Ljava/util/List;
@@ -2017,6 +2089,16 @@
     .end local v1    # "s":Ljava/lang/String;
     :cond_2
     return-object v0
+.end method
+
+.method public getKeyguardLockoutAttemptDeadline(I)J
+    .locals 2
+    .param p1, "failedAttempts"    # I
+
+    .prologue
+    const-wide/16 v0, -0x1
+
+    return-wide v0
 .end method
 
 .method public getKeyguardStoredPasswordQuality(I)I
@@ -3992,6 +4074,16 @@
 
     .line 1230
     return-void
+.end method
+
+.method public setKeyguardLockoutAttemptDeadline(I)J
+    .locals 2
+    .param p1, "failedAttempts"    # I
+
+    .prologue
+    const-wide/16 v0, -0x1
+
+    return-wide v0
 .end method
 
 .method public setLegacyLockPatternEnabled(I)V

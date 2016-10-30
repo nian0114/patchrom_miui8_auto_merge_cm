@@ -71,71 +71,66 @@
     .locals 3
 
     .prologue
-    .line 48
-    const/16 v0, 0x8
+    const/16 v0, 0x9
 
     new-array v0, v0, [Ljava/lang/String;
 
-    .line 49
-    const-string/jumbo v1, "DataSettingsChanged"
+    const-string v1, "DataSettingsChanged"
 
     const/4 v2, 0x0
 
     aput-object v1, v0, v2
 
-    .line 50
-    const-string/jumbo v1, "AccountsUpdated"
+    const-string v1, "AccountsUpdated"
 
     const/4 v2, 0x1
 
     aput-object v1, v0, v2
 
-    .line 51
-    const-string/jumbo v1, "ServiceChanged"
+    const-string v1, "ServiceChanged"
 
     const/4 v2, 0x2
 
     aput-object v1, v0, v2
 
-    .line 52
-    const-string/jumbo v1, "Periodic"
+    const-string v1, "Periodic"
 
     const/4 v2, 0x3
 
     aput-object v1, v0, v2
 
-    .line 53
-    const-string/jumbo v1, "IsSyncable"
+    const-string v1, "IsSyncable"
 
     const/4 v2, 0x4
 
     aput-object v1, v0, v2
 
-    .line 54
-    const-string/jumbo v1, "AutoSync"
+    const-string v1, "AutoSync"
 
     const/4 v2, 0x5
 
     aput-object v1, v0, v2
 
-    .line 55
-    const-string/jumbo v1, "MasterSyncAuto"
+    const-string v1, "MasterSyncAuto"
 
     const/4 v2, 0x6
 
     aput-object v1, v0, v2
 
-    .line 56
-    const-string/jumbo v1, "UserStart"
+    const-string v1, "UserStart"
 
     const/4 v2, 0x7
 
     aput-object v1, v0, v2
 
-    .line 48
+    const/16 v1, 0x8
+
+    const-string v2, "NetReachableChanged"
+
+    aput-object v2, v0, v1
+
     sput-object v0, Lcom/android/server/content/SyncOperation;->REASON_NAMES:[Ljava/lang/String;
 
-    .line 33
     return-void
 .end method
 

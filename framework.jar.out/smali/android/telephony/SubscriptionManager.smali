@@ -1220,23 +1220,91 @@
     .param p2, "subId"    # I
 
     .prologue
-    .line 1221
-    const-string/jumbo v0, "subscription"
+    const-string v0, "subscription"
 
     invoke-virtual {p0, v0, p2}, Landroid/content/Intent;->putExtra(Ljava/lang/String;I)Landroid/content/Intent;
 
-    .line 1222
-    const-string/jumbo v0, "phone"
+    const-string v0, "phone"
 
     invoke-virtual {p0, v0, p1}, Landroid/content/Intent;->putExtra(Ljava/lang/String;I)Landroid/content/Intent;
 
-    .line 1225
-    const-string/jumbo v0, "slot"
+    const-string v0, "slot"
 
     invoke-virtual {p0, v0, p1}, Landroid/content/Intent;->putExtra(Ljava/lang/String;I)Landroid/content/Intent;
 
-    .line 1219
+    invoke-static {p0, p1, p1, p2}, Lmiui/telephony/SubscriptionManager;->putSlotIdPhoneIdAndSubIdExtra(Landroid/content/Intent;III)V
+
     return-void
+.end method
+
+.method public static setDefaultDataSubId(I)V
+    .locals 3
+    .param p0, "subId"    # I
+
+    .prologue
+    :try_start_0
+    const-string v2, "isub"
+
+    invoke-static {v2}, Landroid/os/ServiceManager;->getService(Ljava/lang/String;)Landroid/os/IBinder;
+
+    move-result-object v2
+
+    invoke-static {v2}, Lcom/android/internal/telephony/ISub$Stub;->asInterface(Landroid/os/IBinder;)Lcom/android/internal/telephony/ISub;
+
+    move-result-object v1
+
+    .local v1, "iSub":Lcom/android/internal/telephony/ISub;
+    if-eqz v1, :cond_0
+
+    invoke-interface {v1, p0}, Lcom/android/internal/telephony/ISub;->setDefaultDataSubId(I)V
+    :try_end_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+
+    .end local v1    # "iSub":Lcom/android/internal/telephony/ISub;
+    :cond_0
+    :goto_0
+    return-void
+
+    :catch_0
+    move-exception v0
+
+    .local v0, "ex":Landroid/os/RemoteException;
+    goto :goto_0
+.end method
+
+.method public static setDefaultVoiceSubId(I)V
+    .locals 3
+    .param p0, "subId"    # I
+
+    .prologue
+    :try_start_0
+    const-string v2, "isub"
+
+    invoke-static {v2}, Landroid/os/ServiceManager;->getService(Ljava/lang/String;)Landroid/os/IBinder;
+
+    move-result-object v2
+
+    invoke-static {v2}, Lcom/android/internal/telephony/ISub$Stub;->asInterface(Landroid/os/IBinder;)Lcom/android/internal/telephony/ISub;
+
+    move-result-object v1
+
+    .local v1, "iSub":Lcom/android/internal/telephony/ISub;
+    if-eqz v1, :cond_0
+
+    invoke-interface {v1, p0}, Lcom/android/internal/telephony/ISub;->setDefaultVoiceSubId(I)V
+    :try_end_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+
+    .end local v1    # "iSub":Lcom/android/internal/telephony/ISub;
+    :cond_0
+    :goto_0
+    return-void
+
+    :catch_0
+    move-exception v0
+
+    .local v0, "ex":Landroid/os/RemoteException;
+    goto :goto_0
 .end method
 
 .method public static setSubState(II)I
@@ -2440,52 +2508,12 @@
     goto :goto_0
 .end method
 
-.method public setDefaultDataSubId(I)V
-    .locals 3
-    .param p1, "subId"    # I
-
-    .prologue
-    .line 1069
-    :try_start_0
-    const-string/jumbo v2, "isub"
-
-    invoke-static {v2}, Landroid/os/ServiceManager;->getService(Ljava/lang/String;)Landroid/os/IBinder;
-
-    move-result-object v2
-
-    invoke-static {v2}, Lcom/android/internal/telephony/ISub$Stub;->asInterface(Landroid/os/IBinder;)Lcom/android/internal/telephony/ISub;
-
-    move-result-object v1
-
-    .line 1070
-    .local v1, "iSub":Lcom/android/internal/telephony/ISub;
-    if-eqz v1, :cond_0
-
-    .line 1071
-    invoke-interface {v1, p1}, Lcom/android/internal/telephony/ISub;->setDefaultDataSubId(I)V
-    :try_end_0
-    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
-
-    .line 1066
-    .end local v1    # "iSub":Lcom/android/internal/telephony/ISub;
-    :cond_0
-    :goto_0
-    return-void
-
-    .line 1073
-    :catch_0
-    move-exception v0
-
-    .local v0, "ex":Landroid/os/RemoteException;
-    goto :goto_0
-.end method
-
 .method public setDefaultSmsSubId(I)V
     .locals 3
     .param p1, "subId"    # I
 
     .prologue
-    .line 1029
+    .line 1069
     :try_start_0
     const-string/jumbo v2, "isub"
 
@@ -2513,46 +2541,6 @@
     return-void
 
     .line 1033
-    :catch_0
-    move-exception v0
-
-    .local v0, "ex":Landroid/os/RemoteException;
-    goto :goto_0
-.end method
-
-.method public setDefaultVoiceSubId(I)V
-    .locals 3
-    .param p1, "subId"    # I
-
-    .prologue
-    .line 984
-    :try_start_0
-    const-string/jumbo v2, "isub"
-
-    invoke-static {v2}, Landroid/os/ServiceManager;->getService(Ljava/lang/String;)Landroid/os/IBinder;
-
-    move-result-object v2
-
-    invoke-static {v2}, Lcom/android/internal/telephony/ISub$Stub;->asInterface(Landroid/os/IBinder;)Lcom/android/internal/telephony/ISub;
-
-    move-result-object v1
-
-    .line 985
-    .local v1, "iSub":Lcom/android/internal/telephony/ISub;
-    if-eqz v1, :cond_0
-
-    .line 986
-    invoke-interface {v1, p1}, Lcom/android/internal/telephony/ISub;->setDefaultVoiceSubId(I)V
-    :try_end_0
-    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
-
-    .line 981
-    .end local v1    # "iSub":Lcom/android/internal/telephony/ISub;
-    :cond_0
-    :goto_0
-    return-void
-
-    .line 988
     :catch_0
     move-exception v0
 

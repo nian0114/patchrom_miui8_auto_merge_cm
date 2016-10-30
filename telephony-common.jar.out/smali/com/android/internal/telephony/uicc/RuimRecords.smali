@@ -1719,15 +1719,16 @@
     .param p1, "efid"    # I
 
     .prologue
-    .line 930
     iget-object v0, p0, Lcom/android/internal/telephony/uicc/RuimRecords;->mAdnCache:Lcom/android/internal/telephony/uicc/AdnRecordCache;
 
     invoke-virtual {v0}, Lcom/android/internal/telephony/uicc/AdnRecordCache;->reset()V
 
-    .line 931
+    iget-object v0, p0, Lcom/android/internal/telephony/uicc/RuimRecords;->mMiuiAdnCache:Lcom/android/internal/telephony/uicc/MiuiAdnRecordCache;
+
+    invoke-virtual {v0}, Lcom/android/internal/telephony/uicc/MiuiAdnRecordCache;->reset()V
+
     invoke-direct {p0}, Lcom/android/internal/telephony/uicc/RuimRecords;->fetchRuimRecords()V
 
-    .line 929
     return-void
 .end method
 
@@ -1989,7 +1990,7 @@
 
     const/4 v6, 0x0
 
-    invoke-static {v1, v6, v5}, Lcom/android/internal/telephony/uicc/IccUtils;->bcdToString([BII)Ljava/lang/String;
+    invoke-static {v1, v6, v5}, Lmiui/telephony/IccUtils;->parseIccIdToString([BII)Ljava/lang/String;
 
     move-result-object v5
 
@@ -2311,24 +2312,8 @@
 
     move-result-object v2
 
-    .line 815
     .local v2, "subIds":[I
     if-eqz v2, :cond_2
-
-    .line 816
-    iget-object v3, p0, Lcom/android/internal/telephony/uicc/RuimRecords;->mContext:Landroid/content/Context;
-
-    invoke-static {v3}, Landroid/telephony/SubscriptionManager;->from(Landroid/content/Context;)Landroid/telephony/SubscriptionManager;
-
-    move-result-object v3
-
-    iget-object v4, p0, Lcom/android/internal/telephony/uicc/RuimRecords;->mMdn:Ljava/lang/String;
-
-    const/4 v5, 0x0
-
-    aget v5, v2, v5
-
-    invoke-virtual {v3, v4, v5}, Landroid/telephony/SubscriptionManager;->setDisplayNumber(Ljava/lang/String;I)I
 
     .line 773
     .end local v0    # "phoneId":I
@@ -2501,22 +2486,22 @@
 
     invoke-virtual {p0, v0}, Lcom/android/internal/telephony/uicc/RuimRecords;->log(Ljava/lang/String;)V
 
-    .line 138
     const/4 v0, 0x0
 
     iput-object v0, p0, Lcom/android/internal/telephony/uicc/RuimRecords;->mIccId:Ljava/lang/String;
 
-    .line 140
     iget-object v0, p0, Lcom/android/internal/telephony/uicc/RuimRecords;->mAdnCache:Lcom/android/internal/telephony/uicc/AdnRecordCache;
 
     invoke-virtual {v0}, Lcom/android/internal/telephony/uicc/AdnRecordCache;->reset()V
 
-    .line 151
+    iget-object v0, p0, Lcom/android/internal/telephony/uicc/RuimRecords;->mMiuiAdnCache:Lcom/android/internal/telephony/uicc/MiuiAdnRecordCache;
+
+    invoke-virtual {v0}, Lcom/android/internal/telephony/uicc/MiuiAdnRecordCache;->reset()V
+
     const/4 v0, 0x0
 
     iput-boolean v0, p0, Lcom/android/internal/telephony/uicc/RuimRecords;->mRecordsRequested:Z
 
-    .line 135
     return-void
 .end method
 

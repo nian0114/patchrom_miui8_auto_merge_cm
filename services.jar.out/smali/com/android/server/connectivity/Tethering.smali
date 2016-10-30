@@ -584,84 +584,71 @@
 
     iput-object v1, p0, Lcom/android/server/connectivity/Tethering;->mStateReceiver:Landroid/content/BroadcastReceiver;
 
-    .line 192
     new-instance v0, Landroid/content/IntentFilter;
 
     invoke-direct {v0}, Landroid/content/IntentFilter;-><init>()V
 
-    .line 193
     .local v0, "filter":Landroid/content/IntentFilter;
-    const-string/jumbo v1, "android.hardware.usb.action.USB_STATE"
+    const-string v1, "android.hardware.usb.action.USB_STATE"
 
     invoke-virtual {v0, v1}, Landroid/content/IntentFilter;->addAction(Ljava/lang/String;)V
 
-    .line 194
-    const-string/jumbo v1, "android.net.conn.CONNECTIVITY_CHANGE"
+    const-string v1, "android.net.conn.CONNECTIVITY_CHANGE"
 
     invoke-virtual {v0, v1}, Landroid/content/IntentFilter;->addAction(Ljava/lang/String;)V
 
-    .line 195
-    const-string/jumbo v1, "android.intent.action.CONFIGURATION_CHANGED"
+    const-string v1, "android.intent.action.CONFIGURATION_CHANGED"
 
     invoke-virtual {v0, v1}, Landroid/content/IntentFilter;->addAction(Ljava/lang/String;)V
 
-    .line 196
-    const-string/jumbo v1, "android.net.wifi.WIFI_AP_STATE_CHANGED"
+    const-string v1, "android.net.wifi.WIFI_AP_STATE_CHANGED"
 
     invoke-virtual {v0, v1}, Landroid/content/IntentFilter;->addAction(Ljava/lang/String;)V
 
-    .line 198
     iget-object v1, p0, Lcom/android/server/connectivity/Tethering;->mContext:Landroid/content/Context;
 
     iget-object v2, p0, Lcom/android/server/connectivity/Tethering;->mStateReceiver:Landroid/content/BroadcastReceiver;
 
     invoke-virtual {v1, v2, v0}, Landroid/content/Context;->registerReceiver(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;)Landroid/content/Intent;
 
-    .line 200
+    invoke-static {}, Lcom/android/server/connectivity/TetheringInjector;->init()V
+
     new-instance v0, Landroid/content/IntentFilter;
 
     .end local v0    # "filter":Landroid/content/IntentFilter;
     invoke-direct {v0}, Landroid/content/IntentFilter;-><init>()V
 
-    .line 201
     .restart local v0    # "filter":Landroid/content/IntentFilter;
-    const-string/jumbo v1, "android.intent.action.MEDIA_SHARED"
+    const-string v1, "android.intent.action.MEDIA_SHARED"
 
     invoke-virtual {v0, v1}, Landroid/content/IntentFilter;->addAction(Ljava/lang/String;)V
 
-    .line 202
-    const-string/jumbo v1, "android.intent.action.MEDIA_UNSHARED"
+    const-string v1, "android.intent.action.MEDIA_UNSHARED"
 
     invoke-virtual {v0, v1}, Landroid/content/IntentFilter;->addAction(Ljava/lang/String;)V
 
-    .line 203
-    const-string/jumbo v1, "file"
+    const-string v1, "file"
 
     invoke-virtual {v0, v1}, Landroid/content/IntentFilter;->addDataScheme(Ljava/lang/String;)V
 
-    .line 204
     iget-object v1, p0, Lcom/android/server/connectivity/Tethering;->mContext:Landroid/content/Context;
 
     iget-object v2, p0, Lcom/android/server/connectivity/Tethering;->mStateReceiver:Landroid/content/BroadcastReceiver;
 
     invoke-virtual {v1, v2, v0}, Landroid/content/Context;->registerReceiver(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;)Landroid/content/Intent;
 
-    .line 206
     invoke-virtual {p1}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
 
     move-result-object v1
 
-    .line 207
     const v2, 0x107001a
 
-    .line 206
     invoke-virtual {v1, v2}, Landroid/content/res/Resources;->getStringArray(I)[Ljava/lang/String;
 
     move-result-object v1
 
     iput-object v1, p0, Lcom/android/server/connectivity/Tethering;->mDhcpRange:[Ljava/lang/String;
 
-    .line 208
     iget-object v1, p0, Lcom/android/server/connectivity/Tethering;->mDhcpRange:[Ljava/lang/String;
 
     array-length v1, v1
@@ -753,19 +740,18 @@
 
     if-eqz v1, :cond_0
 
-    .line 749
     iget v1, p0, Lcom/android/server/connectivity/Tethering;->mLastNotificationId:I
 
-    .line 750
     sget-object v2, Landroid/os/UserHandle;->ALL:Landroid/os/UserHandle;
 
-    .line 749
     invoke-virtual {v0, v4, v1, v2}, Landroid/app/NotificationManager;->cancelAsUser(Ljava/lang/String;ILandroid/os/UserHandle;)V
 
-    .line 751
     iput v3, p0, Lcom/android/server/connectivity/Tethering;->mLastNotificationId:I
 
-    .line 745
+    iget-object v1, p0, Lcom/android/server/connectivity/Tethering;->mContext:Landroid/content/Context;
+
+    invoke-static {v1}, Lcom/android/server/connectivity/TetheringInjector;->notificationFinished(Landroid/content/Context;)V
+
     :cond_0
     return-void
 .end method
@@ -1710,31 +1696,29 @@
 
     goto :goto_2
 
-    .line 679
     :cond_a
     if-eqz v11, :cond_c
 
-    .line 680
     if-eqz v3, :cond_b
 
-    .line 681
     move-object/from16 v0, p0
 
     invoke-direct {v0, v15}, Lcom/android/server/connectivity/Tethering;->showTetheredNotification(I)V
 
     goto :goto_2
 
-    .line 684
     :cond_b
-    invoke-direct/range {p0 .. p0}, Lcom/android/server/connectivity/Tethering;->clearTetheredNotification()V
+    const v12, 0x1080683
+
+    move-object/from16 v0, p0
+
+    invoke-direct {v0, v12}, Lcom/android/server/connectivity/Tethering;->showTetheredNotification(I)V
 
     goto :goto_2
 
-    .line 686
     :cond_c
     if-eqz v3, :cond_d
 
-    .line 687
     const v12, 0x1080691
 
     move-object/from16 v0, p0
@@ -1772,102 +1756,77 @@
 
     check-cast v7, Landroid/app/NotificationManager;
 
-    .line 696
     .local v7, "notificationManager":Landroid/app/NotificationManager;
     if-nez v7, :cond_0
 
-    .line 697
     return-void
 
-    .line 700
     :cond_0
     iget v0, p0, Lcom/android/server/connectivity/Tethering;->mLastNotificationId:I
 
     if-eqz v0, :cond_3
 
-    .line 701
     iget v0, p0, Lcom/android/server/connectivity/Tethering;->mLastNotificationId:I
 
     if-ne v0, p1, :cond_2
 
-    .line 702
     iget-object v0, p0, Lcom/android/server/connectivity/Tethering;->mContext:Landroid/content/Context;
 
     invoke-virtual {v0}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
 
     move-result-object v0
 
-    .line 703
     const v3, 0x112000b
 
-    .line 702
     invoke-virtual {v0, v3}, Landroid/content/res/Resources;->getBoolean(I)Z
 
     move-result v0
 
     if-eqz v0, :cond_1
 
-    .line 704
     const v0, 0x1080694
 
     if-eq p1, v0, :cond_2
 
-    .line 706
     :cond_1
     return-void
 
-    .line 709
     :cond_2
     iget v0, p0, Lcom/android/server/connectivity/Tethering;->mLastNotificationId:I
 
-    .line 710
     sget-object v3, Landroid/os/UserHandle;->ALL:Landroid/os/UserHandle;
 
-    .line 709
     invoke-virtual {v7, v4, v0, v3}, Landroid/app/NotificationManager;->cancelAsUser(Ljava/lang/String;ILandroid/os/UserHandle;)V
 
-    .line 711
     iput v1, p0, Lcom/android/server/connectivity/Tethering;->mLastNotificationId:I
 
-    .line 714
     :cond_3
     new-instance v2, Landroid/content/Intent;
 
     invoke-direct {v2}, Landroid/content/Intent;-><init>()V
 
-    .line 715
     .local v2, "intent":Landroid/content/Intent;
-    const-string/jumbo v0, "com.android.settings"
+    const-string v0, "com.android.settings"
 
-    const-string/jumbo v3, "com.android.settings.TetherSettings"
+    const-string v3, "com.android.settings.TetherSettings"
 
     invoke-virtual {v2, v0, v3}, Landroid/content/Intent;->setClassName(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;
 
-    .line 716
-    const/high16 v0, 0x40000000    # 2.0f
-
-    invoke-virtual {v2, v0}, Landroid/content/Intent;->setFlags(I)Landroid/content/Intent;
-
-    .line 718
     iget-object v0, p0, Lcom/android/server/connectivity/Tethering;->mContext:Landroid/content/Context;
 
-    .line 719
     sget-object v5, Landroid/os/UserHandle;->CURRENT:Landroid/os/UserHandle;
 
     move v3, v1
 
-    .line 718
     invoke-static/range {v0 .. v5}, Landroid/app/PendingIntent;->getActivityAsUser(Landroid/content/Context;ILandroid/content/Intent;ILandroid/os/Bundle;Landroid/os/UserHandle;)Landroid/app/PendingIntent;
 
     move-result-object v8
 
-    .line 721
     .local v8, "pi":Landroid/app/PendingIntent;
     invoke-static {}, Landroid/content/res/Resources;->getSystem()Landroid/content/res/Resources;
 
     move-result-object v9
 
-    .line 722
     .local v9, "r":Landroid/content/res/Resources;
     const v0, 0x10404c6
 
@@ -1955,13 +1914,16 @@
 
     invoke-virtual {v0, v8}, Landroid/app/Notification$Builder;->setContentIntent(Landroid/app/PendingIntent;)Landroid/app/Notification$Builder;
 
-    .line 739
     iput p1, p0, Lcom/android/server/connectivity/Tethering;->mLastNotificationId:I
 
-    .line 741
+    iget-object v0, p0, Lcom/android/server/connectivity/Tethering;->mContext:Landroid/content/Context;
+
+    iget-object v1, p0, Lcom/android/server/connectivity/Tethering;->mTetheredNotificationBuilder:Landroid/app/Notification$Builder;
+
+    invoke-static {v0, v1}, Lcom/android/server/connectivity/TetheringInjector;->setTetheredNotification(Landroid/content/Context;Landroid/app/Notification$Builder;)V
+
     iget v0, p0, Lcom/android/server/connectivity/Tethering;->mLastNotificationId:I
 
-    .line 742
     iget-object v1, p0, Lcom/android/server/connectivity/Tethering;->mTetheredNotificationBuilder:Landroid/app/Notification$Builder;
 
     invoke-virtual {v1}, Landroid/app/Notification$Builder;->build()Landroid/app/Notification;

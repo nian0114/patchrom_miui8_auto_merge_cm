@@ -5992,6 +5992,48 @@
     return-void
 .end method
 
+.method protected dump(Ljava/io/PrintWriter;[Ljava/lang/String;)V
+    .locals 5
+    .param p1, "pw"    # Ljava/io/PrintWriter;
+    .param p2, "args"    # [Ljava/lang/String;
+
+    .prologue
+    move-object v1, p2
+
+    .local v1, "arr$":[Ljava/lang/String;
+    array-length v3, v1
+
+    .local v3, "len$":I
+    const/4 v2, 0x0
+
+    .local v2, "i$":I
+    :goto_0
+    if-ge v2, v3, :cond_0
+
+    aget-object v0, v1, v2
+
+    .local v0, "arg":Ljava/lang/String;
+    const-string v4, "focusStack"
+
+    invoke-virtual {v0, v4}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_1
+
+    invoke-direct {p0, p1}, Lcom/android/server/audio/MediaFocusControl;->dumpFocusStack(Ljava/io/PrintWriter;)V
+
+    .end local v0    # "arg":Ljava/lang/String;
+    :cond_0
+    return-void
+
+    .restart local v0    # "arg":Ljava/lang/String;
+    :cond_1
+    add-int/lit8 v2, v2, 0x1
+
+    goto :goto_0
+.end method
+
 .method protected getCurrentAudioFocus()I
     .locals 2
 

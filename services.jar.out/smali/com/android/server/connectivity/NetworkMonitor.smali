@@ -48,7 +48,7 @@
 
 .field private static DEFAULT_LINGER_DELAY_MS:I = 0x0
 
-.field private static final DEFAULT_SERVER:Ljava/lang/String; = "connectivitycheck.gstatic.com"
+.field private static final DEFAULT_SERVER:Ljava/lang/String; = "connect.rom.miui.com"
 
 .field public static final EVENT_NETWORK_LINGER_COMPLETE:I = 0x82005
 
@@ -521,83 +521,70 @@
 
     iput-object v0, p0, Lcom/android/server/connectivity/NetworkMonitor;->mAlarmManager:Landroid/app/AlarmManager;
 
-    .line 257
     iput-object p4, p0, Lcom/android/server/connectivity/NetworkMonitor;->mDefaultRequest:Landroid/net/NetworkRequest;
 
-    .line 259
     iget-object v0, p0, Lcom/android/server/connectivity/NetworkMonitor;->mDefaultState:Lcom/android/internal/util/State;
 
     invoke-virtual {p0, v0}, Lcom/android/server/connectivity/NetworkMonitor;->addState(Lcom/android/internal/util/State;)V
 
-    .line 260
     iget-object v0, p0, Lcom/android/server/connectivity/NetworkMonitor;->mValidatedState:Lcom/android/internal/util/State;
 
     iget-object v3, p0, Lcom/android/server/connectivity/NetworkMonitor;->mDefaultState:Lcom/android/internal/util/State;
 
     invoke-virtual {p0, v0, v3}, Lcom/android/server/connectivity/NetworkMonitor;->addState(Lcom/android/internal/util/State;Lcom/android/internal/util/State;)V
 
-    .line 261
     iget-object v0, p0, Lcom/android/server/connectivity/NetworkMonitor;->mMaybeNotifyState:Lcom/android/internal/util/State;
 
     iget-object v3, p0, Lcom/android/server/connectivity/NetworkMonitor;->mDefaultState:Lcom/android/internal/util/State;
 
     invoke-virtual {p0, v0, v3}, Lcom/android/server/connectivity/NetworkMonitor;->addState(Lcom/android/internal/util/State;Lcom/android/internal/util/State;)V
 
-    .line 262
     iget-object v0, p0, Lcom/android/server/connectivity/NetworkMonitor;->mEvaluatingState:Lcom/android/internal/util/State;
 
     iget-object v3, p0, Lcom/android/server/connectivity/NetworkMonitor;->mMaybeNotifyState:Lcom/android/internal/util/State;
 
     invoke-virtual {p0, v0, v3}, Lcom/android/server/connectivity/NetworkMonitor;->addState(Lcom/android/internal/util/State;Lcom/android/internal/util/State;)V
 
-    .line 263
     iget-object v0, p0, Lcom/android/server/connectivity/NetworkMonitor;->mCaptivePortalState:Lcom/android/internal/util/State;
 
     iget-object v3, p0, Lcom/android/server/connectivity/NetworkMonitor;->mMaybeNotifyState:Lcom/android/internal/util/State;
 
     invoke-virtual {p0, v0, v3}, Lcom/android/server/connectivity/NetworkMonitor;->addState(Lcom/android/internal/util/State;Lcom/android/internal/util/State;)V
 
-    .line 264
     iget-object v0, p0, Lcom/android/server/connectivity/NetworkMonitor;->mLingeringState:Lcom/android/internal/util/State;
 
     iget-object v3, p0, Lcom/android/server/connectivity/NetworkMonitor;->mDefaultState:Lcom/android/internal/util/State;
 
     invoke-virtual {p0, v0, v3}, Lcom/android/server/connectivity/NetworkMonitor;->addState(Lcom/android/internal/util/State;Lcom/android/internal/util/State;)V
 
-    .line 265
     iget-object v0, p0, Lcom/android/server/connectivity/NetworkMonitor;->mDefaultState:Lcom/android/internal/util/State;
 
     invoke-virtual {p0, v0}, Lcom/android/server/connectivity/NetworkMonitor;->setInitialState(Lcom/android/internal/util/State;)V
 
-    .line 267
     iget-object v0, p0, Lcom/android/server/connectivity/NetworkMonitor;->mContext:Landroid/content/Context;
 
     invoke-virtual {v0}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
 
     move-result-object v0
 
-    .line 268
-    const-string/jumbo v3, "captive_portal_server"
+    const-string v3, "captive_portal_server"
 
-    .line 267
     invoke-static {v0, v3}, Landroid/provider/Settings$Global;->getString(Landroid/content/ContentResolver;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v0
 
     iput-object v0, p0, Lcom/android/server/connectivity/NetworkMonitor;->mServer:Ljava/lang/String;
 
-    .line 269
     iget-object v0, p0, Lcom/android/server/connectivity/NetworkMonitor;->mServer:Ljava/lang/String;
 
     if-nez v0, :cond_0
 
-    const-string/jumbo v0, "connectivitycheck.gstatic.com"
+    const-string v0, "connect.rom.miui.com"
 
     iput-object v0, p0, Lcom/android/server/connectivity/NetworkMonitor;->mServer:Ljava/lang/String;
 
-    .line 271
     :cond_0
-    const-string/jumbo v0, "persist.netmon.linger"
+    const-string v0, "persist.netmon.linger"
 
     sget v3, Lcom/android/server/connectivity/NetworkMonitor;->DEFAULT_LINGER_DELAY_MS:I
 
@@ -670,6 +657,17 @@
     sput p0, Lcom/android/server/connectivity/NetworkMonitor;->DEFAULT_LINGER_DELAY_MS:I
 
     .line 824
+    return-void
+.end method
+
+.method static synthetic access$transitionTo(Lcom/android/server/connectivity/NetworkMonitor;Lcom/android/internal/util/IState;)V
+    .locals 0
+    .param p0, "x0"    # Lcom/android/server/connectivity/NetworkMonitor;
+    .param p1, "x1"    # Lcom/android/internal/util/IState;
+
+    .prologue
+    invoke-virtual {p0, p1}, Lcom/android/server/connectivity/NetworkMonitor;->transitionTo(Lcom/android/internal/util/IState;)V
+
     return-void
 .end method
 
@@ -1279,14 +1277,23 @@
     .local v14, "hostToResolve":Ljava/lang/String;
     goto :goto_1
 
-    .line 684
     .end local v14    # "hostToResolve":Ljava/lang/String;
     :cond_7
+    move-object/from16 v0, p0
+
+    iget-object v3, v0, Lcom/android/server/connectivity/NetworkMonitor;->mContext:Landroid/content/Context;
+
+    move-object/from16 v0, v17
+
+    invoke-static {v3, v0}, Lcom/android/server/connectivity/NetworkMonitorInjector;->getCaptivePortalServer(Landroid/content/Context;Ljava/net/URL;)Ljava/net/URL;
+
+    move-result-object v17
+
     new-instance v3, Ljava/lang/StringBuilder;
 
     invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string/jumbo v4, "Checking "
+    const-string v4, "Checking "
 
     invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 

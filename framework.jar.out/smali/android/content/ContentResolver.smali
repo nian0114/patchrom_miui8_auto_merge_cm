@@ -5377,68 +5377,85 @@
 
     move-result-object v22
 
-    .line 507
     .end local v12    # "stableProvider":Landroid/content/IContentProvider;
     .local v22, "qCursor":Landroid/database/Cursor;
     :goto_0
     if-nez v22, :cond_a
 
-    .line 508
     const/4 v5, 0x0
 
-    .line 527
     if-eqz v22, :cond_2
 
-    .line 528
     invoke-interface/range {v22 .. v22}, Landroid/database/Cursor;->close()V
 
-    .line 530
     :cond_2
     if-eqz p6, :cond_3
 
-    .line 531
     const/4 v6, 0x0
 
     move-object/from16 v0, p6
 
     invoke-virtual {v0, v6}, Landroid/os/CancellationSignal;->setRemote(Landroid/os/ICancellationSignal;)V
 
-    .line 533
     :cond_3
     if-eqz v4, :cond_4
 
-    .line 534
     move-object/from16 v0, p0
 
     invoke-virtual {v0, v4}, Landroid/content/ContentResolver;->releaseUnstableProvider(Landroid/content/IContentProvider;)Z
 
-    .line 536
     :cond_4
     if-eqz v12, :cond_5
 
-    .line 537
     move-object/from16 v0, p0
 
     invoke-virtual {v0, v12}, Landroid/content/ContentResolver;->releaseProvider(Landroid/content/IContentProvider;)Z
 
-    .line 508
     :cond_5
     return-object v5
 
-    .line 495
     .restart local v12    # "stableProvider":Landroid/content/IContentProvider;
     .local v22, "qCursor":Landroid/database/Cursor;
     :catch_0
     move-exception v20
 
-    .line 499
     .local v20, "e":Landroid/os/DeadObjectException;
     :try_start_2
     move-object/from16 v0, p0
 
     invoke-virtual {v0, v4}, Landroid/content/ContentResolver;->unstableProviderDied(Landroid/content/IContentProvider;)V
 
-    .line 500
+    move-object/from16 v0, p0
+
+    iget-object v5, v0, Landroid/content/ContentResolver;->mPackageName:Ljava/lang/String;
+
+    move-object/from16 v0, p1
+
+    invoke-static {v5, v0}, Landroid/content/ContentResolverInjector;->isForceAcquireUnstableProvider(Ljava/lang/String;Landroid/net/Uri;)Z
+
+    move-result v5
+
+    if-eqz v5, :cond_miui_0
+
+    move-object/from16 v5, p0
+
+    move-object/from16 v6, p1
+
+    move-object/from16 v7, p2
+
+    move-object/from16 v8, p3
+
+    move-object/from16 v9, p4
+
+    move-object/from16 v10, p5
+
+    invoke-static/range {v5 .. v11}, Landroid/content/ContentResolverInjector;->unstableQuery(Landroid/content/ContentResolver;Landroid/net/Uri;[Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Landroid/os/ICancellationSignal;)Landroid/database/Cursor;
+
+    move-result-object v22
+
+    goto :goto_0
+
+    :cond_miui_0
     invoke-virtual/range {p0 .. p1}, Landroid/content/ContentResolver;->acquireProvider(Landroid/net/Uri;)Landroid/content/IContentProvider;
     :try_end_2
     .catch Landroid/os/RemoteException; {:try_start_2 .. :try_end_2} :catch_1

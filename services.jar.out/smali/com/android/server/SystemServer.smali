@@ -144,14 +144,20 @@
 
     iput-object v1, p0, Lcom/android/server/SystemServer;->mSystemContext:Landroid/content/Context;
 
-    .line 333
     iget-object v1, p0, Lcom/android/server/SystemServer;->mSystemContext:Landroid/content/Context;
 
     const v2, 0x10302e0
 
     invoke-virtual {v1, v2}, Landroid/content/Context;->setTheme(I)V
 
-    .line 330
+    invoke-static {}, Landroid/app/ActivityThread;->currentApplication()Landroid/app/Application;
+
+    move-result-object v1
+
+    const/4 v2, 0x0
+
+    invoke-static {v1, v2}, Lmiui/core/SdkManager;->initialize(Landroid/app/Application;Ljava/util/Map;)I
+
     return-void
 .end method
 
@@ -625,19 +631,16 @@
 
     iput-object v2, p0, Lcom/android/server/SystemServer;->mPowerManagerService:Lcom/android/server/power/PowerManagerService;
 
-    .line 363
     iget-object v2, p0, Lcom/android/server/SystemServer;->mActivityManagerService:Lcom/android/server/am/ActivityManagerService;
 
     invoke-virtual {v2}, Lcom/android/server/am/ActivityManagerService;->initPowerManagement()V
 
-    .line 366
     iget-object v2, p0, Lcom/android/server/SystemServer;->mSystemServiceManager:Lcom/android/server/SystemServiceManager;
 
-    const-class v5, Lcom/android/server/lights/LightsService;
+    const-class v5, Lcom/android/server/lights/MiuiLightsService;
 
     invoke-virtual {v2, v5}, Lcom/android/server/SystemServiceManager;->startService(Ljava/lang/Class;)Lcom/android/server/SystemService;
 
-    .line 370
     iget-object v2, p0, Lcom/android/server/SystemServer;->mSystemServiceManager:Lcom/android/server/SystemServiceManager;
 
     const-class v5, Lcom/android/server/display/DisplayManagerService;
@@ -674,29 +677,30 @@
 
     if-eqz v2, :cond_1
 
-    .line 378
-    const-string/jumbo v2, "SystemServer"
+    const-string v2, "SystemServer"
 
-    const-string/jumbo v5, "Detected encryption in progress - only parsing core apps"
+    const-string v5, "Detected encryption in progress - only parsing core apps"
 
     invoke-static {v2, v5}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 379
     iput-boolean v3, p0, Lcom/android/server/SystemServer;->mOnlyCore:Z
 
-    .line 386
     :cond_0
     :goto_0
-    const-string/jumbo v2, "SystemServer"
+    iget-object v2, p0, Lcom/android/server/SystemServer;->mSystemContext:Landroid/content/Context;
 
-    const-string/jumbo v5, "Package Manager"
+    iget-boolean v5, p0, Lcom/android/server/SystemServer;->mOnlyCore:Z
+
+    invoke-static {v2, v5}, Lcom/android/server/SystemServerInjector;->addExtraServicesBeforePMS(Landroid/content/Context;Z)V
+
+    const-string v2, "SystemServer"
+
+    const-string v5, "Package Manager"
 
     invoke-static {v2, v5}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 387
     iget-object v5, p0, Lcom/android/server/SystemServer;->mSystemContext:Landroid/content/Context;
 
-    .line 388
     iget v2, p0, Lcom/android/server/SystemServer;->mFactoryTestMode:I
 
     if-eqz v2, :cond_2
@@ -1330,19 +1334,19 @@
 
     invoke-virtual {v0, v10, v3}, Lcom/android/server/Watchdog;->init(Landroid/content/Context;Lcom/android/server/am/ActivityManagerService;)V
 
-    .line 520
-    const-string/jumbo v3, "SystemServer"
+    const-string v3, "SystemServer"
 
-    const-string/jumbo v4, "Input Manager"
+    const-string v4, "Input Manager"
 
     invoke-static {v3, v4}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 521
-    new-instance v72, Lcom/android/server/input/InputManagerService;
+    new-instance v72, Lcom/android/server/input/MiuiInputManagerService;
+
+    const/4 v4, 0x0
 
     move-object/from16 v0, v72
 
-    invoke-direct {v0, v10}, Lcom/android/server/input/InputManagerService;-><init>(Landroid/content/Context;)V
+    invoke-direct {v0, v10, v4}, Lcom/android/server/input/MiuiInputManagerService;-><init>(Landroid/content/Context;Landroid/os/Handler;)V
     :try_end_7
     .catch Ljava/lang/RuntimeException; {:try_start_7 .. :try_end_7} :catch_46
 
@@ -1633,30 +1637,28 @@
     :try_end_d
     .catch Ljava/lang/Throwable; {:try_start_d .. :try_end_d} :catch_7
 
-    .line 624
     :goto_9
     :try_start_e
     invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
-    move-result-object v2
+    move-result-object v3
 
-    .line 625
-    const/4 v3, 0x1
+    invoke-virtual {v10}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
 
-    const/4 v4, 0x0
+    move-result-object v4
 
-    const/4 v5, 0x0
+    sget v7, Lcom/android/internal/R$string;->android_upgrading_starting_apps:I
 
-    const/4 v6, 0x0
+    invoke-virtual {v4, v7}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
+
+    move-result-object v4
 
     const/4 v7, 0x0
 
-    .line 624
-    invoke-interface/range {v2 .. v7}, Landroid/app/IActivityManager;->updateBootProgress(ILandroid/content/pm/ApplicationInfo;IIZ)V
+    invoke-interface {v3, v4, v7}, Landroid/app/IActivityManager;->showBootMessage(Ljava/lang/CharSequence;Z)V
     :try_end_e
     .catch Landroid/os/RemoteException; {:try_start_e .. :try_end_e} :catch_40
 
-    .line 629
     :goto_a
     move-object/from16 v0, p0
 
@@ -2593,6 +2595,12 @@
     .end local v94    # "serial":Lcom/android/server/SerialService;
     :cond_14
     :goto_20
+    move-object/from16 v0, p0
+
+    iget-boolean v3, v0, Lcom/android/server/SystemServer;->mOnlyCore:Z
+
+    invoke-static {v10, v3}, Lcom/android/server/SystemServerInjector;->addExtraServices(Landroid/content/Context;Z)V
+
     move-object/from16 v0, p0
 
     iget-object v3, v0, Lcom/android/server/SystemServer;->mSystemServiceManager:Lcom/android/server/SystemServiceManager;

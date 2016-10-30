@@ -903,18 +903,22 @@
 
     if-eqz v9, :cond_5
 
-    .line 466
     :cond_2
     const/4 v12, 0x0
 
     invoke-virtual {p0, v12}, Lcom/android/internal/telephony/imsphone/ImsPhoneCallTracker;->setMute(Z)V
 
-    .line 467
+    iget-object v12, p0, Lcom/android/internal/telephony/imsphone/ImsPhoneCallTracker;->mPhone:Lcom/android/internal/telephony/imsphone/ImsPhone;
+
+    invoke-virtual {v12}, Lcom/android/internal/telephony/imsphone/ImsPhone;->getSubId()I
+
+    move-result v12
+
     invoke-virtual/range {p1 .. p1}, Lcom/android/internal/telephony/imsphone/ImsPhoneConnection;->getAddress()Ljava/lang/String;
 
-    move-result-object v12
+    move-result-object v13
 
-    invoke-static {v12}, Landroid/telephony/PhoneNumberUtils;->isEmergencyNumber(Ljava/lang/String;)Z
+    invoke-static {v12, v13}, Landroid/telephony/PhoneNumberUtils;->isEmergencyNumber(ILjava/lang/String;)Z
 
     move-result v12
 
@@ -3590,25 +3594,32 @@
     .prologue
     monitor-enter p0
 
-    .line 314
     :try_start_0
     invoke-direct/range {p0 .. p0}, Lcom/android/internal/telephony/imsphone/ImsPhoneCallTracker;->isPhoneInEcbMode()Z
 
     move-result v15
 
-    .line 315
     .local v15, "isPhoneInEcmMode":Z
-    invoke-static/range {p1 .. p1}, Landroid/telephony/PhoneNumberUtils;->isEmergencyNumber(Ljava/lang/String;)Z
+    move-object/from16 v0, p0
+
+    iget-object v4, v0, Lcom/android/internal/telephony/imsphone/ImsPhoneCallTracker;->mPhone:Lcom/android/internal/telephony/imsphone/ImsPhone;
+
+    invoke-virtual {v4}, Lcom/android/internal/telephony/imsphone/ImsPhone;->getSubId()I
+
+    move-result v4
+
+    move-object/from16 v0, p1
+
+    invoke-static {v4, v0}, Landroid/telephony/PhoneNumberUtils;->isEmergencyNumber(ILjava/lang/String;)Z
 
     move-result v9
 
-    .line 317
     .local v9, "isEmergencyNumber":Z
     new-instance v4, Ljava/lang/StringBuilder;
 
     invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string/jumbo v5, "dial clirMode="
+    const-string v5, "dial clirMode="
 
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 

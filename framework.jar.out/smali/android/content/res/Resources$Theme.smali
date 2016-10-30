@@ -546,10 +546,14 @@
 
     monitor-exit v11
 
-    .line 1643
-    return-object v9
+    iget-object v0, p0, Landroid/content/res/Resources$Theme;->this$0:Landroid/content/res/Resources;
 
-    .line 1638
+    invoke-virtual {v0, v9}, Landroid/content/res/Resources;->loadOverlayTypedArray(Landroid/content/res/TypedArray;)Landroid/content/res/TypedArray;
+
+    move-result-object v0
+
+    return-object v0
+
     .end local v9    # "array":Landroid/content/res/TypedArray;
     .end local v10    # "len":I
     :catchall_0
@@ -616,29 +620,29 @@
 
     move-object/from16 v8, p2
 
-    .line 1706
     invoke-static/range {v2 .. v10}, Landroid/content/res/AssetManager;->applyStyle(JIIJ[I[I[I)Z
 
-    .line 1709
     iput-object p0, v11, Landroid/content/res/TypedArray;->mTheme:Landroid/content/res/Resources$Theme;
 
-    .line 1710
     iput-object v13, v11, Landroid/content/res/TypedArray;->mXml:Landroid/content/res/XmlBlock$Parser;
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
     monitor-exit v14
 
-    .line 1712
-    return-object v11
+    iget-object v0, p0, Landroid/content/res/Resources$Theme;->this$0:Landroid/content/res/Resources;
 
-    .line 1707
+    invoke-virtual {v0, v11}, Landroid/content/res/Resources;->loadOverlayTypedArray(Landroid/content/res/TypedArray;)Landroid/content/res/TypedArray;
+
+    move-result-object v0
+
+    return-object v0
+
     :cond_0
     const-wide/16 v6, 0x0
 
     goto :goto_0
 
-    .line 1697
     .end local v11    # "array":Landroid/content/res/TypedArray;
     .end local v12    # "len":I
     .end local v13    # "parser":Landroid/content/res/XmlBlock$Parser;
@@ -697,10 +701,14 @@
 
     monitor-exit v11
 
-    .line 1612
-    return-object v9
+    iget-object v0, p0, Landroid/content/res/Resources$Theme;->this$0:Landroid/content/res/Resources;
 
-    .line 1607
+    invoke-virtual {v0, v9}, Landroid/content/res/Resources;->loadOverlayTypedArray(Landroid/content/res/TypedArray;)Landroid/content/res/TypedArray;
+
+    move-result-object v0
+
+    return-object v0
+
     .end local v9    # "array":Landroid/content/res/TypedArray;
     .end local v10    # "len":I
     :catchall_0
@@ -815,6 +823,13 @@
 
     monitor-exit v7
 
+    if-eqz v0, :cond_0
+
+    iget-object v1, p0, Landroid/content/res/Resources$Theme;->this$0:Landroid/content/res/Resources;
+
+    invoke-virtual {v1, p2, p1}, Landroid/content/res/Resources;->loadOverlayValue(Landroid/util/TypedValue;I)V
+
+    :cond_0
     return v0
 
     .line 1766

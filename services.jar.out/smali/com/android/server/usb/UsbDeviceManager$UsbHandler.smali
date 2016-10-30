@@ -679,24 +679,17 @@
 
     move v1, v2
 
-    .line 1003
     :goto_3
     if-nez v5, :cond_7
 
     move v0, v1
 
-    .line 1004
     :goto_4
     if-eqz v0, :cond_8
 
-    .line 1005
-    invoke-direct {p0}, Lcom/android/server/usb/UsbDeviceManager$UsbHandler;->publishAdbCustomTile()V
-
-    .line 994
     :goto_5
     return-void
 
-    .line 996
     .end local v2    # "netAdbActive":Z
     .end local v3    # "notifEnabled":Z
     :cond_0
@@ -761,8 +754,6 @@
     .line 1007
     .end local v0    # "enabled":Z
     :cond_8
-    invoke-direct {p0}, Lcom/android/server/usb/UsbDeviceManager$UsbHandler;->unpublishAdbCustomTile()V
-
     goto :goto_5
 .end method
 
@@ -1675,18 +1666,12 @@
     :cond_2
     iput v7, p0, Lcom/android/server/usb/UsbDeviceManager$UsbHandler;->mAdbNotificationId:I
 
-    .line 894
     :cond_3
     if-lez v7, :cond_d
 
-    .line 895
-    invoke-direct {p0}, Lcom/android/server/usb/UsbDeviceManager$UsbHandler;->publishAdbCustomTile()V
-
-    .line 835
     :goto_4
     return-void
 
-    .line 838
     .end local v6    # "hideNotification":Z
     .end local v7    # "id":I
     .end local v9    # "netAdbActive":Z
@@ -1771,8 +1756,6 @@
 
     .line 897
     :cond_d
-    invoke-direct {p0}, Lcom/android/server/usb/UsbDeviceManager$UsbHandler;->unpublishAdbCustomTile()V
-
     goto :goto_4
 .end method
 

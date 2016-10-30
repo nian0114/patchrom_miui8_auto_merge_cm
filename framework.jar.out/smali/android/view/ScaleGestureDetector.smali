@@ -131,7 +131,7 @@
 .end method
 
 .method public constructor <init>(Landroid/content/Context;Landroid/view/ScaleGestureDetector$OnScaleGestureListener;Landroid/os/Handler;)V
-    .locals 5
+    .locals 6
     .param p1, "context"    # Landroid/content/Context;
     .param p2, "listener"    # Landroid/view/ScaleGestureDetector$OnScaleGestureListener;
     .param p3, "handler"    # Landroid/os/Handler;
@@ -140,6 +140,8 @@
     const/4 v4, 0x1
 
     const/4 v3, 0x0
+
+    const/high16 v5, 0x7fc00000    # NaNf
 
     .line 203
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -207,39 +209,37 @@
 
     iput v2, p0, Landroid/view/ScaleGestureDetector;->mMinSpan:I
 
-    .line 213
     iput-object p3, p0, Landroid/view/ScaleGestureDetector;->mHandler:Landroid/os/Handler;
 
-    .line 215
     invoke-virtual {p1}, Landroid/content/Context;->getApplicationInfo()Landroid/content/pm/ApplicationInfo;
 
     move-result-object v2
 
     iget v1, v2, Landroid/content/pm/ApplicationInfo;->targetSdkVersion:I
 
-    .line 216
     .local v1, "targetSdkVersion":I
     const/16 v2, 0x12
 
     if-le v1, v2, :cond_0
 
-    .line 217
     invoke-virtual {p0, v4}, Landroid/view/ScaleGestureDetector;->setQuickScaleEnabled(Z)V
 
-    .line 220
     :cond_0
     const/16 v2, 0x16
 
     if-le v1, v2, :cond_1
 
-    .line 221
     invoke-virtual {p0, v4}, Landroid/view/ScaleGestureDetector;->setStylusScaleEnabled(Z)V
 
-    .line 204
     :cond_1
+    iput v5, p0, Landroid/view/ScaleGestureDetector;->mTouchUpper:F
+
+    iput v5, p0, Landroid/view/ScaleGestureDetector;->mTouchLower:F
+
+    iput v5, p0, Landroid/view/ScaleGestureDetector;->mTouchHistoryLastAccepted:F
+
     return-void
 
-    .line 173
     .end local v0    # "res":Landroid/content/res/Resources;
     .end local v1    # "targetSdkVersion":I
     :cond_2

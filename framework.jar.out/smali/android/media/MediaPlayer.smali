@@ -5163,7 +5163,7 @@
 .end method
 
 .method public start()V
-    .locals 2
+    .locals 4
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Ljava/lang/IllegalStateException;
@@ -5171,28 +5171,39 @@
     .end annotation
 
     .prologue
+    const/4 v3, 0x0
+
     const/4 v1, 0x0
 
-    .line 1185
+    const/4 v0, 0x7
+
+    iget v2, p0, Landroid/media/MediaPlayer;->mStreamType:I
+
+    invoke-static {v0, v2, v3, v3}, Lmiui/util/QuietUtils;->checkQuiet(IILjava/lang/String;Ljava/lang/CharSequence;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_miui_0
+
+    goto :goto_0
+
+    :cond_miui_0
     invoke-direct {p0}, Landroid/media/MediaPlayer;->isRestricted()Z
 
     move-result v0
 
     if-eqz v0, :cond_0
 
-    .line 1186
     invoke-direct {p0, v1, v1}, Landroid/media/MediaPlayer;->_setVolume(FF)V
 
-    .line 1188
     :cond_0
     const/4 v0, 0x1
 
     invoke-direct {p0, v0}, Landroid/media/MediaPlayer;->stayAwake(Z)V
 
-    .line 1189
     invoke-direct {p0}, Landroid/media/MediaPlayer;->_start()V
 
-    .line 1184
+    :goto_0
     return-void
 .end method
 

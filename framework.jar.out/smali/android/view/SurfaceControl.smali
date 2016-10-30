@@ -20,6 +20,8 @@
 
 .field public static final CURSOR_WINDOW:I = 0x2000
 
+.field private static final FLAG_BLUR:I = 0x10
+
 .field public static final FX_SURFACE_BLUR:I = 0x10000
 
 .field public static final FX_SURFACE_DIM:I = 0x20000
@@ -1199,6 +1201,32 @@
 
     .line 397
     return-void
+.end method
+
+.method public setBlur(Z)V
+    .locals 4
+    .param p1, "isBlur"    # Z
+
+    .prologue
+    const/16 v1, 0x10
+
+    invoke-direct {p0}, Landroid/view/SurfaceControl;->checkNotReleased()V
+
+    iget-wide v2, p0, Landroid/view/SurfaceControl;->mNativeObject:J
+
+    if-eqz p1, :cond_0
+
+    move v0, v1
+
+    :goto_0
+    invoke-static {v2, v3, v0, v1}, Landroid/view/SurfaceControl;->nativeSetFlags(JII)V
+
+    return-void
+
+    :cond_0
+    const/4 v0, 0x0
+
+    goto :goto_0
 .end method
 
 .method public setBlurMaskAlphaThreshold(F)V

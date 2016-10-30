@@ -199,44 +199,35 @@
 
     iput-object v2, p0, Landroid/app/Dialog;->mWindowManager:Landroid/view/WindowManager;
 
-    .line 185
-    new-instance v1, Lcom/android/internal/policy/PhoneWindow;
+    new-instance v1, Lcom/android/internal/policy/MiuiPhoneWindow;
 
     iget-object v2, p0, Landroid/app/Dialog;->mContext:Landroid/content/Context;
 
-    invoke-direct {v1, v2}, Lcom/android/internal/policy/PhoneWindow;-><init>(Landroid/content/Context;)V
+    invoke-direct {v1, v2}, Lcom/android/internal/policy/MiuiPhoneWindow;-><init>(Landroid/content/Context;)V
 
-    .line 186
     .local v1, "w":Landroid/view/Window;
     iput-object v1, p0, Landroid/app/Dialog;->mWindow:Landroid/view/Window;
 
-    .line 187
     invoke-virtual {v1, p0}, Landroid/view/Window;->setCallback(Landroid/view/Window$Callback;)V
 
-    .line 188
     invoke-virtual {v1, p0}, Landroid/view/Window;->setOnWindowDismissedCallback(Landroid/view/Window$OnWindowDismissedCallback;)V
 
-    .line 189
     iget-object v2, p0, Landroid/app/Dialog;->mWindowManager:Landroid/view/WindowManager;
 
     invoke-virtual {v1, v2, v5, v5}, Landroid/view/Window;->setWindowManager(Landroid/view/WindowManager;Landroid/os/IBinder;Ljava/lang/String;)V
 
-    .line 190
     const/16 v2, 0x11
 
     invoke-virtual {v1, v2}, Landroid/view/Window;->setGravity(I)V
 
-    .line 192
     new-instance v2, Landroid/app/Dialog$ListenersHandler;
 
     invoke-direct {v2, p0}, Landroid/app/Dialog$ListenersHandler;-><init>(Landroid/app/Dialog;)V
 
     iput-object v2, p0, Landroid/app/Dialog;->mListenersHandler:Landroid/os/Handler;
 
-    .line 171
     return-void
 
-    .line 180
     .end local v1    # "w":Landroid/view/Window;
     :cond_1
     iput-object p1, p0, Landroid/app/Dialog;->mContext:Landroid/content/Context;

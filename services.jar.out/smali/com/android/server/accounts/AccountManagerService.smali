@@ -4455,7 +4455,7 @@
 .end method
 
 .method private getTypesForCaller(IIZ)Ljava/util/List;
-    .locals 9
+    .locals 10
     .param p1, "callingUid"    # I
     .param p2, "userId"    # I
     .param p3, "isOtherwisePermitted"    # Z
@@ -4526,13 +4526,27 @@
 
     move-result v6
 
-    .line 3822
     .local v6, "sigChk":I
     if-nez p3, :cond_1
 
-    if-nez v6, :cond_0
+    if-eqz v6, :cond_1
 
-    .line 3823
+    iget-object v8, p0, Lcom/android/server/accounts/AccountManagerService;->mPackageManager:Landroid/content/pm/PackageManager;
+
+    iget-object v7, v3, Landroid/content/pm/RegisteredServicesCache$ServiceInfo;->type:Ljava/lang/Object;
+
+    check-cast v7, Landroid/accounts/AuthenticatorDescription;
+
+    iget-object v7, v7, Landroid/accounts/AuthenticatorDescription;->type:Ljava/lang/String;
+
+    iget v9, v3, Landroid/content/pm/RegisteredServicesCache$ServiceInfo;->uid:I
+
+    invoke-static {v8, v7, v9, p1}, Lcom/android/server/accounts/AccountManagerServiceInjector;->isTrustedAccountSignature(Landroid/content/pm/PackageManager;Ljava/lang/String;II)Z
+
+    move-result v7
+
+    if-eqz v7, :cond_0
+
     :cond_1
     iget-object v7, v3, Landroid/content/pm/RegisteredServicesCache$ServiceInfo;->type:Ljava/lang/Object;
 

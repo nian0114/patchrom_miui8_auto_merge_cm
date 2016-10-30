@@ -1166,6 +1166,10 @@
 
     invoke-virtual {p1, v0, v1, v2}, Lcom/android/internal/telephony/SMSDispatcher$SmsTracker;->onFailed(Landroid/content/Context;II)V
 
+    iget-object v0, p0, Lcom/android/internal/telephony/gsm/GsmSMSDispatcher;->mSmsQueue:Lcom/android/internal/telephony/MiuiSmsQueue;
+
+    invoke-virtual {v0, v2}, Lcom/android/internal/telephony/MiuiSmsQueue;->enableSynced(Z)V
+
     .line 283
     return-void
 
@@ -1385,13 +1389,17 @@
 
     move-result-object v6
 
-    .line 185
     .local v6, "map":Ljava/util/HashMap;
+    const-string v5, "calling_package_name"
+
+    move-object/from16 v0, p7
+
+    invoke-virtual {v6, v5, v0}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
     invoke-virtual/range {p0 .. p0}, Lcom/android/internal/telephony/gsm/GsmSMSDispatcher;->getFormat()Ljava/lang/String;
 
     move-result-object v9
 
-    .line 186
     const/4 v11, 0x0
 
     const/4 v13, 0x1

@@ -1822,53 +1822,58 @@
     .restart local v3    # "uiccAppState":Lcom/android/internal/telephony/uicc/IccCardApplicationStatus$AppState;
     goto :goto_0
 
-    .line 412
     :cond_1
     const/4 v4, 0x1
 
     if-eq v2, v4, :cond_2
 
-    .line 413
-    if-ne v2, v6, :cond_3
+    if-ne v2, v6, :cond_4
 
-    .line 414
     :cond_2
+    invoke-virtual {p0}, Lcom/android/internal/telephony/cdma/CdmaConnection;->getAddress()Ljava/lang/String;
+
+    move-result-object v6
+
+    invoke-static {v6}, Landroid/telephony/PhoneNumberUtils;->isEmergencyNumber(Ljava/lang/String;)Z
+
+    move-result v6
+
+    if-eqz v6, :cond_3
+
+    return v4
+
+    :cond_3
     const/16 v4, 0x12
 
     return v4
 
-    .line 415
-    :cond_3
+    :cond_4
     iget v4, v1, Lcom/android/internal/telephony/cdma/CDMAPhone;->mCdmaSubscriptionSource:I
 
-    if-nez v4, :cond_4
+    if-nez v4, :cond_5
 
-    .line 417
     sget-object v4, Lcom/android/internal/telephony/uicc/IccCardApplicationStatus$AppState;->APPSTATE_READY:Lcom/android/internal/telephony/uicc/IccCardApplicationStatus$AppState;
 
-    if-eq v3, v4, :cond_4
+    if-eq v3, v4, :cond_5
 
-    .line 418
     const/16 v4, 0x13
 
     return v4
 
-    .line 419
-    :cond_4
+    :cond_5
     const/16 v4, 0x10
 
-    if-ne p1, v4, :cond_5
+    if-ne p1, v4, :cond_6
 
-    .line 420
     return v6
 
-    .line 422
-    :cond_5
+    :cond_6
     const/16 v4, 0x24
 
     return v4
 
-    .line 360
+    nop
+
     :sswitch_data_0
     .sparse-switch
         0x11 -> :sswitch_0

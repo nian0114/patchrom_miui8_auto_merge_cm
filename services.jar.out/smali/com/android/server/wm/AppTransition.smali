@@ -21,7 +21,7 @@
 
 .field private static final DEBUG_APP_TRANSITIONS:Z = false
 
-.field private static final DEFAULT_APP_TRANSITION_DURATION:I = 0x150
+.field private static final DEFAULT_APP_TRANSITION_DURATION:I = 0xfa
 
 .field private static final NEXT_TRANSIT_TYPE_CLIP_REVEAL:I = 0x8
 
@@ -730,17 +730,14 @@
 
     invoke-virtual {v13, v0}, Landroid/view/animation/Animation;->setInterpolator(Landroid/view/animation/Interpolator;)V
 
-    .line 538
-    const-wide/16 v22, 0x86
+    const-wide/16 v22, 0x64
 
     move-wide/from16 v0, v22
 
     invoke-virtual {v13, v0, v1}, Landroid/view/animation/Animation;->setDuration(J)V
 
-    .line 539
     new-instance v14, Landroid/view/animation/ClipRectTBAnimation;
 
-    .line 540
     move-object/from16 v0, p0
 
     iget v0, v0, Lcom/android/server/wm/AppTransition;->mNextAppTransitionStartHeight:I
@@ -790,17 +787,14 @@
 
     invoke-virtual {v14, v0}, Landroid/view/animation/Animation;->setInterpolator(Landroid/view/animation/Interpolator;)V
 
-    .line 544
-    const-wide/16 v22, 0x150
+    const-wide/16 v22, 0xfa
 
     move-wide/from16 v0, v22
 
     invoke-virtual {v14, v0, v1}, Landroid/view/animation/Animation;->setDuration(J)V
 
-    .line 546
     new-instance v19, Landroid/view/animation/TranslateYAnimation;
 
-    .line 547
     move/from16 v0, v20
 
     int-to-float v0, v0
@@ -840,8 +834,7 @@
 
     invoke-virtual {v0, v1}, Landroid/view/animation/TranslateYAnimation;->setInterpolator(Landroid/view/animation/Interpolator;)V
 
-    .line 549
-    const-wide/16 v22, 0x150
+    const-wide/16 v22, 0xfa
 
     move-object/from16 v0, v19
 
@@ -849,10 +842,8 @@
 
     invoke-virtual {v0, v1, v2}, Landroid/view/animation/TranslateYAnimation;->setDuration(J)V
 
-    .line 552
-    const/16 v7, 0x54
+    const/16 v7, 0x3e
 
-    .line 553
     .local v7, "alphaDuration":I
     new-instance v6, Landroid/view/animation/AlphaAnimation;
 
@@ -868,7 +859,7 @@
 
     .line 554
     .local v6, "alpha":Landroid/view/animation/AlphaAnimation;
-    const-wide/16 v22, 0x54
+    const-wide/16 v22, 0x3e
 
     move-wide/from16 v0, v22
 
@@ -939,15 +930,12 @@
     :goto_0
     return-object v8
 
-    .line 567
     .end local v8    # "anim":Landroid/view/animation/Animation;
     :cond_1
     packed-switch p1, :pswitch_data_0
 
-    .line 573
-    const-wide/16 v16, 0x150
+    const-wide/16 v16, 0xfa
 
-    .line 576
     .local v16, "duration":J
     :goto_1
     const/16 v21, 0xe
@@ -1190,27 +1178,22 @@
     :goto_0
     packed-switch p1, :pswitch_data_0
 
-    .line 504
-    const-wide/16 v14, 0x150
+    const-wide/16 v14, 0xfa
 
-    .line 507
     .local v14, "duration":J
     :goto_1
     invoke-virtual {v11, v14, v15}, Landroid/view/animation/Animation;->setDuration(J)V
 
-    .line 508
     const/4 v6, 0x1
 
     invoke-virtual {v11, v6}, Landroid/view/animation/Animation;->setFillAfter(Z)V
 
-    .line 509
     move-object/from16 v0, p0
 
     iget-object v6, v0, Lcom/android/server/wm/AppTransition;->mDecelerateInterpolator:Landroid/view/animation/Interpolator;
 
     invoke-virtual {v11, v6}, Landroid/view/animation/Animation;->setInterpolator(Landroid/view/animation/Interpolator;)V
 
-    .line 510
     move/from16 v0, p3
 
     move/from16 v1, p4
@@ -5109,13 +5092,10 @@
     .param p4, "transit"    # I
 
     .prologue
-    .line 617
     packed-switch p4, :pswitch_data_0
 
-    .line 623
-    const/16 v4, 0x150
+    const/16 v4, 0xfa
 
-    .line 627
     .local v4, "duration":I
     :goto_0
     iget-object v5, p0, Lcom/android/server/wm/AppTransition;->mDecelerateInterpolator:Landroid/view/animation/Interpolator;

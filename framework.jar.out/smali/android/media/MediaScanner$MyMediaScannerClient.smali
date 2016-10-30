@@ -4090,30 +4090,33 @@
 
     if-eqz v0, :cond_0
 
-    .line 789
-    const-string/jumbo v0, "video"
+    const-string v0, "video"
 
     invoke-virtual {p1, v0}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
 
     move-result v0
 
-    .line 788
     if-eqz v0, :cond_0
 
-    .line 793
+    :cond_miui_0
     return-void
 
-    .line 795
     :cond_0
+    iget-object v0, p0, Landroid/media/MediaScanner$MyMediaScannerClient;->mMimeType:Ljava/lang/String;
+
+    invoke-static {v0, p1}, Landroid/media/MediaScannerInjector;->keepMimeType(Ljava/lang/String;Ljava/lang/String;)Z
+
+    move-result v0
+
+    if-nez v0, :cond_miui_0
+
     iput-object p1, p0, Landroid/media/MediaScanner$MyMediaScannerClient;->mMimeType:Ljava/lang/String;
 
-    .line 796
     invoke-static {p1}, Landroid/media/MediaFile;->getFileTypeForMimeType(Ljava/lang/String;)I
 
     move-result v0
 
     iput v0, p0, Landroid/media/MediaScanner$MyMediaScannerClient;->mFileType:I
 
-    .line 787
     return-void
 .end method

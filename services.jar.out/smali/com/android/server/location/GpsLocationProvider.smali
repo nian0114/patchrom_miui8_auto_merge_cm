@@ -4710,44 +4710,44 @@
 
     if-ge v4, v5, :cond_5
 
-    .line 1433
     iget-object v4, p0, Lcom/android/server/location/GpsLocationProvider;->mAlarmManager:Landroid/app/AlarmManager;
 
     iget-object v5, p0, Lcom/android/server/location/GpsLocationProvider;->mTimeoutIntent:Landroid/app/PendingIntent;
 
     invoke-virtual {v4, v5}, Landroid/app/AlarmManager;->cancel(Landroid/app/PendingIntent;)V
 
-    .line 1437
     :cond_5
     new-instance v3, Landroid/content/Intent;
 
-    const-string/jumbo v4, "android.location.GPS_FIX_CHANGE"
+    const-string v4, "android.location.GPS_FIX_CHANGE"
 
     invoke-direct {v3, v4}, Landroid/content/Intent;-><init>(Ljava/lang/String;)V
 
-    .line 1438
     .local v3, "intent":Landroid/content/Intent;
-    const-string/jumbo v4, "enabled"
+    const-string v4, "enabled"
 
     const/4 v5, 0x1
 
     invoke-virtual {v3, v4, v5}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Z)Landroid/content/Intent;
 
-    .line 1439
+    iget-object v4, p0, Lcom/android/server/location/GpsLocationProvider;->mClientSource:Landroid/os/WorkSource;
+
+    iget-boolean v5, p0, Lcom/android/server/location/GpsLocationProvider;->mNavigating:Z
+
+    invoke-static {v4, v5, v3}, Lcom/android/server/location/GpsLocationProviderInjector;->appendUidExtra(Landroid/os/WorkSource;ZLandroid/content/Intent;)V
+
     iget-object v4, p0, Lcom/android/server/location/GpsLocationProvider;->mContext:Landroid/content/Context;
 
     sget-object v5, Landroid/os/UserHandle;->ALL:Landroid/os/UserHandle;
 
     invoke-virtual {v4, v3, v5}, Landroid/content/Context;->sendBroadcastAsUser(Landroid/content/Intent;Landroid/os/UserHandle;)V
 
-    .line 1440
     iget v4, p0, Lcom/android/server/location/GpsLocationProvider;->mSvCount:I
 
     const/4 v5, 0x2
 
     invoke-direct {p0, v5, v4}, Lcom/android/server/location/GpsLocationProvider;->updateStatus(II)V
 
-    .line 1443
     .end local v3    # "intent":Landroid/content/Intent;
     :cond_6
     const/4 v4, 0x1
@@ -4949,85 +4949,78 @@
 
     invoke-static {v2, v3}, Landroid/util/Log;->v(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 1456
     :cond_0
     iget-boolean v1, p0, Lcom/android/server/location/GpsLocationProvider;->mNavigating:Z
 
-    .line 1457
     .local v1, "wasNavigating":Z
     packed-switch p1, :pswitch_data_0
 
-    .line 1474
     :goto_0
     iget-boolean v2, p0, Lcom/android/server/location/GpsLocationProvider;->mNavigating:Z
 
     if-eq v1, v2, :cond_1
 
-    .line 1475
     iget-object v2, p0, Lcom/android/server/location/GpsLocationProvider;->mListenerHelper:Lcom/android/server/location/GpsStatusListenerHelper;
 
     iget-boolean v3, p0, Lcom/android/server/location/GpsLocationProvider;->mNavigating:Z
 
     invoke-virtual {v2, v3}, Lcom/android/server/location/GpsStatusListenerHelper;->onStatusChanged(Z)V
 
-    .line 1478
     new-instance v0, Landroid/content/Intent;
 
-    const-string/jumbo v2, "android.location.GPS_ENABLED_CHANGE"
+    const-string v2, "android.location.GPS_ENABLED_CHANGE"
 
     invoke-direct {v0, v2}, Landroid/content/Intent;-><init>(Ljava/lang/String;)V
 
-    .line 1479
     .local v0, "intent":Landroid/content/Intent;
-    const-string/jumbo v2, "enabled"
+    const-string v2, "enabled"
 
     iget-boolean v3, p0, Lcom/android/server/location/GpsLocationProvider;->mNavigating:Z
 
     invoke-virtual {v0, v2, v3}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Z)Landroid/content/Intent;
 
-    .line 1480
+    iget-object v2, p0, Lcom/android/server/location/GpsLocationProvider;->mClientSource:Landroid/os/WorkSource;
+
+    iget-boolean v3, p0, Lcom/android/server/location/GpsLocationProvider;->mNavigating:Z
+
+    invoke-static {v2, v3, v0}, Lcom/android/server/location/GpsLocationProviderInjector;->appendUidExtra(Landroid/os/WorkSource;ZLandroid/content/Intent;)V
+
     iget-object v2, p0, Lcom/android/server/location/GpsLocationProvider;->mContext:Landroid/content/Context;
 
     sget-object v3, Landroid/os/UserHandle;->ALL:Landroid/os/UserHandle;
 
     invoke-virtual {v2, v0, v3}, Landroid/content/Context;->sendBroadcastAsUser(Landroid/content/Intent;Landroid/os/UserHandle;)V
 
-    .line 1453
     .end local v0    # "intent":Landroid/content/Intent;
     :cond_1
     return-void
 
-    .line 1459
     :pswitch_0
     iput-boolean v6, p0, Lcom/android/server/location/GpsLocationProvider;->mNavigating:Z
 
-    .line 1460
     iput-boolean v6, p0, Lcom/android/server/location/GpsLocationProvider;->mEngineOn:Z
 
     goto :goto_0
 
-    .line 1463
     :pswitch_1
     iput-boolean v5, p0, Lcom/android/server/location/GpsLocationProvider;->mNavigating:Z
 
     goto :goto_0
 
-    .line 1466
     :pswitch_2
     iput-boolean v6, p0, Lcom/android/server/location/GpsLocationProvider;->mEngineOn:Z
 
     goto :goto_0
 
-    .line 1469
     :pswitch_3
     iput-boolean v5, p0, Lcom/android/server/location/GpsLocationProvider;->mEngineOn:Z
 
-    .line 1470
     iput-boolean v5, p0, Lcom/android/server/location/GpsLocationProvider;->mNavigating:Z
 
     goto :goto_0
 
-    .line 1457
+    nop
+
     :pswitch_data_0
     .packed-switch 0x1
         :pswitch_0

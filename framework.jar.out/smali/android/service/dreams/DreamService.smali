@@ -447,30 +447,25 @@
 
     if-eqz v3, :cond_7
 
-    .line 965
     :cond_3
     iget-boolean v3, p0, Landroid/service/dreams/DreamService;->mWindowless:Z
 
     if-nez v3, :cond_6
 
-    .line 966
-    new-instance v3, Lcom/android/internal/policy/PhoneWindow;
+    new-instance v3, Lcom/android/internal/policy/MiuiPhoneWindow;
 
-    invoke-direct {v3, p0}, Lcom/android/internal/policy/PhoneWindow;-><init>(Landroid/content/Context;)V
+    invoke-direct {v3, p0}, Lcom/android/internal/policy/MiuiPhoneWindow;-><init>(Landroid/content/Context;)V
 
     iput-object v3, p0, Landroid/service/dreams/DreamService;->mWindow:Landroid/view/Window;
 
-    .line 967
     iget-object v3, p0, Landroid/service/dreams/DreamService;->mWindow:Landroid/view/Window;
 
     invoke-virtual {v3, p0}, Landroid/view/Window;->setCallback(Landroid/view/Window$Callback;)V
 
-    .line 968
     iget-object v3, p0, Landroid/service/dreams/DreamService;->mWindow:Landroid/view/Window;
 
     invoke-virtual {v3, v5}, Landroid/view/Window;->requestFeature(I)Z
 
-    .line 969
     iget-object v3, p0, Landroid/service/dreams/DreamService;->mWindow:Landroid/view/Window;
 
     new-instance v6, Landroid/graphics/drawable/ColorDrawable;

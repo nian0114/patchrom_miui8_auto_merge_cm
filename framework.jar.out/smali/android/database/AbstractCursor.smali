@@ -832,7 +832,7 @@
 .end method
 
 .method public final moveToPosition(I)Z
-    .locals 4
+    .locals 5
     .param p1, "position"    # I
 
     .prologue
@@ -897,6 +897,17 @@
 
     .line 240
     :cond_3
+    invoke-static {p0, p1}, Landroid/database/AbstractCursorInjector;->checkPosition(Landroid/database/AbstractCursor;I)Z
+
+    move-result v4
+
+    if-nez v4, :cond_miui_0
+
+    move v1, v2
+
+    goto :goto_0
+
+    :cond_miui_0
     iput p1, p0, Landroid/database/AbstractCursor;->mPos:I
 
     goto :goto_0

@@ -239,6 +239,8 @@
 
 .field private static final NS_PER_MS:J = 0xf4240L
 
+.field public static final TOOL_TYPE_EDGE_TOUCH:I = 0x5
+
 .field public static final TOOL_TYPE_ERASER:I = 0x4
 
 .field public static final TOOL_TYPE_FINGER:I = 0x1
@@ -296,588 +298,503 @@
 
     const/4 v4, 0x0
 
-    .line 1176
     new-instance v1, Landroid/util/SparseArray;
 
     invoke-direct {v1}, Landroid/util/SparseArray;-><init>()V
 
     sput-object v1, Landroid/view/MotionEvent;->AXIS_SYMBOLIC_NAMES:Landroid/util/SparseArray;
 
-    .line 1178
     sget-object v0, Landroid/view/MotionEvent;->AXIS_SYMBOLIC_NAMES:Landroid/util/SparseArray;
 
-    .line 1179
     .local v0, "names":Landroid/util/SparseArray;, "Landroid/util/SparseArray<Ljava/lang/String;>;"
-    const-string/jumbo v1, "AXIS_X"
+    const-string v1, "AXIS_X"
 
     invoke-virtual {v0, v4, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1180
-    const-string/jumbo v1, "AXIS_Y"
+    const-string v1, "AXIS_Y"
 
     invoke-virtual {v0, v5, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1181
-    const-string/jumbo v1, "AXIS_PRESSURE"
+    const-string v1, "AXIS_PRESSURE"
 
     invoke-virtual {v0, v6, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1182
-    const-string/jumbo v1, "AXIS_SIZE"
+    const-string v1, "AXIS_SIZE"
 
     invoke-virtual {v0, v7, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1183
-    const-string/jumbo v1, "AXIS_TOUCH_MAJOR"
+    const-string v1, "AXIS_TOUCH_MAJOR"
 
     invoke-virtual {v0, v8, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1184
-    const-string/jumbo v1, "AXIS_TOUCH_MINOR"
+    const-string v1, "AXIS_TOUCH_MINOR"
 
     const/4 v2, 0x5
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1185
-    const-string/jumbo v1, "AXIS_TOOL_MAJOR"
+    const-string v1, "AXIS_TOOL_MAJOR"
 
     const/4 v2, 0x6
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1186
-    const-string/jumbo v1, "AXIS_TOOL_MINOR"
+    const-string v1, "AXIS_TOOL_MINOR"
 
     const/4 v2, 0x7
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1187
-    const-string/jumbo v1, "AXIS_ORIENTATION"
+    const-string v1, "AXIS_ORIENTATION"
 
     const/16 v2, 0x8
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1188
-    const-string/jumbo v1, "AXIS_VSCROLL"
+    const-string v1, "AXIS_VSCROLL"
 
     const/16 v2, 0x9
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1189
-    const-string/jumbo v1, "AXIS_HSCROLL"
+    const-string v1, "AXIS_HSCROLL"
 
     const/16 v2, 0xa
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1190
-    const-string/jumbo v1, "AXIS_Z"
+    const-string v1, "AXIS_Z"
 
     const/16 v2, 0xb
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1191
-    const-string/jumbo v1, "AXIS_RX"
+    const-string v1, "AXIS_RX"
 
     const/16 v2, 0xc
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1192
-    const-string/jumbo v1, "AXIS_RY"
+    const-string v1, "AXIS_RY"
 
     const/16 v2, 0xd
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1193
-    const-string/jumbo v1, "AXIS_RZ"
+    const-string v1, "AXIS_RZ"
 
     const/16 v2, 0xe
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1194
-    const-string/jumbo v1, "AXIS_HAT_X"
+    const-string v1, "AXIS_HAT_X"
 
     const/16 v2, 0xf
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1195
-    const-string/jumbo v1, "AXIS_HAT_Y"
+    const-string v1, "AXIS_HAT_Y"
 
     const/16 v2, 0x10
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1196
-    const-string/jumbo v1, "AXIS_LTRIGGER"
+    const-string v1, "AXIS_LTRIGGER"
 
     const/16 v2, 0x11
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1197
-    const-string/jumbo v1, "AXIS_RTRIGGER"
+    const-string v1, "AXIS_RTRIGGER"
 
     const/16 v2, 0x12
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1198
-    const-string/jumbo v1, "AXIS_THROTTLE"
+    const-string v1, "AXIS_THROTTLE"
 
     const/16 v2, 0x13
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1199
-    const-string/jumbo v1, "AXIS_RUDDER"
+    const-string v1, "AXIS_RUDDER"
 
     const/16 v2, 0x14
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1200
-    const-string/jumbo v1, "AXIS_WHEEL"
+    const-string v1, "AXIS_WHEEL"
 
     const/16 v2, 0x15
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1201
-    const-string/jumbo v1, "AXIS_GAS"
+    const-string v1, "AXIS_GAS"
 
     const/16 v2, 0x16
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1202
-    const-string/jumbo v1, "AXIS_BRAKE"
+    const-string v1, "AXIS_BRAKE"
 
     const/16 v2, 0x17
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1203
-    const-string/jumbo v1, "AXIS_DISTANCE"
+    const-string v1, "AXIS_DISTANCE"
 
     const/16 v2, 0x18
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1204
-    const-string/jumbo v1, "AXIS_TILT"
+    const-string v1, "AXIS_TILT"
 
     const/16 v2, 0x19
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1205
-    const-string/jumbo v1, "AXIS_SCROLL"
+    const-string v1, "AXIS_SCROLL"
 
     const/16 v2, 0x1a
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1206
-    const-string/jumbo v1, "AXIS_GENERIC_1"
+    const-string v1, "AXIS_GENERIC_1"
 
     const/16 v2, 0x20
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1207
-    const-string/jumbo v1, "AXIS_GENERIC_2"
+    const-string v1, "AXIS_GENERIC_2"
 
     const/16 v2, 0x21
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1208
-    const-string/jumbo v1, "AXIS_GENERIC_3"
+    const-string v1, "AXIS_GENERIC_3"
 
     const/16 v2, 0x22
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1209
-    const-string/jumbo v1, "AXIS_GENERIC_4"
+    const-string v1, "AXIS_GENERIC_4"
 
     const/16 v2, 0x23
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1210
-    const-string/jumbo v1, "AXIS_GENERIC_5"
+    const-string v1, "AXIS_GENERIC_5"
 
     const/16 v2, 0x24
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1211
-    const-string/jumbo v1, "AXIS_GENERIC_6"
+    const-string v1, "AXIS_GENERIC_6"
 
     const/16 v2, 0x25
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1212
-    const-string/jumbo v1, "AXIS_GENERIC_7"
+    const-string v1, "AXIS_GENERIC_7"
 
     const/16 v2, 0x26
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1213
-    const-string/jumbo v1, "AXIS_GENERIC_8"
+    const-string v1, "AXIS_GENERIC_8"
 
     const/16 v2, 0x27
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1214
-    const-string/jumbo v1, "AXIS_GENERIC_9"
+    const-string v1, "AXIS_GENERIC_9"
 
     const/16 v2, 0x28
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1215
-    const-string/jumbo v1, "AXIS_GENERIC_10"
+    const-string v1, "AXIS_GENERIC_10"
 
     const/16 v2, 0x29
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1216
-    const-string/jumbo v1, "AXIS_GENERIC_11"
+    const-string v1, "AXIS_GENERIC_11"
 
     const/16 v2, 0x2a
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1217
-    const-string/jumbo v1, "AXIS_GENERIC_12"
+    const-string v1, "AXIS_GENERIC_12"
 
     const/16 v2, 0x2b
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1218
-    const-string/jumbo v1, "AXIS_GENERIC_13"
+    const-string v1, "AXIS_GENERIC_13"
 
     const/16 v2, 0x2c
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1219
-    const-string/jumbo v1, "AXIS_GENERIC_14"
+    const-string v1, "AXIS_GENERIC_14"
 
     const/16 v2, 0x2d
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1220
-    const-string/jumbo v1, "AXIS_GENERIC_15"
+    const-string v1, "AXIS_GENERIC_15"
 
     const/16 v2, 0x2e
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1221
-    const-string/jumbo v1, "AXIS_GENERIC_16"
+    const-string v1, "AXIS_GENERIC_16"
 
     const/16 v2, 0x2f
 
     invoke-virtual {v0, v2, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1289
     const/16 v1, 0x20
 
     new-array v1, v1, [Ljava/lang/String;
 
-    .line 1290
-    const-string/jumbo v2, "BUTTON_PRIMARY"
+    const-string v2, "BUTTON_PRIMARY"
 
     aput-object v2, v1, v4
 
-    .line 1291
-    const-string/jumbo v2, "BUTTON_SECONDARY"
+    const-string v2, "BUTTON_SECONDARY"
 
     aput-object v2, v1, v5
 
-    .line 1292
-    const-string/jumbo v2, "BUTTON_TERTIARY"
+    const-string v2, "BUTTON_TERTIARY"
 
     aput-object v2, v1, v6
 
-    .line 1293
-    const-string/jumbo v2, "BUTTON_BACK"
+    const-string v2, "BUTTON_BACK"
 
     aput-object v2, v1, v7
 
-    .line 1294
-    const-string/jumbo v2, "BUTTON_FORWARD"
+    const-string v2, "BUTTON_FORWARD"
 
     aput-object v2, v1, v8
 
-    .line 1295
-    const-string/jumbo v2, "BUTTON_STYLUS_PRIMARY"
+    const-string v2, "BUTTON_STYLUS_PRIMARY"
 
     const/4 v3, 0x5
 
     aput-object v2, v1, v3
 
-    .line 1296
-    const-string/jumbo v2, "BUTTON_STYLUS_SECONDARY"
+    const-string v2, "BUTTON_STYLUS_SECONDARY"
 
     const/4 v3, 0x6
 
     aput-object v2, v1, v3
 
-    .line 1297
-    const-string/jumbo v2, "0x00000080"
+    const-string v2, "0x00000080"
 
     const/4 v3, 0x7
 
     aput-object v2, v1, v3
 
-    .line 1298
-    const-string/jumbo v2, "0x00000100"
+    const-string v2, "0x00000100"
 
     const/16 v3, 0x8
 
     aput-object v2, v1, v3
 
-    .line 1299
-    const-string/jumbo v2, "0x00000200"
+    const-string v2, "0x00000200"
 
     const/16 v3, 0x9
 
     aput-object v2, v1, v3
 
-    .line 1300
-    const-string/jumbo v2, "0x00000400"
+    const-string v2, "0x00000400"
 
     const/16 v3, 0xa
 
     aput-object v2, v1, v3
 
-    .line 1301
-    const-string/jumbo v2, "0x00000800"
+    const-string v2, "0x00000800"
 
     const/16 v3, 0xb
 
     aput-object v2, v1, v3
 
-    .line 1302
-    const-string/jumbo v2, "0x00001000"
+    const-string v2, "0x00001000"
 
     const/16 v3, 0xc
 
     aput-object v2, v1, v3
 
-    .line 1303
-    const-string/jumbo v2, "0x00002000"
+    const-string v2, "0x00002000"
 
     const/16 v3, 0xd
 
     aput-object v2, v1, v3
 
-    .line 1304
-    const-string/jumbo v2, "0x00004000"
+    const-string v2, "0x00004000"
 
     const/16 v3, 0xe
 
     aput-object v2, v1, v3
 
-    .line 1305
-    const-string/jumbo v2, "0x00008000"
+    const-string v2, "0x00008000"
 
     const/16 v3, 0xf
 
     aput-object v2, v1, v3
 
-    .line 1306
-    const-string/jumbo v2, "0x00010000"
+    const-string v2, "0x00010000"
 
     const/16 v3, 0x10
 
     aput-object v2, v1, v3
 
-    .line 1307
-    const-string/jumbo v2, "0x00020000"
+    const-string v2, "0x00020000"
 
     const/16 v3, 0x11
 
     aput-object v2, v1, v3
 
-    .line 1308
-    const-string/jumbo v2, "0x00040000"
+    const-string v2, "0x00040000"
 
     const/16 v3, 0x12
 
     aput-object v2, v1, v3
 
-    .line 1309
-    const-string/jumbo v2, "0x00080000"
+    const-string v2, "0x00080000"
 
     const/16 v3, 0x13
 
     aput-object v2, v1, v3
 
-    .line 1310
-    const-string/jumbo v2, "0x00100000"
+    const-string v2, "0x00100000"
 
     const/16 v3, 0x14
 
     aput-object v2, v1, v3
 
-    .line 1311
-    const-string/jumbo v2, "0x00200000"
+    const-string v2, "0x00200000"
 
     const/16 v3, 0x15
 
     aput-object v2, v1, v3
 
-    .line 1312
-    const-string/jumbo v2, "0x00400000"
+    const-string v2, "0x00400000"
 
     const/16 v3, 0x16
 
     aput-object v2, v1, v3
 
-    .line 1313
-    const-string/jumbo v2, "0x00800000"
+    const-string v2, "0x00800000"
 
     const/16 v3, 0x17
 
     aput-object v2, v1, v3
 
-    .line 1314
-    const-string/jumbo v2, "0x01000000"
+    const-string v2, "0x01000000"
 
     const/16 v3, 0x18
 
     aput-object v2, v1, v3
 
-    .line 1315
-    const-string/jumbo v2, "0x02000000"
+    const-string v2, "0x02000000"
 
     const/16 v3, 0x19
 
     aput-object v2, v1, v3
 
-    .line 1316
-    const-string/jumbo v2, "0x04000000"
+    const-string v2, "0x04000000"
 
     const/16 v3, 0x1a
 
     aput-object v2, v1, v3
 
-    .line 1317
-    const-string/jumbo v2, "0x08000000"
+    const-string v2, "0x08000000"
 
     const/16 v3, 0x1b
 
     aput-object v2, v1, v3
 
-    .line 1318
-    const-string/jumbo v2, "0x10000000"
+    const-string v2, "0x10000000"
 
     const/16 v3, 0x1c
 
     aput-object v2, v1, v3
 
-    .line 1319
-    const-string/jumbo v2, "0x20000000"
+    const-string v2, "0x20000000"
 
     const/16 v3, 0x1d
 
     aput-object v2, v1, v3
 
-    .line 1320
-    const-string/jumbo v2, "0x40000000"
+    const-string v2, "0x40000000"
 
     const/16 v3, 0x1e
 
     aput-object v2, v1, v3
 
-    .line 1321
-    const-string/jumbo v2, "0x80000000"
+    const-string v2, "0x80000000"
 
     const/16 v3, 0x1f
 
     aput-object v2, v1, v3
 
-    .line 1289
     sput-object v1, Landroid/view/MotionEvent;->BUTTON_SYMBOLIC_NAMES:[Ljava/lang/String;
 
-    .line 1365
     new-instance v1, Landroid/util/SparseArray;
 
     invoke-direct {v1}, Landroid/util/SparseArray;-><init>()V
 
     sput-object v1, Landroid/view/MotionEvent;->TOOL_TYPE_SYMBOLIC_NAMES:Landroid/util/SparseArray;
 
-    .line 1367
     sget-object v0, Landroid/view/MotionEvent;->TOOL_TYPE_SYMBOLIC_NAMES:Landroid/util/SparseArray;
 
-    .line 1368
-    const-string/jumbo v1, "TOOL_TYPE_UNKNOWN"
+    const-string v1, "TOOL_TYPE_UNKNOWN"
 
     invoke-virtual {v0, v4, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1369
-    const-string/jumbo v1, "TOOL_TYPE_FINGER"
+    const-string v1, "TOOL_TYPE_FINGER"
 
     invoke-virtual {v0, v5, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1370
-    const-string/jumbo v1, "TOOL_TYPE_STYLUS"
+    const-string v1, "TOOL_TYPE_STYLUS"
 
     invoke-virtual {v0, v6, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1371
-    const-string/jumbo v1, "TOOL_TYPE_MOUSE"
+    const-string v1, "TOOL_TYPE_MOUSE"
 
     invoke-virtual {v0, v7, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1372
-    const-string/jumbo v1, "TOOL_TYPE_ERASER"
+    const-string v1, "TOOL_TYPE_ERASER"
 
     invoke-virtual {v0, v8, v1}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
 
-    .line 1379
+    const/4 v1, 0x5
+
+    const-string v2, "TOOL_TYPE_EDGE_TOUCH"
+
+    invoke-virtual {v0, v1, v2}, Landroid/util/SparseArray;->append(ILjava/lang/Object;)V
+
     new-instance v1, Ljava/lang/Object;
 
     invoke-direct {v1}, Ljava/lang/Object;-><init>()V
 
     sput-object v1, Landroid/view/MotionEvent;->gRecyclerLock:Ljava/lang/Object;
 
-    .line 1385
     new-instance v1, Ljava/lang/Object;
 
     invoke-direct {v1}, Ljava/lang/Object;-><init>()V
 
     sput-object v1, Landroid/view/MotionEvent;->gSharedTempLock:Ljava/lang/Object;
 
-    .line 3300
     new-instance v1, Landroid/view/MotionEvent$1;
 
     invoke-direct {v1}, Landroid/view/MotionEvent$1;-><init>()V
 
-    .line 3299
     sput-object v1, Landroid/view/MotionEvent;->CREATOR:Landroid/os/Parcelable$Creator;
 
-    .line 168
     return-void
 .end method
 
@@ -4222,6 +4139,28 @@
     const/4 v0, 0x1
 
     :cond_1
+    return v0
+.end method
+
+.method public final isEdgeTouchEvent()Z
+    .locals 4
+
+    .prologue
+    const/4 v0, 0x0
+
+    iget-wide v2, p0, Landroid/view/MotionEvent;->mNativePtr:J
+
+    invoke-static {v2, v3, v0}, Landroid/view/MotionEvent;->nativeGetToolType(JI)I
+
+    move-result v1
+
+    const/4 v2, 0x5
+
+    if-ne v1, v2, :cond_0
+
+    const/4 v0, 0x1
+
+    :cond_0
     return v0
 .end method
 

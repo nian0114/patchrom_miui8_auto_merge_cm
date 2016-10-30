@@ -849,6 +849,10 @@
     throw v9
 
     :cond_2
+    const/4 v9, 0x0
+
+    invoke-static {p1, p2, v9}, Lmiui/util/ScreenshotDrawable;->processBlurBehindFlag(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;Z)V
+
     move-object v8, p2
 
     .line 243
@@ -2567,34 +2571,34 @@
     .param p2, "params"    # Landroid/view/ViewGroup$LayoutParams;
 
     .prologue
-    .line 324
+    const/4 v4, 0x1
+
     if-nez p1, :cond_0
 
-    .line 325
     new-instance v3, Ljava/lang/IllegalArgumentException;
 
-    const-string/jumbo v4, "view must not be null"
+    const-string v4, "view must not be null"
 
     invoke-direct {v3, v4}, Ljava/lang/IllegalArgumentException;-><init>(Ljava/lang/String;)V
 
     throw v3
 
-    .line 327
     :cond_0
     instance-of v3, p2, Landroid/view/WindowManager$LayoutParams;
 
     if-nez v3, :cond_1
 
-    .line 328
     new-instance v3, Ljava/lang/IllegalArgumentException;
 
-    const-string/jumbo v4, "Params must be WindowManager.LayoutParams"
+    const-string v4, "Params must be WindowManager.LayoutParams"
 
     invoke-direct {v3, v4}, Ljava/lang/IllegalArgumentException;-><init>(Ljava/lang/String;)V
 
     throw v3
 
     :cond_1
+    invoke-static {p1, p2, v4}, Lmiui/util/ScreenshotDrawable;->processBlurBehindFlag(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;Z)V
+
     move-object v2, p2
 
     .line 331

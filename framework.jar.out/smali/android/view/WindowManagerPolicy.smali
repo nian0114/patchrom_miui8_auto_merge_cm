@@ -257,6 +257,9 @@
 .method public abstract notifyActivityDrawnForKeyguardLw()V
 .end method
 
+.method public abstract notifyBackLidSwitchChanged(JZ)V
+.end method
+
 .method public abstract notifyCameraLensCoverSwitchChanged(JZ)V
 .end method
 
@@ -323,6 +326,9 @@
 .method public abstract setUserRotationMode(II)V
 .end method
 
+.method public abstract showBootMessage(Ljava/lang/CharSequence;Z)V
+.end method
+
 .method public abstract showGlobalActions()V
 .end method
 
@@ -345,9 +351,6 @@
 .end method
 
 .method public abstract systemReady()V
-.end method
-
-.method public abstract updateBootProgress(ILandroid/content/pm/ApplicationInfo;II)V
 .end method
 
 .method public abstract userActivity()V

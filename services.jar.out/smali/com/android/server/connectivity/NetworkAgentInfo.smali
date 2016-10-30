@@ -45,6 +45,8 @@
 
 .field public linkProperties:Landroid/net/LinkProperties;
 
+.field private final mContext:Landroid/content/Context;
+
 .field public final messenger:Landroid/os/Messenger;
 
 .field public final network:Landroid/net/Network;
@@ -97,55 +99,44 @@
     .param p12, "connService"    # Lcom/android/server/ConnectivityService;
 
     .prologue
-    .line 166
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    .line 154
     new-instance v0, Landroid/util/SparseArray;
 
     invoke-direct {v0}, Landroid/util/SparseArray;-><init>()V
 
     iput-object v0, p0, Lcom/android/server/connectivity/NetworkAgentInfo;->networkRequests:Landroid/util/SparseArray;
 
-    .line 158
     new-instance v0, Ljava/util/ArrayList;
 
     invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
 
     iput-object v0, p0, Lcom/android/server/connectivity/NetworkAgentInfo;->networkLingered:Ljava/util/ArrayList;
 
-    .line 169
     iput-object p1, p0, Lcom/android/server/connectivity/NetworkAgentInfo;->messenger:Landroid/os/Messenger;
 
-    .line 170
     iput-object p2, p0, Lcom/android/server/connectivity/NetworkAgentInfo;->asyncChannel:Lcom/android/internal/util/AsyncChannel;
 
-    .line 171
     iput-object p3, p0, Lcom/android/server/connectivity/NetworkAgentInfo;->network:Landroid/net/Network;
 
-    .line 172
     iput-object p4, p0, Lcom/android/server/connectivity/NetworkAgentInfo;->networkInfo:Landroid/net/NetworkInfo;
 
-    .line 173
     iput-object p5, p0, Lcom/android/server/connectivity/NetworkAgentInfo;->linkProperties:Landroid/net/LinkProperties;
 
-    .line 174
     iput-object p6, p0, Lcom/android/server/connectivity/NetworkAgentInfo;->networkCapabilities:Landroid/net/NetworkCapabilities;
 
-    .line 175
     iput p7, p0, Lcom/android/server/connectivity/NetworkAgentInfo;->currentScore:I
 
-    .line 176
     invoke-virtual {p12, p8, p9, p0, p11}, Lcom/android/server/ConnectivityService;->createNetworkMonitor(Landroid/content/Context;Landroid/os/Handler;Lcom/android/server/connectivity/NetworkAgentInfo;Landroid/net/NetworkRequest;)Lcom/android/server/connectivity/NetworkMonitor;
 
     move-result-object v0
 
     iput-object v0, p0, Lcom/android/server/connectivity/NetworkAgentInfo;->networkMonitor:Lcom/android/server/connectivity/NetworkMonitor;
 
-    .line 177
     iput-object p10, p0, Lcom/android/server/connectivity/NetworkAgentInfo;->networkMisc:Landroid/net/NetworkMisc;
 
-    .line 168
+    iput-object p8, p0, Lcom/android/server/connectivity/NetworkAgentInfo;->mContext:Landroid/content/Context;
+
     return-void
 .end method
 
@@ -206,6 +197,14 @@
 
     .line 228
     :cond_4
+    iget-object v1, p0, Lcom/android/server/connectivity/NetworkAgentInfo;->mContext:Landroid/content/Context;
+
+    invoke-static {v1}, Lcom/android/server/connectivity/NetworkAgentInfoInjector;->enableDataAndWifiRoam(Landroid/content/Context;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_2
+
     add-int/lit8 v0, v0, -0x28
 
     goto :goto_0

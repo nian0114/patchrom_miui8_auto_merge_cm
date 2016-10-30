@@ -2171,13 +2171,19 @@
 
     move-result-object v1
 
-    .line 421
     .local v1, "res":Landroid/content/res/Resources;
+    invoke-virtual {p0}, Landroid/view/LayoutInflater;->getContext()Landroid/content/Context;
+
+    move-result-object v2
+
+    invoke-static {v2, p1}, Landroid/view/LayoutInflaterMap;->getResourceId(Landroid/content/Context;I)I
+
+    move-result p1
+
     invoke-virtual {v1, p1}, Landroid/content/res/Resources;->getLayout(I)Landroid/content/res/XmlResourceParser;
 
     move-result-object v0
 
-    .line 423
     .local v0, "parser":Landroid/content/res/XmlResourceParser;
     :try_start_0
     invoke-virtual {p0, v0, p2, p3}, Landroid/view/LayoutInflater;->inflate(Lorg/xmlpull/v1/XmlPullParser;Landroid/view/ViewGroup;Z)Landroid/view/View;

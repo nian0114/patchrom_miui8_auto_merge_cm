@@ -764,6 +764,8 @@
 
 .field private mSelector:Landroid/content/Intent;
 
+.field private mSenderPackageName:Ljava/lang/String;
+
 .field private mSourceBounds:Landroid/graphics/Rect;
 
 .field private mType:Ljava/lang/String;
@@ -959,6 +961,10 @@
 
     .line 4552
     :cond_4
+    iget-object v0, p1, Landroid/content/Intent;->mSenderPackageName:Ljava/lang/String;
+
+    iput-object v0, p0, Landroid/content/Intent;->mSenderPackageName:Ljava/lang/String;
+
     return-void
 .end method
 
@@ -1017,6 +1023,10 @@
 
     .line 4582
     :cond_0
+    iget-object v0, p1, Landroid/content/Intent;->mSenderPackageName:Ljava/lang/String;
+
+    iput-object v0, p0, Landroid/content/Intent;->mSenderPackageName:Ljava/lang/String;
+
     return-void
 .end method
 
@@ -8922,14 +8932,18 @@
 
     iput v2, p0, Landroid/content/Intent;->mContentUserHint:I
 
-    .line 8046
     invoke-virtual {p1}, Landroid/os/Parcel;->readBundle()Landroid/os/Bundle;
 
     move-result-object v2
 
     iput-object v2, p0, Landroid/content/Intent;->mExtras:Landroid/os/Bundle;
 
-    .line 8015
+    invoke-virtual {p1}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v2
+
+    iput-object v2, p0, Landroid/content/Intent;->mSenderPackageName:Ljava/lang/String;
+
     return-void
 .end method
 
@@ -11030,61 +11044,72 @@
 
     goto :goto_0
 
-    .line 7980
     :cond_1
     invoke-virtual {p1, v3}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 7983
     :cond_2
     iget-object v2, p0, Landroid/content/Intent;->mSelector:Landroid/content/Intent;
 
     if-eqz v2, :cond_3
 
-    .line 7984
     invoke-virtual {p1, v4}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 7985
     iget-object v2, p0, Landroid/content/Intent;->mSelector:Landroid/content/Intent;
 
     invoke-virtual {v2, p1, p2}, Landroid/content/Intent;->writeToParcel(Landroid/os/Parcel;I)V
 
-    .line 7990
     :goto_2
     iget-object v2, p0, Landroid/content/Intent;->mClipData:Landroid/content/ClipData;
 
     if-eqz v2, :cond_4
 
-    .line 7991
     invoke-virtual {p1, v4}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 7992
     iget-object v2, p0, Landroid/content/Intent;->mClipData:Landroid/content/ClipData;
 
     invoke-virtual {v2, p1, p2}, Landroid/content/ClipData;->writeToParcel(Landroid/os/Parcel;I)V
 
-    .line 7996
     :goto_3
     iget v2, p0, Landroid/content/Intent;->mContentUserHint:I
 
     invoke-virtual {p1, v2}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 7997
     iget-object v2, p0, Landroid/content/Intent;->mExtras:Landroid/os/Bundle;
 
     invoke-virtual {p1, v2}, Landroid/os/Parcel;->writeBundle(Landroid/os/Bundle;)V
 
-    .line 7958
+    iget-object v2, p0, Landroid/content/Intent;->mSenderPackageName:Ljava/lang/String;
+
+    invoke-virtual {p1, v2}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
+
     return-void
 
-    .line 7987
     :cond_3
     invoke-virtual {p1, v3}, Landroid/os/Parcel;->writeInt(I)V
 
     goto :goto_2
 
-    .line 7994
     :cond_4
     invoke-virtual {p1, v3}, Landroid/os/Parcel;->writeInt(I)V
 
     goto :goto_3
+.end method
+
+.method public getSender()Ljava/lang/String;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Landroid/content/Intent;->mSenderPackageName:Ljava/lang/String;
+
+    return-object v0
+.end method
+
+.method public setSender(Ljava/lang/String;)V
+    .locals 0
+    .param p1, "packageName"    # Ljava/lang/String;
+
+    .prologue
+    iput-object p1, p0, Landroid/content/Intent;->mSenderPackageName:Ljava/lang/String;
+
+    return-void
 .end method

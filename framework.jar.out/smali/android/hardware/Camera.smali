@@ -314,7 +314,7 @@
     return-void
 .end method
 
-.method constructor <init>(I)V
+.method protected constructor <init>(I)V
     .locals 3
     .param p1, "cameraId"    # I
 
@@ -898,7 +898,7 @@
 .end method
 
 .method public static getEmptyParameters()Landroid/hardware/Camera$Parameters;
-    .locals 3
+    .locals 2
 
     .prologue
     .line 2013
@@ -912,9 +912,7 @@
 
     invoke-virtual {v0}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
 
-    const/4 v2, 0x0
-
-    invoke-direct {v1, v0, v2}, Landroid/hardware/Camera$Parameters;-><init>(Landroid/hardware/Camera;Landroid/hardware/Camera$Parameters;)V
+    invoke-direct {v1, v0}, Landroid/hardware/Camera$Parameters;-><init>(Landroid/hardware/Camera;)V
 
     return-object v1
 .end method
@@ -953,7 +951,7 @@
 
     invoke-virtual {v0}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
 
-    invoke-direct {v1, v0, v2}, Landroid/hardware/Camera$Parameters;-><init>(Landroid/hardware/Camera;Landroid/hardware/Camera$Parameters;)V
+    invoke-direct {v1, v0}, Landroid/hardware/Camera$Parameters;-><init>(Landroid/hardware/Camera;)V
 
     .line 2193
     .local v1, "p":Landroid/hardware/Camera$Parameters;
@@ -1505,27 +1503,32 @@
 .end method
 
 .method public getParameters()Landroid/hardware/Camera$Parameters;
-    .locals 3
+    .locals 2
 
     .prologue
-    .line 1978
     new-instance v0, Landroid/hardware/Camera$Parameters;
 
-    const/4 v2, 0x0
+    invoke-direct {v0, p0}, Landroid/hardware/Camera$Parameters;-><init>(Landroid/hardware/Camera;)V
 
-    invoke-direct {v0, p0, v2}, Landroid/hardware/Camera$Parameters;-><init>(Landroid/hardware/Camera;Landroid/hardware/Camera$Parameters;)V
-
-    .line 1979
     .local v0, "p":Landroid/hardware/Camera$Parameters;
     invoke-direct {p0}, Landroid/hardware/Camera;->native_getParameters()Ljava/lang/String;
 
     move-result-object v1
 
-    .line 1980
     .local v1, "s":Ljava/lang/String;
     invoke-virtual {v0, v1}, Landroid/hardware/Camera$Parameters;->unflatten(Ljava/lang/String;)V
 
-    .line 1981
+    return-object v0
+.end method
+
+.method protected getParametersString()Ljava/lang/String;
+    .locals 1
+
+    .prologue
+    invoke-direct {p0}, Landroid/hardware/Camera;->native_getParameters()Ljava/lang/String;
+
+    move-result-object v0
+
     return-object v0
 .end method
 

@@ -53,6 +53,16 @@
 
     if-eqz v2, :cond_4
 
+    const-string v2, "sys.keyguard.screen_off_by_lid"
+
+    const/4 v3, 0x0
+
+    invoke-static {v2, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result v2
+
+    if-nez v2, :cond_4
+
     .line 755
     iget-object v2, p0, Lcom/android/server/VibratorService$2;->this$0:Lcom/android/server/VibratorService;
 

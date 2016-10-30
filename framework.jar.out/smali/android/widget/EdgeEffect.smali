@@ -68,6 +68,8 @@
 
 .field private final mInterpolator:Landroid/view/animation/Interpolator;
 
+.field mIsUsingMiui:Z
+
 .field private final mPaint:Landroid/graphics/Paint;
 
 .field private mPullDistance:F
@@ -204,14 +206,18 @@
 
     invoke-virtual {v2, v3}, Landroid/graphics/Paint;->setXfermode(Landroid/graphics/Xfermode;)Landroid/graphics/Xfermode;
 
-    .line 128
     new-instance v2, Landroid/view/animation/DecelerateInterpolator;
 
     invoke-direct {v2}, Landroid/view/animation/DecelerateInterpolator;-><init>()V
 
     iput-object v2, p0, Landroid/widget/EdgeEffect;->mInterpolator:Landroid/view/animation/Interpolator;
 
-    .line 118
+    invoke-static {p1}, Lmiui/os/Environment;->isUsingMiui(Landroid/content/Context;)Z
+
+    move-result v2
+
+    iput-boolean v2, p0, Landroid/widget/EdgeEffect;->mIsUsingMiui:Z
+
     return-void
 .end method
 
@@ -424,15 +430,21 @@
 
     const/4 v9, 0x0
 
-    .line 320
+    iget-boolean v7, p0, Landroid/widget/EdgeEffect;->mIsUsingMiui:Z
+
+    if-eqz v7, :cond_0
+
+    const/4 v4, 0x0
+
+    goto :goto_0
+
+    :cond_0
     invoke-direct {p0}, Landroid/widget/EdgeEffect;->update()V
 
-    .line 322
     invoke-virtual {p1}, Landroid/graphics/Canvas;->save()I
 
     move-result v2
 
-    .line 324
     .local v2, "count":I
     iget-object v6, p0, Landroid/widget/EdgeEffect;->mBounds:Landroid/graphics/Rect;
 
@@ -542,32 +554,29 @@
 
     const/4 v7, 0x3
 
-    if-ne v6, v7, :cond_0
+    if-ne v6, v7, :cond_1
 
     iget v6, p0, Landroid/widget/EdgeEffect;->mGlowScaleY:F
 
     cmpl-float v6, v6, v9
 
-    if-nez v6, :cond_0
+    if-nez v6, :cond_1
 
-    .line 340
     iput v10, p0, Landroid/widget/EdgeEffect;->mState:I
 
-    .line 341
     const/4 v4, 0x1
 
-    .line 344
-    :cond_0
+    :cond_1
     iget v6, p0, Landroid/widget/EdgeEffect;->mState:I
 
-    if-nez v6, :cond_1
+    if-nez v6, :cond_2
 
     .end local v4    # "oneLastFrame":Z
     :goto_0
     return v4
 
     .restart local v4    # "oneLastFrame":Z
-    :cond_1
+    :cond_2
     const/4 v4, 0x1
 
     goto :goto_0

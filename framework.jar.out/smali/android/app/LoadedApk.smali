@@ -2710,45 +2710,44 @@
     .prologue
     const/4 v6, 0x0
 
-    .line 547
     iget-object v0, p0, Landroid/app/LoadedApk;->mResources:Landroid/content/res/Resources;
 
     if-nez v0, :cond_0
 
-    .line 548
     iget-object v1, p0, Landroid/app/LoadedApk;->mResDir:Ljava/lang/String;
 
     iget-object v2, p0, Landroid/app/LoadedApk;->mSplitResDirs:[Ljava/lang/String;
 
     iget-object v3, p0, Landroid/app/LoadedApk;->mOverlayDirs:[Ljava/lang/String;
 
-    .line 549
     iget-object v0, p0, Landroid/app/LoadedApk;->mApplicationInfo:Landroid/content/pm/ApplicationInfo;
 
     iget-object v4, v0, Landroid/content/pm/ApplicationInfo;->sharedLibraryFiles:[Ljava/lang/String;
 
-    .line 550
     invoke-virtual {p1}, Landroid/app/ActivityThread;->getSystemContext()Landroid/app/ContextImpl;
 
     move-result-object v8
 
     iget-object v9, p0, Landroid/app/LoadedApk;->mPackageName:Ljava/lang/String;
 
-    .line 549
     const/4 v5, 0x0
 
     move-object v0, p1
 
     move-object v7, p0
 
-    .line 548
     invoke-virtual/range {v0 .. v9}, Landroid/app/ActivityThread;->getTopLevelResources(Ljava/lang/String;[Ljava/lang/String;[Ljava/lang/String;[Ljava/lang/String;ILandroid/content/res/Configuration;Landroid/app/LoadedApk;Landroid/content/Context;Ljava/lang/String;)Landroid/content/res/Resources;
 
     move-result-object v0
 
     iput-object v0, p0, Landroid/app/LoadedApk;->mResources:Landroid/content/res/Resources;
 
-    .line 552
+    iget-object v0, p0, Landroid/app/LoadedApk;->mResources:Landroid/content/res/Resources;
+
+    iget-object v1, p0, Landroid/app/LoadedApk;->mPackageName:Ljava/lang/String;
+
+    invoke-static {v0, v1}, Landroid/miui/ResourcesManager;->initMiuiResource(Landroid/content/res/Resources;Ljava/lang/String;)V
+
     :cond_0
     iget-object v0, p0, Landroid/app/LoadedApk;->mResources:Landroid/content/res/Resources;
 

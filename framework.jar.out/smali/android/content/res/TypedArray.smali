@@ -258,42 +258,34 @@
 
     if-lt v2, v1, :cond_0
 
-    .line 51
     return-object v0
 
-    .line 54
     :cond_0
     new-array v2, v1, [I
 
     iput-object v2, v0, Landroid/content/res/TypedArray;->mData:[I
 
-    .line 55
     add-int/lit8 v2, p1, 0x1
 
     new-array v2, v2, [I
 
     iput-object v2, v0, Landroid/content/res/TypedArray;->mIndices:[I
 
-    .line 56
     return-object v0
 
-    .line 59
     .end local v1    # "fullLen":I
     :cond_1
-    new-instance v2, Landroid/content/res/TypedArray;
+    new-instance v2, Landroid/content/res/MiuiTypedArray;
 
-    .line 60
     mul-int/lit8 v3, p1, 0x6
 
     new-array v3, v3, [I
 
-    .line 61
     add-int/lit8 v4, p1, 0x1
 
     new-array v4, v4, [I
 
-    .line 59
-    invoke-direct {v2, p0, v3, v4, p1}, Landroid/content/res/TypedArray;-><init>(Landroid/content/res/Resources;[I[II)V
+    invoke-direct {v2, p0, v3, v4, p1}, Landroid/content/res/MiuiTypedArray;-><init>(Landroid/content/res/Resources;[I[II)V
 
     return-object v2
 .end method

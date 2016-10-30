@@ -31,6 +31,8 @@
 
 .field public static final DENSITY_MEDIUM:I = 0xa0
 
+.field public static final DENSITY_NXHGITH:I
+
 .field public static DENSITY_PREFERRED:I = 0x0
 
 .field public static final DENSITY_TV:I = 0xd5
@@ -77,15 +79,18 @@
     .locals 3
 
     .prologue
-    .line 151
-    const-string/jumbo v0, "qemu.sf.lcd_density"
+    invoke-static {}, Landroid/util/MiuiDisplayMetrics;->getNxhdpiDensity()I
 
-    .line 152
-    const-string/jumbo v1, "ro.sf.lcd_density"
+    move-result v0
+
+    sput v0, Landroid/util/DisplayMetrics;->DENSITY_NXHGITH:I
+
+    const-string v0, "qemu.sf.lcd_density"
+
+    const-string v1, "ro.sf.lcd_density"
 
     const/16 v2, 0xa0
 
-    .line 151
     invoke-static {v1, v2}, Landroid/os/SystemProperties;->getInt(Ljava/lang/String;I)I
 
     move-result v1

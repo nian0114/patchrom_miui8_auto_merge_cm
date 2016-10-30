@@ -908,91 +908,75 @@
     :cond_0
     new-instance v0, Landroid/content/Intent;
 
-    const-class v1, Landroid/accounts/ChooseAccountTypeActivity;
+    invoke-direct {v0}, Landroid/content/Intent;-><init>()V
 
-    invoke-direct {v0, p0, v1}, Landroid/content/Intent;-><init>(Landroid/content/Context;Ljava/lang/Class;)V
-
-    .line 428
     .local v0, "intent":Landroid/content/Intent;
+    invoke-static {v0}, Landroid/accounts/ChooseTypeAndAccountActivityInjector;->toMiuiChooseAccountTypeActivity(Landroid/content/Intent;)V
+
     const/high16 v1, 0x80000
 
     invoke-virtual {v0, v1}, Landroid/content/Intent;->setFlags(I)Landroid/content/Intent;
 
-    .line 429
-    const-string/jumbo v1, "allowableAccountTypes"
+    const-string v1, "allowableAccountTypes"
 
-    .line 430
     invoke-virtual {p0}, Landroid/accounts/ChooseTypeAndAccountActivity;->getIntent()Landroid/content/Intent;
 
     move-result-object v2
 
-    const-string/jumbo v3, "allowableAccountTypes"
+    const-string v3, "allowableAccountTypes"
 
     invoke-virtual {v2, v3}, Landroid/content/Intent;->getStringArrayExtra(Ljava/lang/String;)[Ljava/lang/String;
 
     move-result-object v2
 
-    .line 429
     invoke-virtual {v0, v1, v2}, Landroid/content/Intent;->putExtra(Ljava/lang/String;[Ljava/lang/String;)Landroid/content/Intent;
 
-    .line 431
-    const-string/jumbo v1, "addAccountOptions"
+    const-string v1, "addAccountOptions"
 
-    .line 432
     invoke-virtual {p0}, Landroid/accounts/ChooseTypeAndAccountActivity;->getIntent()Landroid/content/Intent;
 
     move-result-object v2
 
-    const-string/jumbo v3, "addAccountOptions"
+    const-string v3, "addAccountOptions"
 
     invoke-virtual {v2, v3}, Landroid/content/Intent;->getBundleExtra(Ljava/lang/String;)Landroid/os/Bundle;
 
     move-result-object v2
 
-    .line 431
     invoke-virtual {v0, v1, v2}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Landroid/os/Bundle;)Landroid/content/Intent;
 
-    .line 433
-    const-string/jumbo v1, "addAccountRequiredFeatures"
+    const-string v1, "addAccountRequiredFeatures"
 
-    .line 434
     invoke-virtual {p0}, Landroid/accounts/ChooseTypeAndAccountActivity;->getIntent()Landroid/content/Intent;
 
     move-result-object v2
 
-    const-string/jumbo v3, "addAccountRequiredFeatures"
+    const-string v3, "addAccountRequiredFeatures"
 
     invoke-virtual {v2, v3}, Landroid/content/Intent;->getStringArrayExtra(Ljava/lang/String;)[Ljava/lang/String;
 
     move-result-object v2
 
-    .line 433
     invoke-virtual {v0, v1, v2}, Landroid/content/Intent;->putExtra(Ljava/lang/String;[Ljava/lang/String;)Landroid/content/Intent;
 
-    .line 435
-    const-string/jumbo v1, "authTokenType"
+    const-string v1, "authTokenType"
 
-    .line 436
     invoke-virtual {p0}, Landroid/accounts/ChooseTypeAndAccountActivity;->getIntent()Landroid/content/Intent;
 
     move-result-object v2
 
-    const-string/jumbo v3, "authTokenType"
+    const-string v3, "authTokenType"
 
     invoke-virtual {v2, v3}, Landroid/content/Intent;->getStringExtra(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v2
 
-    .line 435
     invoke-virtual {v0, v1, v2}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;
 
-    .line 437
     invoke-virtual {p0, v0, v4}, Landroid/accounts/ChooseTypeAndAccountActivity;->startActivityForResult(Landroid/content/Intent;I)V
 
-    .line 438
     iput v4, p0, Landroid/accounts/ChooseTypeAndAccountActivity;->mPendingRequest:I
 
-    .line 423
     return-void
 .end method
 
@@ -1751,6 +1735,8 @@
     move-result v7
 
     if-ne v7, v8, :cond_8
+
+    iput v8, p0, Landroid/accounts/ChooseTypeAndAccountActivity;->mPendingRequest:I
 
     .line 216
     iget-object v7, p0, Landroid/accounts/ChooseTypeAndAccountActivity;->mSetOfRelevantAccountTypes:Ljava/util/Set;

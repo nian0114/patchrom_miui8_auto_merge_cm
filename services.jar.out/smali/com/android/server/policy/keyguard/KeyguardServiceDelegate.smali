@@ -269,6 +269,22 @@
 
 
 # virtual methods
+.method public OnDoubleClickHome()V
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Lcom/android/server/policy/keyguard/KeyguardServiceDelegate;->mKeyguardService:Lcom/android/server/policy/keyguard/KeyguardServiceWrapper;
+
+    if-eqz v0, :cond_0
+
+    iget-object v0, p0, Lcom/android/server/policy/keyguard/KeyguardServiceDelegate;->mKeyguardService:Lcom/android/server/policy/keyguard/KeyguardServiceWrapper;
+
+    invoke-virtual {v0}, Lcom/android/server/policy/keyguard/KeyguardServiceWrapper;->OnDoubleClickHome()V
+
+    :cond_0
+    return-void
+.end method
+
 .method public bindService(Landroid/content/Context;)V
     .locals 7
     .param p1, "context"    # Landroid/content/Context;

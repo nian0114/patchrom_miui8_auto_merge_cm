@@ -200,32 +200,64 @@
 .end method
 
 .method private defaultInitialisation()V
-    .locals 8
+    .locals 10
 
     .prologue
     const-wide/32 v4, 0x15180
 
     const-wide/16 v2, -0x1
 
-    .line 377
     const/4 v1, -0x1
 
     iput v1, p0, Lcom/android/server/content/SyncStorageEngine$AuthorityInfo;->syncable:I
 
-    .line 378
     iput-wide v2, p0, Lcom/android/server/content/SyncStorageEngine$AuthorityInfo;->backoffTime:J
 
-    .line 379
     iput-wide v2, p0, Lcom/android/server/content/SyncStorageEngine$AuthorityInfo;->backoffDelay:J
 
-    .line 382
+    const-string v8, "com.google"
+
+    .local v8, "GOOGLE_ACCOUNT_TYPE":Ljava/lang/String;
+    iget-object v1, p0, Lcom/android/server/content/SyncStorageEngine$AuthorityInfo;->target:Lcom/android/server/content/SyncStorageEngine$EndPoint;
+
+    if-eqz v1, :cond_1
+
+    iget-object v1, p0, Lcom/android/server/content/SyncStorageEngine$AuthorityInfo;->target:Lcom/android/server/content/SyncStorageEngine$EndPoint;
+
+    iget-object v1, v1, Lcom/android/server/content/SyncStorageEngine$EndPoint;->account:Landroid/accounts/Account;
+
+    if-eqz v1, :cond_1
+
+    const-string v1, "com.google"
+
+    iget-object v2, p0, Lcom/android/server/content/SyncStorageEngine$AuthorityInfo;->target:Lcom/android/server/content/SyncStorageEngine$EndPoint;
+
+    iget-object v2, v2, Lcom/android/server/content/SyncStorageEngine$EndPoint;->account:Landroid/accounts/Account;
+
+    iget-object v2, v2, Landroid/accounts/Account;->type:Ljava/lang/String;
+
+    invoke-virtual {v1, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_1
+
+    sget-boolean v1, Lmiui/os/Build;->IS_GLOBAL_BUILD:Z
+
+    if-eqz v1, :cond_1
+
+    const/4 v9, 0x1
+
+    .local v9, "allowDefaultPeriodic":Z
+    :goto_0
+    if-eqz v9, :cond_0
+
     iget-object v1, p0, Lcom/android/server/content/SyncStorageEngine$AuthorityInfo;->target:Lcom/android/server/content/SyncStorageEngine$EndPoint;
 
     iget-boolean v1, v1, Lcom/android/server/content/SyncStorageEngine$EndPoint;->target_provider:Z
 
     if-eqz v1, :cond_0
 
-    .line 384
     new-instance v0, Landroid/content/PeriodicSync;
 
     iget-object v1, p0, Lcom/android/server/content/SyncStorageEngine$AuthorityInfo;->target:Lcom/android/server/content/SyncStorageEngine$EndPoint;
@@ -259,6 +291,12 @@
     .end local v0    # "defaultSync":Landroid/content/PeriodicSync;
     :cond_0
     return-void
+
+    .end local v9    # "allowDefaultPeriodic":Z
+    :cond_1
+    const/4 v9, 0x0
+
+    goto :goto_0
 .end method
 
 

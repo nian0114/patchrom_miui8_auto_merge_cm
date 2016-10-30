@@ -538,6 +538,8 @@
 
 .field public static final ZEN_MODE_IMPORTANT_INTERRUPTIONS:I = 0x1
 
+.field public static final ZEN_MODE_MIUI_SILENT:I = 0x4
+
 .field public static final ZEN_MODE_NO_INTERRUPTIONS:I = 0x2
 
 .field public static final ZEN_MODE_OFF:I = 0x0
@@ -1693,38 +1695,43 @@
     .param p0, "mode"    # I
 
     .prologue
-    .line 8036
     const/4 v0, 0x1
 
     if-ne p0, v0, :cond_0
 
-    const-string/jumbo v0, "ZEN_MODE_IMPORTANT_INTERRUPTIONS"
+    const-string v0, "ZEN_MODE_IMPORTANT_INTERRUPTIONS"
 
     return-object v0
 
-    .line 8037
     :cond_0
     const/4 v0, 0x3
 
     if-ne p0, v0, :cond_1
 
-    const-string/jumbo v0, "ZEN_MODE_ALARMS"
+    const-string v0, "ZEN_MODE_ALARMS"
 
     return-object v0
 
-    .line 8038
     :cond_1
     const/4 v0, 0x2
 
     if-ne p0, v0, :cond_2
 
-    const-string/jumbo v0, "ZEN_MODE_NO_INTERRUPTIONS"
+    const-string v0, "ZEN_MODE_NO_INTERRUPTIONS"
 
     return-object v0
 
-    .line 8039
     :cond_2
-    const-string/jumbo v0, "ZEN_MODE_OFF"
+    const/4 v0, 0x4
+
+    if-ne p0, v0, :cond_3
+
+    const-string v0, "ZEN_MODE_MIUI_SILENT"
+
+    return-object v0
+
+    :cond_3
+    const-string v0, "ZEN_MODE_OFF"
 
     return-object v0
 .end method

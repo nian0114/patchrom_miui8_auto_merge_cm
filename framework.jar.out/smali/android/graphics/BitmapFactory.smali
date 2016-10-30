@@ -176,11 +176,13 @@
 
     :try_start_1
     invoke-static {v4, v5, p1}, Landroid/graphics/BitmapFactory;->decodeStream(Ljava/io/InputStream;Landroid/graphics/Rect;Landroid/graphics/BitmapFactory$Options;)Landroid/graphics/Bitmap;
+
+    move-result-object v0
+
+    invoke-static {v0, p0}, Lmiui/util/DumpBitmapInfoUtils;->putBitmap(Landroid/graphics/Bitmap;Ljava/lang/CharSequence;)V
     :try_end_1
     .catch Ljava/lang/Exception; {:try_start_1 .. :try_end_1} :catch_4
     .catchall {:try_start_1 .. :try_end_1} :catchall_1
-
-    move-result-object v0
 
     .line 398
     .local v0, "bm":Landroid/graphics/Bitmap;
@@ -520,11 +522,15 @@
     const/4 v5, 0x0
 
     invoke-static {p0, v4, v3, v5, p2}, Landroid/graphics/BitmapFactory;->decodeResourceStream(Landroid/content/res/Resources;Landroid/util/TypedValue;Ljava/io/InputStream;Landroid/graphics/Rect;Landroid/graphics/BitmapFactory$Options;)Landroid/graphics/Bitmap;
+
+    move-result-object v0
+
+    iget-object v5, v4, Landroid/util/TypedValue;->string:Ljava/lang/CharSequence;
+
+    invoke-static {v0, v5}, Lmiui/util/DumpBitmapInfoUtils;->putBitmap(Landroid/graphics/Bitmap;Ljava/lang/CharSequence;)V
     :try_end_0
     .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_1
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
-
-    move-result-object v0
 
     .line 475
     .local v0, "bm":Landroid/graphics/Bitmap;

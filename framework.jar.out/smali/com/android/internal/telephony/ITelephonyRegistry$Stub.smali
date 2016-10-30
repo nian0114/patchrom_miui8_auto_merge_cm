@@ -28,6 +28,8 @@
 
 .field static final TRANSACTION_addOnSubscriptionsChangedListener:I = 0x1
 
+.field static final TRANSACTION_getMiuiTelephony:I = 0x22
+
 .field static final TRANSACTION_listen:I = 0x3
 
 .field static final TRANSACTION_listenForSubscriber:I = 0x4
@@ -89,6 +91,8 @@
 .field static final TRANSACTION_notifyVoLteServiceStateChanged:I = 0x1d
 
 .field static final TRANSACTION_removeOnSubscriptionsChangedListener:I = 0x2
+
+.field static final TRANSACTION_setMiuiTelephony:I = 0x21
 
 
 # direct methods
@@ -1904,6 +1908,67 @@
     .restart local v38    # "_arg0":Z
     goto :goto_14
 
+    :sswitch_21
+    const-string v1, "com.android.internal.telephony.ITelephonyRegistry"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v1}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readStrongBinder()Landroid/os/IBinder;
+
+    move-result-object v1
+
+    invoke-static {v1}, Lmiui/telephony/IMiuiTelephony$Stub;->asInterface(Landroid/os/IBinder;)Lmiui/telephony/IMiuiTelephony;
+
+    move-result-object v2
+
+    .local v2, "_arg0":Lmiui/telephony/IMiuiTelephony;
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v2}, Lcom/android/internal/telephony/ITelephonyRegistry$Stub;->setMiuiTelephony(Lmiui/telephony/IMiuiTelephony;)V
+
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    const/4 v5, 0x1
+
+    return v5
+
+    .end local v2    # "_arg0":Lmiui/telephony/IMiuiTelephony;
+    :sswitch_22
+    const-string v1, "com.android.internal.telephony.ITelephonyRegistry"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v1}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual/range {p0 .. p0}, Lcom/android/internal/telephony/ITelephonyRegistry$Stub;->getMiuiTelephony()Lmiui/telephony/IMiuiTelephony;
+
+    move-result-object v14
+
+    .local v14, "_result":Lmiui/telephony/IMiuiTelephony;
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    if-eqz v14, :cond_15
+
+    invoke-interface {v14}, Lmiui/telephony/IMiuiTelephony;->asBinder()Landroid/os/IBinder;
+
+    move-result-object v1
+
+    :goto_15
+    move-object/from16 v0, p3
+
+    invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeStrongBinder(Landroid/os/IBinder;)V
+
+    const/4 v5, 0x1
+
+    return v5
+
+    :cond_15
+    const/4 v1, 0x0
+
+    goto :goto_15
+
     .line 38
     :sswitch_data_0
     .sparse-switch
@@ -1939,6 +2004,8 @@
         0x1e -> :sswitch_1e
         0x1f -> :sswitch_1f
         0x20 -> :sswitch_20
+        0x21 -> :sswitch_21
+        0x22 -> :sswitch_22
         0x5f4e5446 -> :sswitch_0
     .end sparse-switch
 .end method

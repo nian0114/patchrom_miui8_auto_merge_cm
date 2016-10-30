@@ -519,12 +519,12 @@
     .locals 1
 
     .prologue
-    .line 227
     iget-object v0, p0, Landroid/bluetooth/le/BluetoothLeScanner;->mLeScanClients:Ljava/util/Map;
 
     invoke-interface {v0}, Ljava/util/Map;->clear()V
 
-    .line 226
+    invoke-static {}, Landroid/bluetooth/BluetoothLeScannerInjector;->cleanupLeScanStatistics()V
+
     return-void
 .end method
 
@@ -597,6 +597,20 @@
     monitor-exit v2
 
     throw v1
+.end method
+
+.method public startLeScanStatistics(Landroid/bluetooth/BluetoothAdapter$LeScanCallback;)Z
+    .locals 1
+    .param p1, "callback"    # Landroid/bluetooth/BluetoothAdapter$LeScanCallback;
+
+    .prologue
+    iget-object v0, p0, Landroid/bluetooth/le/BluetoothLeScanner;->mBluetoothManager:Landroid/bluetooth/IBluetoothManager;
+
+    invoke-static {v0, p1}, Landroid/bluetooth/BluetoothLeScannerInjector;->startLeScanStatistics(Landroid/bluetooth/IBluetoothManager;Landroid/bluetooth/BluetoothAdapter$LeScanCallback;)Z
+
+    move-result v0
+
+    return v0
 .end method
 
 .method public startScan(Landroid/bluetooth/le/ScanCallback;)V
@@ -741,6 +755,16 @@
     invoke-direct {p0, v3, p2, p3, v4}, Landroid/bluetooth/le/BluetoothLeScanner;->startScan(Ljava/util/List;Landroid/bluetooth/le/ScanSettings;Landroid/bluetooth/le/ScanCallback;Ljava/util/List;)V
 
     .line 209
+    return-void
+.end method
+
+.method public stopLeScanStatistics(Landroid/bluetooth/BluetoothAdapter$LeScanCallback;)V
+    .locals 0
+    .param p1, "callback"    # Landroid/bluetooth/BluetoothAdapter$LeScanCallback;
+
+    .prologue
+    invoke-static {p1}, Landroid/bluetooth/BluetoothLeScannerInjector;->stopLeScanStatistics(Landroid/bluetooth/BluetoothAdapter$LeScanCallback;)V
+
     return-void
 .end method
 

@@ -3690,15 +3690,21 @@
     .param p1, "resCode"    # Lcom/android/internal/telephony/cat/ResultCode;
 
     .prologue
-    .line 273
+    iget-object v0, p0, Lcom/android/internal/telephony/cat/CommandParamsFactory;->mCaller:Lcom/android/internal/telephony/cat/RilMessageDecoder;
+
+    if-nez v0, :cond_0
+
+    :goto_0
+    return-void
+
+    :cond_0
     iget-object v0, p0, Lcom/android/internal/telephony/cat/CommandParamsFactory;->mCaller:Lcom/android/internal/telephony/cat/RilMessageDecoder;
 
     iget-object v1, p0, Lcom/android/internal/telephony/cat/CommandParamsFactory;->mCmdParams:Lcom/android/internal/telephony/cat/CommandParams;
 
     invoke-virtual {v0, p1, v1}, Lcom/android/internal/telephony/cat/RilMessageDecoder;->sendMsgParamsDecoded(Lcom/android/internal/telephony/cat/ResultCode;Lcom/android/internal/telephony/cat/CommandParams;)V
 
-    .line 272
-    return-void
+    goto :goto_0
 .end method
 
 .method private setIcons(Ljava/lang/Object;)Lcom/android/internal/telephony/cat/ResultCode;

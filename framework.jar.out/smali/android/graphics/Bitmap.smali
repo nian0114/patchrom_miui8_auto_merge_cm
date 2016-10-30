@@ -43,7 +43,7 @@
 
 
 # instance fields
-.field private mBuffer:[B
+.field public mBuffer:[B
 
 .field mDensity:I
 
@@ -59,7 +59,7 @@
 
 .field private mNinePatchInsets:Landroid/graphics/NinePatch$InsetStruct;
 
-.field private mRecycled:Z
+.field public mRecycled:Z
 
 .field private mRequestPremultiplied:Z
 
@@ -224,89 +224,74 @@
     .param p10, "ninePatchInsets"    # Landroid/graphics/NinePatch$InsetStruct;
 
     .prologue
-    .line 109
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    .line 79
     invoke-static {}, Landroid/graphics/Bitmap;->getDefaultDensity()I
 
     move-result v1
 
     iput v1, p0, Landroid/graphics/Bitmap;->mDensity:I
 
-    .line 112
     const-wide/16 v2, 0x0
 
     cmp-long v1, p1, v2
 
     if-nez v1, :cond_0
 
-    .line 113
     new-instance v1, Ljava/lang/RuntimeException;
 
-    const-string/jumbo v2, "internal error: native bitmap is 0"
+    const-string v2, "internal error: native bitmap is 0"
 
     invoke-direct {v1, v2}, Ljava/lang/RuntimeException;-><init>(Ljava/lang/String;)V
 
     throw v1
 
-    .line 116
     :cond_0
     iput p4, p0, Landroid/graphics/Bitmap;->mWidth:I
 
-    .line 117
     iput p5, p0, Landroid/graphics/Bitmap;->mHeight:I
 
-    .line 118
     iput-boolean p7, p0, Landroid/graphics/Bitmap;->mIsMutable:Z
 
-    .line 119
     iput-boolean p8, p0, Landroid/graphics/Bitmap;->mRequestPremultiplied:Z
 
-    .line 120
     iput-object p3, p0, Landroid/graphics/Bitmap;->mBuffer:[B
 
-    .line 122
     iput-object p9, p0, Landroid/graphics/Bitmap;->mNinePatchChunk:[B
 
-    .line 123
     iput-object p10, p0, Landroid/graphics/Bitmap;->mNinePatchInsets:Landroid/graphics/NinePatch$InsetStruct;
 
-    .line 124
     if-ltz p6, :cond_1
 
-    .line 125
     iput p6, p0, Landroid/graphics/Bitmap;->mDensity:I
 
-    .line 128
     :cond_1
     iput-wide p1, p0, Landroid/graphics/Bitmap;->mNativePtr:J
 
-    .line 129
     new-instance v1, Landroid/graphics/Bitmap$BitmapFinalizer;
 
     invoke-direct {v1, p1, p2}, Landroid/graphics/Bitmap$BitmapFinalizer;-><init>(J)V
 
     iput-object v1, p0, Landroid/graphics/Bitmap;->mFinalizer:Landroid/graphics/Bitmap$BitmapFinalizer;
 
-    .line 130
     if-nez p3, :cond_2
 
     invoke-virtual {p0}, Landroid/graphics/Bitmap;->getByteCount()I
 
     move-result v0
 
-    .line 131
     .local v0, "nativeAllocationByteCount":I
     :goto_0
     iget-object v1, p0, Landroid/graphics/Bitmap;->mFinalizer:Landroid/graphics/Bitmap$BitmapFinalizer;
 
     invoke-virtual {v1, v0}, Landroid/graphics/Bitmap$BitmapFinalizer;->setNativeAllocationByteCount(I)V
 
-    .line 111
+    const/4 v1, 0x0
+
+    invoke-static {p0, v1}, Lmiui/util/DumpBitmapInfoUtils;->putBitmap(Landroid/graphics/Bitmap;Ljava/lang/CharSequence;)V
+
     return-void
 
-    .line 130
     .end local v0    # "nativeAllocationByteCount":I
     :cond_2
     const/4 v0, 0x0

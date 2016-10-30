@@ -1040,14 +1040,24 @@
 
     if-eq v2, v3, :cond_0
 
-    .line 509
+    invoke-static {p2}, Lmiui/securityspace/XSpaceUserHandle;->isUidBelongtoXSpace(I)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_miui_0
+
+    invoke-virtual {p3}, Landroid/content/Context;->getUserId()I
+
+    move-result v2
+
+    if-eqz v2, :cond_0
+
+    :cond_miui_0
     iget-boolean v2, p0, Landroid/content/ContentProvider;->mSingleUser:Z
 
-    .line 508
     if-nez v2, :cond_0
 
-    .line 510
-    const-string/jumbo v2, "android.permission.INTERACT_ACROSS_USERS"
+    const-string v2, "android.permission.INTERACT_ACROSS_USERS"
 
     invoke-virtual {p3, v2, p1, p2}, Landroid/content/Context;->checkPermission(Ljava/lang/String;II)I
 
@@ -1154,18 +1164,28 @@
 
     move-result v8
 
+    if-nez v8, :cond_miui_1
+
+    invoke-virtual {v4}, Landroid/content/Context;->getUserId()I
+
+    move-result v8
+
+    move-object/from16 v0, p2
+
+    invoke-static {v0, v8}, Lmiui/securityspace/CrossUserUtils;->checkCrossPermission(Ljava/lang/String;I)Z
+
+    move-result v8
+
     if-eqz v8, :cond_7
 
-    .line 547
+    :cond_miui_1
     invoke-virtual/range {p0 .. p0}, Landroid/content/ContentProvider;->getReadPermission()Ljava/lang/String;
 
     move-result-object v12
 
-    .line 548
     .local v12, "componentPerm":Ljava/lang/String;
     if-eqz v12, :cond_2
 
-    .line 549
     move-object/from16 v0, p0
 
     move-object/from16 v1, p2

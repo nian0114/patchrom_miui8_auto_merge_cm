@@ -58,6 +58,8 @@
 
 .field static final TRANSACTION_setLong:I = 0x2
 
+.field static final TRANSACTION_setRawLockPassword:I = 0x15
+
 .field static final TRANSACTION_setString:I = 0x3
 
 .field static final TRANSACTION_unregisterStrongAuthTracker:I = 0x12
@@ -1237,6 +1239,37 @@
     .line 39
     nop
 
+    :sswitch_15
+    const-string v7, "com.android.internal.widget.ILockSettings"
+
+    move-object/from16 v1, p2
+
+    invoke-virtual {v1, v7}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    invoke-virtual {v1}, Landroid/os/Parcel;->createByteArray()[B
+
+    move-result-object v0
+
+    .local v0, "_arg0":[B
+    move-object/from16 v1, p2
+
+    invoke-virtual {v1}, Landroid/os/Parcel;->readInt()I
+
+    move-result v2
+
+    .local v2, "_arg1":I
+    move-object/from16 v1, p2
+
+    invoke-virtual {v1, v0, v2}, Lcom/android/internal/widget/ILockSettings$Stub;->setRawLockPassword([BI)V
+
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    const/16 v17, 0x1
+
+    return v17
+
+    .end local v0    # "_arg0":[B
+    .end local v2    # "_arg1":I
     :sswitch_data_0
     .sparse-switch
         0x1 -> :sswitch_1
@@ -1259,6 +1292,7 @@
         0x12 -> :sswitch_12
         0x13 -> :sswitch_13
         0x14 -> :sswitch_14
+        0x15 -> :sswitch_15
         0x5f4e5446 -> :sswitch_0
     .end sparse-switch
 .end method

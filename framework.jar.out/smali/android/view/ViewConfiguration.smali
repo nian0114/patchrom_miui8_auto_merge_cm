@@ -378,6 +378,10 @@
 
     float-to-int v11, v11
 
+    invoke-static {p1, v11}, Landroid/view/ViewConfigurationInjector;->getOverScrollDistance(Landroid/content/Context;I)I
+
+    move-result v11
+
     iput v11, p0, Landroid/view/ViewConfiguration;->mOverscrollDistance:I
 
     .line 309
@@ -390,6 +394,10 @@
     add-float/2addr v11, v12
 
     float-to-int v11, v11
+
+    invoke-static {p1, v11}, Landroid/view/ViewConfigurationInjector;->getOverFlingDistance(Landroid/content/Context;I)I
+
+    move-result v11
 
     iput v11, p0, Landroid/view/ViewConfiguration;->mOverflingDistance:I
 
@@ -569,11 +577,41 @@
 .end method
 
 .method public static get(Landroid/content/Context;)Landroid/view/ViewConfiguration;
-    .locals 5
+    .locals 6
     .param p0, "context"    # Landroid/content/Context;
 
     .prologue
-    .line 364
+    invoke-static {p0}, Landroid/view/ViewConfigurationInjector;->get(Landroid/content/Context;)Landroid/view/ViewConfiguration;
+
+    move-result-object v5
+
+    .local v5, "cfg":Landroid/view/ViewConfiguration;
+    if-eqz v5, :cond_0
+
+    move-object v0, v5
+
+    goto :goto_0
+
+    :cond_0
+    invoke-static {p0}, Landroid/view/ViewConfigurationInjector;->needMiuiConfiguration(Landroid/content/Context;)Z
+
+    move-result v3
+
+    if-eqz v3, :cond_1
+
+    new-instance v5, Landroid/view/ViewConfiguration;
+
+    .end local v5    # "cfg":Landroid/view/ViewConfiguration;
+    invoke-direct {v5, p0}, Landroid/view/ViewConfiguration;-><init>(Landroid/content/Context;)V
+
+    .restart local v5    # "cfg":Landroid/view/ViewConfiguration;
+    invoke-static {p0, v5}, Landroid/view/ViewConfigurationInjector;->put(Landroid/content/Context;Landroid/view/ViewConfiguration;)V
+
+    move-object v0, v5
+
+    goto :goto_0
+
+    :cond_1
     invoke-virtual {p0}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
 
     move-result-object v3
@@ -602,24 +640,21 @@
 
     check-cast v0, Landroid/view/ViewConfiguration;
 
-    .line 368
     .local v0, "configuration":Landroid/view/ViewConfiguration;
-    if-nez v0, :cond_0
+    if-nez v0, :cond_2
 
-    .line 369
     new-instance v0, Landroid/view/ViewConfiguration;
 
     .end local v0    # "configuration":Landroid/view/ViewConfiguration;
     invoke-direct {v0, p0}, Landroid/view/ViewConfiguration;-><init>(Landroid/content/Context;)V
 
-    .line 370
     .restart local v0    # "configuration":Landroid/view/ViewConfiguration;
     sget-object v3, Landroid/view/ViewConfiguration;->sConfigurations:Landroid/util/SparseArray;
 
     invoke-virtual {v3, v1, v0}, Landroid/util/SparseArray;->put(ILjava/lang/Object;)V
 
-    .line 373
-    :cond_0
+    :cond_2
+    :goto_0
     return-object v0
 .end method
 

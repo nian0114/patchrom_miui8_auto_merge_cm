@@ -1311,24 +1311,37 @@
 .end method
 
 .method public getHighestRankedEngineName()Ljava/lang/String;
-    .locals 3
+    .locals 4
 
     .prologue
     const/4 v2, 0x0
 
-    .line 124
+    invoke-static {}, Ljava/util/Locale;->getDefault()Ljava/util/Locale;
+
+    move-result-object v1
+
+    invoke-static {p0, v1}, Landroid/speech/tts/TtsEnginesInjector;->getRecommendEngineForLocale(Landroid/speech/tts/TtsEngines;Ljava/util/Locale;)Ljava/lang/String;
+
+    move-result-object v3
+
+    .local v3, "engine":Ljava/lang/String;
+    if-eqz v3, :cond_0
+
+    return-object v3
+
+    :cond_0
     invoke-virtual {p0}, Landroid/speech/tts/TtsEngines;->getEngines()Ljava/util/List;
 
     move-result-object v0
 
-    .line 126
     .local v0, "engines":Ljava/util/List;, "Ljava/util/List<Landroid/speech/tts/TextToSpeech$EngineInfo;>;"
     invoke-interface {v0}, Ljava/util/List;->size()I
 
     move-result v1
 
-    if-lez v1, :cond_0
+    if-lez v1, :cond_1
 
+    .line 127
     invoke-interface {v0, v2}, Ljava/util/List;->get(I)Ljava/lang/Object;
 
     move-result-object v1
@@ -1337,9 +1350,8 @@
 
     iget-boolean v1, v1, Landroid/speech/tts/TextToSpeech$EngineInfo;->system:Z
 
-    if-eqz v1, :cond_0
+    if-eqz v1, :cond_1
 
-    .line 127
     invoke-interface {v0, v2}, Ljava/util/List;->get(I)Ljava/lang/Object;
 
     move-result-object v1
@@ -1350,8 +1362,7 @@
 
     return-object v1
 
-    .line 130
-    :cond_0
+    :cond_1
     const/4 v1, 0x0
 
     return-object v1
@@ -1362,20 +1373,18 @@
     .param p1, "engineName"    # Ljava/lang/String;
 
     .prologue
-    .line 332
     iget-object v0, p0, Landroid/speech/tts/TtsEngines;->mContext:Landroid/content/Context;
 
     invoke-virtual {v0}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
 
     move-result-object v0
 
-    const-string/jumbo v1, "tts_default_locale"
+    const-string v1, "tts_default_locale"
 
     invoke-static {v0, v1}, Landroid/provider/Settings$Secure;->getString(Landroid/content/ContentResolver;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v0
 
-    .line 331
     invoke-virtual {p0, p1, v0}, Landroid/speech/tts/TtsEngines;->getLocalePrefForEngine(Ljava/lang/String;Ljava/lang/String;)Ljava/util/Locale;
 
     move-result-object v0
@@ -1389,12 +1398,10 @@
     .param p2, "prefValue"    # Ljava/lang/String;
 
     .prologue
-    .line 338
     invoke-static {p2, p1}, Landroid/speech/tts/TtsEngines;->parseEnginePrefFromList(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v0
 
-    .line 342
     .local v0, "localeString":Ljava/lang/String;
     invoke-static {v0}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
 
@@ -1402,31 +1409,28 @@
 
     if-eqz v2, :cond_0
 
-    .line 344
     invoke-static {}, Ljava/util/Locale;->getDefault()Ljava/util/Locale;
 
     move-result-object v2
 
     return-object v2
 
-    .line 347
+    .line 130
     :cond_0
     invoke-virtual {p0, v0}, Landroid/speech/tts/TtsEngines;->parseLocaleString(Ljava/lang/String;)Ljava/util/Locale;
 
     move-result-object v1
 
-    .line 348
     .local v1, "result":Ljava/util/Locale;
     if-nez v1, :cond_1
 
-    .line 349
-    const-string/jumbo v2, "TtsEngines"
+    const-string v2, "TtsEngines"
 
     new-instance v3, Ljava/lang/StringBuilder;
 
     invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string/jumbo v4, "Failed to parse locale "
+    const-string v4, "Failed to parse locale "
 
     invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 

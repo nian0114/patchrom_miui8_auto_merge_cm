@@ -1704,19 +1704,18 @@
     .param p2, "args"    # [Ljava/lang/String;
 
     .prologue
-    .line 1122
     iget-object v0, p0, Landroid/app/ActivityThread$ApplicationThread;->this$0:Landroid/app/ActivityThread;
 
     invoke-static {v0, p1}, Landroid/app/ActivityThread;->-wrap0(Landroid/app/ActivityThread;Ljava/io/FileDescriptor;)V
 
-    .line 1123
     invoke-static {}, Landroid/view/WindowManagerGlobal;->getInstance()Landroid/view/WindowManagerGlobal;
 
     move-result-object v0
 
     invoke-virtual {v0, p1, p2}, Landroid/view/WindowManagerGlobal;->dumpGfxInfo(Ljava/io/FileDescriptor;[Ljava/lang/String;)V
 
-    .line 1121
+    invoke-static {p1, p2}, Lmiui/util/DumpBitmapInfoUtils;->dumpBitmapInfo(Ljava/io/FileDescriptor;[Ljava/lang/String;)V
+
     return-void
 .end method
 

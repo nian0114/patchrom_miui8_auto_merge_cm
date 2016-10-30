@@ -591,11 +591,7 @@
 
     .line 457
     .local v18, "tm":Landroid/telephony/TelephonyManager;
-    move-object/from16 v0, v18
-
-    invoke-virtual {v0, v15}, Landroid/telephony/TelephonyManager;->getLine1NumberForSubscriber(I)Ljava/lang/String;
-
-    move-result-object v6
+    const/4 v6, 0x0
 
     .line 458
     .local v6, "msisdn":Ljava/lang/String;
@@ -1752,7 +1748,7 @@
 
     array-length v8, v1
 
-    invoke-static {v1, v9, v8}, Lcom/android/internal/telephony/uicc/IccUtils;->bcdToString([BII)Ljava/lang/String;
+    invoke-static {v1, v9, v8}, Lmiui/telephony/IccUtils;->parseIccIdToString([BII)Ljava/lang/String;
 
     move-result-object v8
 
@@ -3851,36 +3847,20 @@
 
     check-cast v18, Landroid/telephony/SubscriptionInfo;
 
-    .line 743
     .local v18, "temp":Landroid/telephony/SubscriptionInfo;
-    invoke-static {}, Landroid/telephony/TelephonyManager;->getDefault()Landroid/telephony/TelephonyManager;
+    const/4 v9, 0x0
 
-    move-result-object v21
-
-    .line 744
-    invoke-virtual/range {v18 .. v18}, Landroid/telephony/SubscriptionInfo;->getSubscriptionId()I
-
-    move-result v22
-
-    .line 743
-    invoke-virtual/range {v21 .. v22}, Landroid/telephony/TelephonyManager;->getLine1NumberForSubscriber(I)Ljava/lang/String;
-
-    move-result-object v9
-
-    .line 746
     .local v9, "msisdn":Ljava/lang/String;
     if-eqz v9, :cond_17
 
-    .line 747
     new-instance v20, Landroid/content/ContentValues;
 
     const/16 v21, 0x1
 
     invoke-direct/range {v20 .. v21}, Landroid/content/ContentValues;-><init>(I)V
 
-    .line 748
     .restart local v20    # "value":Landroid/content/ContentValues;
-    const-string/jumbo v21, "number"
+    const-string v21, "number"
 
     move-object/from16 v0, v20
 
@@ -4190,9 +4170,9 @@
 
     invoke-static {}, Landroid/telephony/SubscriptionManager;->getDefaultDataSubId()I
 
-    move-result v22
+    move-result v21
 
-    invoke-virtual/range {v21 .. v22}, Landroid/telephony/SubscriptionManager;->setDefaultDataSubId(I)V
+    invoke-static/range {v21 .. v21}, Landroid/telephony/SubscriptionManager;->setDefaultDataSubId(I)V
 
     .line 791
     invoke-static {}, Lcom/android/internal/telephony/SubscriptionController;->getInstance()Lcom/android/internal/telephony/SubscriptionController;

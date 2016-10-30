@@ -5825,14 +5825,14 @@
     .param p1, "data"    # Landroid/app/ActivityThread$AppBindData;
 
     .prologue
-    .line 4474
+    invoke-static {}, Landroid/app/ActivityThreadInjector;->raiseThreadPriority()V
+
     move-object/from16 v0, p1
 
     move-object/from16 v1, p0
 
     iput-object v0, v1, Landroid/app/ActivityThread;->mBoundApplication:Landroid/app/ActivityThread$AppBindData;
 
-    .line 4475
     new-instance v2, Landroid/content/res/Configuration;
 
     move-object/from16 v0, p1
@@ -5968,6 +5968,8 @@
 
     .line 4500
     :cond_1
+    invoke-static {}, Lcom/miui/whetstone/app/WhetstoneAppManager;->setHardwareRendererIfNeeded()V
+
     move-object/from16 v0, p0
 
     iget-object v2, v0, Landroid/app/ActivityThread;->mProfiler:Landroid/app/ActivityThread$Profiler;
@@ -6864,20 +6866,37 @@
 
     if-eqz v2, :cond_17
 
-    .line 4710
     invoke-static {}, Ldalvik/system/VMRuntime;->getRuntime()Ldalvik/system/VMRuntime;
 
     move-result-object v2
 
     invoke-virtual {v2}, Ldalvik/system/VMRuntime;->clearGrowthLimit()V
 
-    .line 4720
     :goto_a
+    move-object/from16 v0, p1
+
+    iget-object v2, v0, Landroid/app/ActivityThread$AppBindData;->appInfo:Landroid/content/pm/ApplicationInfo;
+
+    invoke-static {v2}, Lcom/miui/whetstone/app/WhetstoneAppManager;->trimHeapSizeIfNeeded(Landroid/content/pm/ApplicationInfo;)V
+
+    move-object/from16 v0, p1
+
+    iget-object v2, v0, Landroid/app/ActivityThread$AppBindData;->appInfo:Landroid/content/pm/ApplicationInfo;
+
+    iget v2, v2, Landroid/content/pm/ApplicationInfo;->nextActivityTheme:I
+
+    move-object/from16 v0, p1
+
+    iget-object v4, v0, Landroid/app/ActivityThread$AppBindData;->info:Landroid/app/LoadedApk;
+
+    move-object/from16 v0, p0
+
+    invoke-static {v0, v2, v4}, Landroid/app/ActivityThreadInjector;->preloadSubActivity(Landroid/app/ActivityThread;ILandroid/app/LoadedApk;)V
+
     invoke-static {}, Landroid/os/StrictMode;->allowThreadDiskWrites()Landroid/os/StrictMode$ThreadPolicy;
 
     move-result-object v29
 
-    .line 4724
     .local v29, "savedPolicy":Landroid/os/StrictMode$ThreadPolicy;
     :try_start_5
     move-object/from16 v0, p1
@@ -12679,50 +12698,42 @@
 
     move-result-object v0
 
-    .line 5441
     .local v0, "configDir":Ljava/io/File;
     invoke-static {v0}, Lcom/android/org/conscrypt/TrustedCertificateStore;->setDefaultUserDirectory(Ljava/io/File;)V
 
-    .line 5443
-    const-string/jumbo v2, "<pre-initialized>"
+    const-string v2, "<pre-initialized>"
 
     invoke-static {v2}, Landroid/os/Process;->setArgV0(Ljava/lang/String;)V
 
-    .line 5445
     invoke-static {}, Landroid/os/Looper;->prepareMainLooper()V
 
-    .line 5447
     new-instance v1, Landroid/app/ActivityThread;
 
     invoke-direct {v1}, Landroid/app/ActivityThread;-><init>()V
 
-    .line 5448
     .local v1, "thread":Landroid/app/ActivityThread;
+    invoke-static {}, Lcom/miui/whetstone/app/WhetstoneAppManager;->getInstance()Lcom/miui/whetstone/app/WhetstoneAppManager;
+
     invoke-direct {v1, v3}, Landroid/app/ActivityThread;->attach(Z)V
 
-    .line 5450
     sget-object v2, Landroid/app/ActivityThread;->sMainThreadHandler:Landroid/os/Handler;
 
     if-nez v2, :cond_0
 
-    .line 5451
     invoke-virtual {v1}, Landroid/app/ActivityThread;->getHandler()Landroid/os/Handler;
 
     move-result-object v2
 
     sput-object v2, Landroid/app/ActivityThread;->sMainThreadHandler:Landroid/os/Handler;
 
-    .line 5460
     :cond_0
     invoke-static {v6, v7}, Landroid/os/Trace;->traceEnd(J)V
 
-    .line 5461
     invoke-static {}, Landroid/os/Looper;->loop()V
 
-    .line 5463
     new-instance v2, Ljava/lang/RuntimeException;
 
-    const-string/jumbo v3, "Main thread loop unexpectedly exited"
+    const-string v3, "Main thread loop unexpectedly exited"
 
     invoke-direct {v2, v3}, Ljava/lang/RuntimeException;-><init>(Ljava/lang/String;)V
 
@@ -18582,7 +18593,15 @@
     .param p1, "level"    # I
 
     .prologue
-    .line 4431
+    invoke-static {p1}, Lcom/miui/whetstone/app/WhetstoneAppManager;->handleTrimMemory(I)Z
+
+    move-result v3
+
+    if-eqz v3, :cond_0
+
+    goto :goto_1
+
+    :cond_0
     const/4 v3, 0x1
 
     const/4 v4, 0x0
@@ -18603,7 +18622,7 @@
 
     .local v2, "i":I
     :goto_0
-    if-ge v2, v0, :cond_0
+    if-ge v2, v0, :cond_1
 
     .line 4435
     invoke-virtual {v1, v2}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -18614,20 +18633,18 @@
 
     invoke-interface {v3, p1}, Landroid/content/ComponentCallbacks2;->onTrimMemory(I)V
 
-    .line 4434
     add-int/lit8 v2, v2, 0x1
 
     goto :goto_0
 
-    .line 4438
-    :cond_0
+    :cond_1
     invoke-static {}, Landroid/view/WindowManagerGlobal;->getInstance()Landroid/view/WindowManagerGlobal;
 
     move-result-object v3
 
     invoke-virtual {v3, p1}, Landroid/view/WindowManagerGlobal;->trimMemory(I)V
 
-    .line 4428
+    :goto_1
     return-void
 .end method
 
@@ -18637,12 +18654,10 @@
     .param p2, "fromClient"    # Z
 
     .prologue
-    .line 5069
     iget-object v0, p0, Landroid/app/ActivityThread;->mProviderMap:Landroid/util/ArrayMap;
 
     monitor-enter v0
 
-    .line 5070
     :try_start_0
     invoke-virtual {p0, p1, p2}, Landroid/app/ActivityThread;->handleUnstableProviderDiedLocked(Landroid/os/IBinder;Z)V
     :try_end_0
@@ -18650,6 +18665,7 @@
 
     monitor-exit v0
 
+    .line 4428
     .line 5068
     return-void
 

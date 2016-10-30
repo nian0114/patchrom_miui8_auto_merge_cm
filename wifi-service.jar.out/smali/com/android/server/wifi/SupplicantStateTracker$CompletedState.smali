@@ -102,12 +102,12 @@
 
     invoke-virtual {v0}, Lcom/android/server/wifi/WifiConfigStore;->enableAllNetworks()V
 
-    .line 376
     iget-object v0, p0, Lcom/android/server/wifi/SupplicantStateTracker$CompletedState;->this$0:Lcom/android/server/wifi/SupplicantStateTracker;
 
     invoke-static {v0, v3}, Lcom/android/server/wifi/SupplicantStateTracker;->-set3(Lcom/android/server/wifi/SupplicantStateTracker;Z)Z
 
-    .line 369
+    invoke-static {}, Landroid/net/wifi/SupplicantStateTrackerInjector;->handleNetworkConnectionComplete()V
+
     :cond_1
     return-void
 .end method

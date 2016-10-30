@@ -426,93 +426,82 @@
     .prologue
     const/16 v3, 0xa
 
-    .line 73
     new-array v0, v3, [Ljava/lang/String;
 
-    .line 74
-    const-string/jumbo v1, "STREAM_VOICE_CALL"
+    const-string v1, "STREAM_VOICE_CALL"
 
     const/4 v2, 0x0
 
     aput-object v1, v0, v2
 
-    .line 75
-    const-string/jumbo v1, "STREAM_SYSTEM"
+    const-string v1, "STREAM_SYSTEM"
 
     const/4 v2, 0x1
 
     aput-object v1, v0, v2
 
-    .line 76
-    const-string/jumbo v1, "STREAM_RING"
+    const-string v1, "STREAM_RING"
 
     const/4 v2, 0x2
 
     aput-object v1, v0, v2
 
-    .line 77
-    const-string/jumbo v1, "STREAM_MUSIC"
+    const-string v1, "STREAM_MUSIC"
 
     const/4 v2, 0x3
 
     aput-object v1, v0, v2
 
-    .line 78
-    const-string/jumbo v1, "STREAM_ALARM"
+    const-string v1, "STREAM_ALARM"
 
     const/4 v2, 0x4
 
     aput-object v1, v0, v2
 
-    .line 79
-    const-string/jumbo v1, "STREAM_NOTIFICATION"
+    const-string v1, "STREAM_NOTIFICATION"
 
     const/4 v2, 0x5
 
     aput-object v1, v0, v2
 
-    .line 80
-    const-string/jumbo v1, "STREAM_BLUETOOTH_SCO"
+    const-string v1, "STREAM_BLUETOOTH_SCO"
 
     const/4 v2, 0x6
 
     aput-object v1, v0, v2
 
-    .line 81
-    const-string/jumbo v1, "STREAM_SYSTEM_ENFORCED"
+    const-string v1, "STREAM_SYSTEM_ENFORCED"
 
     const/4 v2, 0x7
 
     aput-object v1, v0, v2
 
-    .line 82
-    const-string/jumbo v1, "STREAM_DTMF"
+    const-string v1, "STREAM_DTMF"
 
     const/16 v2, 0x8
 
     aput-object v1, v0, v2
 
-    .line 83
-    const-string/jumbo v1, "STREAM_TTS"
+    const-string v1, "STREAM_TTS"
 
     const/16 v2, 0x9
 
     aput-object v1, v0, v2
 
-    .line 73
     sput-object v0, Landroid/media/AudioSystem;->STREAM_NAMES:[Ljava/lang/String;
 
-    .line 697
     new-array v0, v3, [I
 
     fill-array-data v0, :array_0
 
     sput-object v0, Landroid/media/AudioSystem;->DEFAULT_STREAM_VOLUME:[I
 
-    .line 34
+    sget-object v0, Landroid/media/AudioSystem;->DEFAULT_STREAM_VOLUME:[I
+
+    invoke-static {v0}, Landroid/media/AudioServiceInjector;->adjustDefaultStreamVolume([I)V
+
     return-void
 
-    .line 697
     :array_0
     .array-data 4
         0x4

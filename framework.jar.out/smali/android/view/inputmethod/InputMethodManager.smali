@@ -33,6 +33,8 @@
 
 .field public static final DISPATCH_NOT_HANDLED:I = 0x0
 
+.field public static final DISPATCH_NO_METHOD:I = 0x63
+
 .field public static final HIDE_IMPLICIT_ONLY:I = 0x1
 
 .field public static final HIDE_NOT_ALWAYS:I = 0x2
@@ -1015,6 +1017,17 @@
     .end local v8    # "msg":Landroid/os/Message;
     .end local v9    # "p":Landroid/view/inputmethod/InputMethodManager$PendingEvent;
     :cond_2
+    iget-object v1, p0, Landroid/view/inputmethod/InputMethodManager;->mCurMethod:Lcom/android/internal/view/IInputMethodSession;
+
+    if-nez v1, :cond_3
+
+    const/16 v1, 0x63
+
+    monitor-exit v10
+
+    return v1
+
+    :cond_3
     monitor-exit v10
 
     .line 1801

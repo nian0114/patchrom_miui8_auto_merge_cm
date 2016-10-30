@@ -703,41 +703,39 @@
 
     move-result-object v1
 
-    .line 200
     .local v1, "resolver":Landroid/content/ContentResolver;
-    const-string/jumbo v3, "wifi_display_on"
+    const-string v3, "wifi_display_on"
 
-    .line 199
     invoke-static {v3}, Landroid/provider/Settings$Global;->getUriFor(Ljava/lang/String;)Landroid/net/Uri;
 
     move-result-object v3
 
     invoke-virtual {v1, v3, v5, v2}, Landroid/content/ContentResolver;->registerContentObserver(Landroid/net/Uri;ZLandroid/database/ContentObserver;)V
 
-    .line 202
-    const-string/jumbo v3, "wifi_display_certification_on"
+    const-string v3, "wifi_display_certification_on"
 
-    .line 201
     invoke-static {v3}, Landroid/provider/Settings$Global;->getUriFor(Ljava/lang/String;)Landroid/net/Uri;
 
     move-result-object v3
 
     invoke-virtual {v1, v3, v5, v2}, Landroid/content/ContentResolver;->registerContentObserver(Landroid/net/Uri;ZLandroid/database/ContentObserver;)V
 
-    .line 204
-    const-string/jumbo v3, "wifi_display_wps_config"
+    const-string v3, "wifi_display_wps_config"
 
-    .line 203
     invoke-static {v3}, Landroid/provider/Settings$Global;->getUriFor(Ljava/lang/String;)Landroid/net/Uri;
 
     move-result-object v3
 
     invoke-virtual {v1, v3, v5, v2}, Landroid/content/ContentResolver;->registerContentObserver(Landroid/net/Uri;ZLandroid/database/ContentObserver;)V
 
-    .line 205
     invoke-direct {p0}, Lcom/android/server/display/WifiDisplayController;->updateSettings()V
 
-    .line 176
+    iget-object v3, p0, Lcom/android/server/display/WifiDisplayController;->mContext:Landroid/content/Context;
+
+    iget-object v4, p0, Lcom/android/server/display/WifiDisplayController;->mHandler:Landroid/os/Handler;
+
+    invoke-static {v3, v4, p0}, Lcom/android/server/display/WifiDisplayControllerInjector;->registerProjectionReceiver(Landroid/content/Context;Landroid/os/Handler;Lcom/android/server/display/WifiDisplayController;)V
+
     return-void
 .end method
 
@@ -2391,35 +2389,29 @@
 
     if-eq v0, v2, :cond_d
 
-    .line 720
     iget v0, p0, Lcom/android/server/display/WifiDisplayController;->mWifiDisplayWpsConfig:I
 
     iput v0, v14, Landroid/net/wifi/WpsInfo;->setup:I
 
-    .line 729
     :goto_2
     iput-object v14, v7, Landroid/net/wifi/p2p/WifiP2pConfig;->wps:Landroid/net/wifi/WpsInfo;
 
-    .line 730
     iget-object v0, p0, Lcom/android/server/display/WifiDisplayController;->mConnectingDevice:Landroid/net/wifi/p2p/WifiP2pDevice;
 
     iget-object v0, v0, Landroid/net/wifi/p2p/WifiP2pDevice;->deviceAddress:Ljava/lang/String;
 
     iput-object v0, v7, Landroid/net/wifi/p2p/WifiP2pConfig;->deviceAddress:Ljava/lang/String;
 
-    .line 732
-    const/4 v0, 0x0
+    const/16 v0, 0xf
 
     iput v0, v7, Landroid/net/wifi/p2p/WifiP2pConfig;->groupOwnerIntent:I
 
-    .line 734
     iget-object v0, p0, Lcom/android/server/display/WifiDisplayController;->mConnectingDevice:Landroid/net/wifi/p2p/WifiP2pDevice;
 
     invoke-static {v0}, Lcom/android/server/display/WifiDisplayController;->createWifiDisplay(Landroid/net/wifi/p2p/WifiP2pDevice;)Landroid/hardware/display/WifiDisplay;
 
     move-result-object v1
 
-    .line 735
     .local v1, "display":Landroid/hardware/display/WifiDisplay;
     const/4 v2, 0x0
 

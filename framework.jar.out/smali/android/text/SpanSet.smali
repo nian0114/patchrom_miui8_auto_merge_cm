@@ -225,68 +225,60 @@
 
     iput-object v8, p0, Landroid/text/SpanSet;->spans:[Ljava/lang/Object;
 
-    .line 53
     new-array v8, v2, [I
 
     iput-object v8, p0, Landroid/text/SpanSet;->spanStarts:[I
 
-    .line 54
     new-array v8, v2, [I
 
     iput-object v8, p0, Landroid/text/SpanSet;->spanEnds:[I
 
-    .line 55
     new-array v8, v2, [I
 
     iput-object v8, p0, Landroid/text/SpanSet;->spanFlags:[I
 
-    .line 58
-    :cond_1
+    :goto_0
     iget v3, p0, Landroid/text/SpanSet;->numberOfSpans:I
 
-    .line 59
     .local v3, "prevNumberOfSpans":I
     iput v9, p0, Landroid/text/SpanSet;->numberOfSpans:I
 
-    .line 60
     const/4 v1, 0x0
 
     .local v1, "i":I
-    :goto_0
+    :goto_1
     if-ge v1, v2, :cond_3
 
-    .line 61
     aget-object v4, v0, v1
 
-    .line 63
     .local v4, "span":Ljava/lang/Object;, "TE;"
     invoke-interface {p1, v4}, Landroid/text/Spanned;->getSpanStart(Ljava/lang/Object;)I
 
     move-result v7
 
-    .line 64
     .local v7, "spanStart":I
     invoke-interface {p1, v4}, Landroid/text/Spanned;->getSpanEnd(Ljava/lang/Object;)I
 
     move-result v5
 
-    .line 65
     .local v5, "spanEnd":I
     if-ne v7, v5, :cond_2
 
-    .line 60
-    :goto_1
+    :goto_2
     add-int/lit8 v1, v1, 0x1
+
+    goto :goto_1
+
+    :cond_1
+    invoke-virtual {p0}, Landroid/text/SpanSet;->recycle()V
 
     goto :goto_0
 
-    .line 67
     :cond_2
     invoke-interface {p1, v4}, Landroid/text/Spanned;->getSpanFlags(Ljava/lang/Object;)I
 
     move-result v6
 
-    .line 69
     .local v6, "spanFlag":I
     iget-object v8, p0, Landroid/text/SpanSet;->spans:[Ljava/lang/Object;
 
@@ -322,7 +314,7 @@
 
     iput v8, p0, Landroid/text/SpanSet;->numberOfSpans:I
 
-    goto :goto_1
+    goto :goto_2
 
     .line 78
     .end local v4    # "span":Ljava/lang/Object;, "TE;"

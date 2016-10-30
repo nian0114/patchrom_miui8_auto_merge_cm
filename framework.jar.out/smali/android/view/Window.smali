@@ -349,6 +349,16 @@
 .method public abstract addContentView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 .end method
 
+.method public addExtraFlags(I)V
+    .locals 0
+    .param p1, "flags"    # I
+
+    .prologue
+    invoke-virtual {p0, p1, p1}, Landroid/view/Window;->setExtraFlags(II)V
+
+    return-void
+.end method
+
 .method public addFlags(I)V
     .locals 0
     .param p1, "flags"    # I
@@ -735,6 +745,18 @@
 .end method
 
 .method public abstract alwaysReadCloseOnTouchAttr()V
+.end method
+
+.method public clearExtraFlags(I)V
+    .locals 1
+    .param p1, "flags"    # I
+
+    .prologue
+    const/4 v0, 0x0
+
+    invoke-virtual {p0, v0, p1}, Landroid/view/Window;->setExtraFlags(II)V
+
+    return-void
 .end method
 
 .method public clearFlags(I)V
@@ -1766,6 +1788,72 @@
     return-void
 .end method
 
+.method public setExtraFlags(II)V
+    .locals 4
+    .param p1, "flags"    # I
+    .param p2, "mask"    # I
+
+    .prologue
+    const/high16 v3, 0x4000000
+
+    invoke-virtual {p0}, Landroid/view/Window;->getAttributes()Landroid/view/WindowManager$LayoutParams;
+
+    move-result-object v0
+
+    .local v0, "attrs":Landroid/view/WindowManager$LayoutParams;
+    iget v1, v0, Landroid/view/WindowManager$LayoutParams;->extraFlags:I
+
+    xor-int/lit8 v2, p2, -0x1
+
+    and-int/2addr v1, v2
+
+    and-int v2, p1, p2
+
+    or-int/2addr v1, v2
+
+    iput v1, v0, Landroid/view/WindowManager$LayoutParams;->extraFlags:I
+
+    and-int/lit8 v1, p2, 0x1
+
+    if-eqz v1, :cond_0
+
+    and-int/lit8 v1, p1, 0x1
+
+    if-eqz v1, :cond_2
+
+    iget v1, v0, Landroid/view/WindowManager$LayoutParams;->flags:I
+
+    and-int/2addr v1, v3
+
+    if-nez v1, :cond_0
+
+    invoke-virtual {p0, v3, v3}, Landroid/view/Window;->setFlags(II)V
+
+    :cond_0
+    :goto_0
+    iget-object v1, p0, Landroid/view/Window;->mCallback:Landroid/view/Window$Callback;
+
+    if-eqz v1, :cond_1
+
+    iget-object v1, p0, Landroid/view/Window;->mCallback:Landroid/view/Window$Callback;
+
+    invoke-interface {v1, v0}, Landroid/view/Window$Callback;->onWindowAttributesChanged(Landroid/view/WindowManager$LayoutParams;)V
+
+    :cond_1
+    return-void
+
+    :cond_2
+    iget v1, v0, Landroid/view/WindowManager$LayoutParams;->flags:I
+
+    and-int/2addr v1, v3
+
+    if-eqz v1, :cond_0
+
+    invoke-virtual {p0, v3}, Landroid/view/Window;->clearFlags(I)V
+
+    goto :goto_0
+.end method
+
 .method public abstract setFeatureDrawable(ILandroid/graphics/drawable/Drawable;)V
 .end method
 
@@ -1782,17 +1870,17 @@
 .end method
 
 .method public setFlags(II)V
-    .locals 3
+    .locals 4
     .param p1, "flags"    # I
     .param p2, "mask"    # I
 
     .prologue
-    .line 865
+    const/high16 v3, 0x4000000
+
     invoke-virtual {p0}, Landroid/view/Window;->getAttributes()Landroid/view/WindowManager$LayoutParams;
 
     move-result-object v0
 
-    .line 866
     .local v0, "attrs":Landroid/view/WindowManager$LayoutParams;
     iget v1, v0, Landroid/view/WindowManager$LayoutParams;->flags:I
 
@@ -1806,17 +1894,33 @@
 
     iput v1, v0, Landroid/view/WindowManager$LayoutParams;->flags:I
 
-    .line 867
+    and-int v1, p2, v3
+
+    if-eqz v1, :cond_0
+
+    and-int v1, p1, v3
+
+    if-nez v1, :cond_0
+
+    iget v1, v0, Landroid/view/WindowManager$LayoutParams;->extraFlags:I
+
+    and-int/lit8 v1, v1, 0x1
+
+    if-eqz v1, :cond_0
+
+    const/4 v1, 0x1
+
+    invoke-virtual {p0, v1}, Landroid/view/Window;->clearExtraFlags(I)V
+
+    :cond_0
     iget v1, p0, Landroid/view/Window;->mForcedWindowFlags:I
 
     or-int/2addr v1, p2
 
     iput v1, p0, Landroid/view/Window;->mForcedWindowFlags:I
 
-    .line 868
     invoke-virtual {p0, v0}, Landroid/view/Window;->dispatchWindowAttributesChanged(Landroid/view/WindowManager$LayoutParams;)V
 
-    .line 864
     return-void
 .end method
 
@@ -1827,37 +1931,29 @@
     .prologue
     const/4 v2, 0x0
 
-    .line 764
     invoke-virtual {p0}, Landroid/view/Window;->getAttributes()Landroid/view/WindowManager$LayoutParams;
 
     move-result-object v0
 
-    .line 765
     .local v0, "attrs":Landroid/view/WindowManager$LayoutParams;
     if-eqz p1, :cond_0
 
-    .line 766
     iput p1, v0, Landroid/view/WindowManager$LayoutParams;->format:I
 
-    .line 767
     const/4 v1, 0x1
 
     iput-boolean v1, p0, Landroid/view/Window;->mHaveWindowFormat:Z
 
-    .line 772
     :goto_0
     invoke-virtual {p0, v0}, Landroid/view/Window;->dispatchWindowAttributesChanged(Landroid/view/WindowManager$LayoutParams;)V
 
-    .line 763
     return-void
 
-    .line 769
     :cond_0
     iget v1, p0, Landroid/view/Window;->mDefaultWindowFormat:I
 
     iput v1, v0, Landroid/view/WindowManager$LayoutParams;->format:I
 
-    .line 770
     iput-boolean v2, p0, Landroid/view/Window;->mHaveWindowFormat:Z
 
     goto :goto_0
@@ -1868,19 +1964,17 @@
     .param p1, "gravity"    # I
 
     .prologue
-    .line 735
+    .line 865
     invoke-virtual {p0}, Landroid/view/Window;->getAttributes()Landroid/view/WindowManager$LayoutParams;
 
     move-result-object v0
 
-    .line 736
+    .line 866
     .local v0, "attrs":Landroid/view/WindowManager$LayoutParams;
     iput p1, v0, Landroid/view/WindowManager$LayoutParams;->gravity:I
 
-    .line 737
     invoke-virtual {p0, v0}, Landroid/view/Window;->dispatchWindowAttributesChanged(Landroid/view/WindowManager$LayoutParams;)V
 
-    .line 733
     return-void
 .end method
 
@@ -1889,7 +1983,6 @@
     .param p1, "resId"    # I
 
     .prologue
-    .line 1501
     return-void
 .end method
 
@@ -1899,22 +1992,17 @@
     .param p2, "height"    # I
 
     .prologue
-    .line 717
     invoke-virtual {p0}, Landroid/view/Window;->getAttributes()Landroid/view/WindowManager$LayoutParams;
 
     move-result-object v0
 
-    .line 718
     .local v0, "attrs":Landroid/view/WindowManager$LayoutParams;
     iput p1, v0, Landroid/view/WindowManager$LayoutParams;->width:I
 
-    .line 719
     iput p2, v0, Landroid/view/WindowManager$LayoutParams;->height:I
 
-    .line 720
     invoke-virtual {p0, v0}, Landroid/view/Window;->dispatchWindowAttributesChanged(Landroid/view/WindowManager$LayoutParams;)V
 
-    .line 716
     return-void
 .end method
 
@@ -1924,7 +2012,6 @@
     .param p2, "inTouchMode"    # Z
 
     .prologue
-    .line 1536
     return-void
 .end method
 
@@ -1933,7 +2020,7 @@
     .param p1, "resId"    # I
 
     .prologue
-    .line 1519
+    .line 1501
     return-void
 .end method
 
@@ -1942,7 +2029,6 @@
     .param p1, "controller"    # Landroid/media/session/MediaController;
 
     .prologue
-    .line 1468
     return-void
 .end method
 
@@ -1954,19 +2040,15 @@
     .param p1, "value"    # I
 
     .prologue
-    .line 881
     invoke-virtual {p0}, Landroid/view/Window;->getAttributes()Landroid/view/WindowManager$LayoutParams;
 
     move-result-object v0
 
-    .line 882
     .local v0, "attrs":Landroid/view/WindowManager$LayoutParams;
     iput p1, v0, Landroid/view/WindowManager$LayoutParams;->needsMenuKey:I
 
-    .line 883
     invoke-virtual {p0, v0}, Landroid/view/Window;->dispatchWindowAttributesChanged(Landroid/view/WindowManager$LayoutParams;)V
 
-    .line 880
     return-void
 .end method
 
@@ -1975,10 +2057,8 @@
     .param p1, "dcb"    # Landroid/view/Window$OnWindowDismissedCallback;
 
     .prologue
-    .line 670
     iput-object p1, p0, Landroid/view/Window;->mOnWindowDismissedCallback:Landroid/view/Window$OnWindowDismissedCallback;
 
-    .line 669
     return-void
 .end method
 
@@ -1987,7 +2067,7 @@
     .param p1, "transition"    # Landroid/transition/Transition;
 
     .prologue
-    .line 1639
+    .line 1536
     return-void
 .end method
 
@@ -1996,7 +2076,7 @@
     .param p1, "transition"    # Landroid/transition/Transition;
 
     .prologue
-    .line 1609
+    .line 1519
     return-void
 .end method
 
@@ -2005,7 +2085,7 @@
     .param p1, "transition"    # Landroid/transition/Transition;
 
     .prologue
-    .line 1708
+    .line 1468
     return-void
 .end method
 
@@ -2014,7 +2094,6 @@
     .param p1, "transition"    # Landroid/transition/Transition;
 
     .prologue
-    .line 1754
     return-void
 .end method
 
@@ -2023,7 +2102,6 @@
     .param p1, "transition"    # Landroid/transition/Transition;
 
     .prologue
-    .line 1767
     return-void
 .end method
 
@@ -2032,6 +2110,11 @@
     .param p1, "transition"    # Landroid/transition/Transition;
 
     .prologue
+    .line 1639
+    .line 1609
+    .line 1708
+    .line 1754
+    .line 1767
     .line 1723
     return-void
 .end method

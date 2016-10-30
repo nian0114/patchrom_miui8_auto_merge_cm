@@ -103,6 +103,8 @@
 
 .field protected mSmsCapable:Z
 
+.field protected mSmsQueue:Lcom/android/internal/telephony/MiuiSmsQueue;
+
 .field protected mSmsSendDisabled:Z
 
 .field protected final mTelephonyManager:Landroid/telephony/TelephonyManager;
@@ -310,6 +312,12 @@
 
     :goto_0
     iput-boolean v0, p0, Lcom/android/internal/telephony/SMSDispatcher;->mSmsSendDisabled:Z
+
+    new-instance v0, Lcom/android/internal/telephony/MiuiSmsQueue;
+
+    invoke-direct {v0, p0}, Lcom/android/internal/telephony/MiuiSmsQueue;-><init>(Lcom/android/internal/telephony/SMSDispatcher;)V
+
+    iput-object v0, p0, Lcom/android/internal/telephony/SMSDispatcher;->mSmsQueue:Lcom/android/internal/telephony/MiuiSmsQueue;
 
     .line 203
     const-string/jumbo v0, "SMSDispatcher"
@@ -1904,11 +1912,18 @@
 
     move-result-object v5
 
-    .line 1668
     .end local v5    # "appInfo":Landroid/content/pm/PackageInfo;
     :cond_0
     :goto_0
-    const-string/jumbo v1, "destAddr"
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, p1
+
+    invoke-static {v0, v1, v5}, Lcom/android/internal/telephony/SMSDispatcherInjector;->getCallerAppInfo(Lcom/android/internal/telephony/SMSDispatcher;Ljava/util/HashMap;Landroid/content/pm/PackageInfo;)Landroid/content/pm/PackageInfo;
+
+    move-result-object v5
+
+    const-string v1, "destAddr"
 
     move-object/from16 v0, p1
 
@@ -2262,97 +2277,82 @@
 
     check-cast v11, Landroid/widget/TextView;
 
-    .line 1266
     .local v11, "messageView":Landroid/widget/TextView;
     invoke-virtual {v11, v10}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
 
-    .line 1269
     const v14, 0x10203d1
 
-    .line 1268
     invoke-virtual {v8, v14}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
     move-result-object v5
 
     check-cast v5, Landroid/view/ViewGroup;
 
-    .line 1271
     .local v5, "detailsLayout":Landroid/view/ViewGroup;
     const v14, 0x10203d3
 
-    .line 1270
     invoke-virtual {v5, v14}, Landroid/view/ViewGroup;->findViewById(I)Landroid/view/View;
 
     move-result-object v6
 
     check-cast v6, Landroid/widget/TextView;
 
-    .line 1272
     .local v6, "detailsView":Landroid/widget/TextView;
     invoke-virtual {v6, v4}, Landroid/widget/TextView;->setText(I)V
 
-    .line 1275
     const v14, 0x10203d4
 
-    .line 1274
     invoke-virtual {v8, v14}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
     move-result-object v13
 
     check-cast v13, Landroid/widget/CheckBox;
 
-    .line 1276
     .local v13, "rememberChoice":Landroid/widget/CheckBox;
     invoke-virtual {v13, v9}, Landroid/widget/CheckBox;->setOnCheckedChangeListener(Landroid/widget/CompoundButton$OnCheckedChangeListener;)V
 
-    .line 1278
-    new-instance v14, Landroid/app/AlertDialog$Builder;
+    new-instance v14, Lmiui/app/AlertDialog$Builder;
 
     move-object/from16 v0, p0
 
     iget-object v15, v0, Lcom/android/internal/telephony/SMSDispatcher;->mContext:Landroid/content/Context;
 
-    invoke-direct {v14, v15}, Landroid/app/AlertDialog$Builder;-><init>(Landroid/content/Context;)V
+    invoke-direct {v14, v15}, Lmiui/app/AlertDialog$Builder;-><init>(Landroid/content/Context;)V
 
-    invoke-virtual {v14, v8}, Landroid/app/AlertDialog$Builder;->setView(Landroid/view/View;)Landroid/app/AlertDialog$Builder;
+    invoke-virtual {v14, v8}, Lmiui/app/AlertDialog$Builder;->setView(Landroid/view/View;)Lmiui/app/AlertDialog$Builder;
 
     move-result-object v14
 
-    .line 1280
     const v15, 0x104043a
 
     invoke-virtual {v12, v15}, Landroid/content/res/Resources;->getString(I)Ljava/lang/String;
 
     move-result-object v15
 
-    .line 1278
-    invoke-virtual {v14, v15, v9}, Landroid/app/AlertDialog$Builder;->setPositiveButton(Ljava/lang/CharSequence;Landroid/content/DialogInterface$OnClickListener;)Landroid/app/AlertDialog$Builder;
+    invoke-virtual {v14, v15, v9}, Lmiui/app/AlertDialog$Builder;->setPositiveButton(Ljava/lang/CharSequence;Landroid/content/DialogInterface$OnClickListener;)Lmiui/app/AlertDialog$Builder;
 
     move-result-object v14
 
-    .line 1281
     const v15, 0x104043b
 
     invoke-virtual {v12, v15}, Landroid/content/res/Resources;->getString(I)Ljava/lang/String;
 
     move-result-object v15
 
-    .line 1278
-    invoke-virtual {v14, v15, v9}, Landroid/app/AlertDialog$Builder;->setNegativeButton(Ljava/lang/CharSequence;Landroid/content/DialogInterface$OnClickListener;)Landroid/app/AlertDialog$Builder;
+    invoke-virtual {v14, v15, v9}, Lmiui/app/AlertDialog$Builder;->setNegativeButton(Ljava/lang/CharSequence;Landroid/content/DialogInterface$OnClickListener;)Lmiui/app/AlertDialog$Builder;
 
     move-result-object v14
 
-    invoke-virtual {v14, v9}, Landroid/app/AlertDialog$Builder;->setOnCancelListener(Landroid/content/DialogInterface$OnCancelListener;)Landroid/app/AlertDialog$Builder;
+    invoke-virtual {v14, v9}, Lmiui/app/AlertDialog$Builder;->setOnCancelListener(Landroid/content/DialogInterface$OnCancelListener;)Lmiui/app/AlertDialog$Builder;
 
     move-result-object v14
 
-    invoke-virtual {v14}, Landroid/app/AlertDialog$Builder;->create()Landroid/app/AlertDialog;
+    invoke-virtual {v14}, Lmiui/app/AlertDialog$Builder;->create()Lmiui/app/AlertDialog;
 
     move-result-object v3
 
-    .line 1285
-    .local v3, "d":Landroid/app/AlertDialog;
-    invoke-virtual {v3}, Landroid/app/AlertDialog;->getWindow()Landroid/view/Window;
+    .local v3, "d":Lmiui/app/AlertDialog;
+    invoke-virtual {v3}, Lmiui/app/AlertDialog;->getWindow()Landroid/view/Window;
 
     move-result-object v14
 
@@ -2360,13 +2360,11 @@
 
     invoke-virtual {v14, v15}, Landroid/view/Window;->setType(I)V
 
-    .line 1286
-    invoke-virtual {v3}, Landroid/app/AlertDialog;->show()V
+    invoke-virtual {v3}, Lmiui/app/AlertDialog;->show()V
 
-    .line 1288
     const/4 v14, -0x1
 
-    invoke-virtual {v3, v14}, Landroid/app/AlertDialog;->getButton(I)Landroid/widget/Button;
+    invoke-virtual {v3, v14}, Lmiui/app/AlertDialog;->getButton(I)Landroid/widget/Button;
 
     move-result-object v14
 
@@ -2375,7 +2373,7 @@
     .line 1289
     const/4 v14, -0x2
 
-    invoke-virtual {v3, v14}, Landroid/app/AlertDialog;->getButton(I)Landroid/widget/Button;
+    invoke-virtual {v3, v14}, Lmiui/app/AlertDialog;->getButton(I)Landroid/widget/Button;
 
     move-result-object v14
 
@@ -2386,7 +2384,7 @@
 
     .line 1249
     .end local v2    # "appLabel":Ljava/lang/CharSequence;
-    .end local v3    # "d":Landroid/app/AlertDialog;
+    .end local v3    # "d":Lmiui/app/AlertDialog;
     .end local v4    # "detailsId":I
     .end local v5    # "detailsLayout":Landroid/view/ViewGroup;
     .end local v6    # "detailsView":Landroid/widget/TextView;
@@ -2409,8 +2407,6 @@
     .param p1, "msg"    # Landroid/os/Message;
 
     .prologue
-    const/4 v2, 0x1
-
     const/4 v3, 0x0
 
     .line 278
@@ -2497,6 +2493,8 @@
 
     .line 298
     :pswitch_5
+    const/4 v2, 0x1
+
     iget-object v1, p1, Landroid/os/Message;->obj:Ljava/lang/Object;
 
     check-cast v1, Lcom/android/internal/telephony/SMSDispatcher$SmsTracker;
@@ -2532,35 +2530,17 @@
 
     goto :goto_0
 
-    .line 307
     :cond_0
-    iget v1, p0, Lcom/android/internal/telephony/SMSDispatcher;->mPendingTrackerCount:I
-
-    if-le v1, v2, :cond_1
-
-    .line 308
-    iput-boolean v2, v0, Lcom/android/internal/telephony/SMSDispatcher$SmsTracker;->mExpectMore:Z
-
-    .line 312
-    :goto_2
     invoke-virtual {p0, v0}, Lcom/android/internal/telephony/SMSDispatcher;->sendSms(Lcom/android/internal/telephony/SMSDispatcher$SmsTracker;)V
 
     goto :goto_1
 
-    .line 310
-    :cond_1
-    iput-boolean v3, v0, Lcom/android/internal/telephony/SMSDispatcher$SmsTracker;->mExpectMore:Z
-
-    goto :goto_2
-
-    .line 320
     .end local v0    # "tracker":Lcom/android/internal/telephony/SMSDispatcher$SmsTracker;
     :pswitch_7
     iget-object v0, p1, Landroid/os/Message;->obj:Ljava/lang/Object;
 
     check-cast v0, Lcom/android/internal/telephony/SMSDispatcher$SmsTracker;
 
-    .line 321
     .restart local v0    # "tracker":Lcom/android/internal/telephony/SMSDispatcher$SmsTracker;
     iget-object v1, p0, Lcom/android/internal/telephony/SMSDispatcher;->mContext:Landroid/content/Context;
 
@@ -2585,9 +2565,6 @@
     invoke-virtual {p0, v1}, Lcom/android/internal/telephony/SMSDispatcher;->handleStatusReport(Ljava/lang/Object;)V
 
     goto :goto_0
-
-    .line 278
-    nop
 
     :pswitch_data_0
     .packed-switch 0x2
@@ -2664,67 +2641,54 @@
 
     .line 1222
     .local v2, "listener":Lcom/android/internal/telephony/SMSDispatcher$ConfirmDialogListener;
-    new-instance v5, Landroid/app/AlertDialog$Builder;
+    new-instance v5, Lmiui/app/AlertDialog$Builder;
 
     iget-object v6, p0, Lcom/android/internal/telephony/SMSDispatcher;->mContext:Landroid/content/Context;
 
-    invoke-direct {v5, v6}, Landroid/app/AlertDialog$Builder;-><init>(Landroid/content/Context;)V
+    const/4 p0, 0x3
 
-    .line 1223
+    invoke-direct {v5, v6, p0}, Lmiui/app/AlertDialog$Builder;-><init>(Landroid/content/Context;I)V
+
     const v6, 0x1040433
 
-    .line 1222
-    invoke-virtual {v5, v6}, Landroid/app/AlertDialog$Builder;->setTitle(I)Landroid/app/AlertDialog$Builder;
+    invoke-virtual {v5, v6}, Lmiui/app/AlertDialog$Builder;->setTitle(I)Lmiui/app/AlertDialog$Builder;
 
     move-result-object v5
 
-    .line 1224
-    const v6, 0x108008a
-
-    .line 1222
-    invoke-virtual {v5, v6}, Landroid/app/AlertDialog$Builder;->setIcon(I)Landroid/app/AlertDialog$Builder;
+    invoke-virtual {v5, v3}, Lmiui/app/AlertDialog$Builder;->setMessage(Ljava/lang/CharSequence;)Lmiui/app/AlertDialog$Builder;
 
     move-result-object v5
 
-    invoke-virtual {v5, v3}, Landroid/app/AlertDialog$Builder;->setMessage(Ljava/lang/CharSequence;)Landroid/app/AlertDialog$Builder;
-
-    move-result-object v5
-
-    .line 1226
     const v6, 0x1040435
 
     invoke-virtual {v4, v6}, Landroid/content/res/Resources;->getString(I)Ljava/lang/String;
 
     move-result-object v6
 
-    .line 1222
-    invoke-virtual {v5, v6, v2}, Landroid/app/AlertDialog$Builder;->setPositiveButton(Ljava/lang/CharSequence;Landroid/content/DialogInterface$OnClickListener;)Landroid/app/AlertDialog$Builder;
+    invoke-virtual {v5, v6, v2}, Lmiui/app/AlertDialog$Builder;->setPositiveButton(Ljava/lang/CharSequence;Landroid/content/DialogInterface$OnClickListener;)Lmiui/app/AlertDialog$Builder;
 
     move-result-object v5
 
-    .line 1227
     const v6, 0x1040436
 
     invoke-virtual {v4, v6}, Landroid/content/res/Resources;->getString(I)Ljava/lang/String;
 
     move-result-object v6
 
-    .line 1222
-    invoke-virtual {v5, v6, v2}, Landroid/app/AlertDialog$Builder;->setNegativeButton(Ljava/lang/CharSequence;Landroid/content/DialogInterface$OnClickListener;)Landroid/app/AlertDialog$Builder;
+    invoke-virtual {v5, v6, v2}, Lmiui/app/AlertDialog$Builder;->setNegativeButton(Ljava/lang/CharSequence;Landroid/content/DialogInterface$OnClickListener;)Lmiui/app/AlertDialog$Builder;
 
     move-result-object v5
 
-    invoke-virtual {v5, v2}, Landroid/app/AlertDialog$Builder;->setOnCancelListener(Landroid/content/DialogInterface$OnCancelListener;)Landroid/app/AlertDialog$Builder;
+    invoke-virtual {v5, v2}, Lmiui/app/AlertDialog$Builder;->setOnCancelListener(Landroid/content/DialogInterface$OnCancelListener;)Lmiui/app/AlertDialog$Builder;
 
     move-result-object v5
 
-    invoke-virtual {v5}, Landroid/app/AlertDialog$Builder;->create()Landroid/app/AlertDialog;
+    invoke-virtual {v5}, Lmiui/app/AlertDialog$Builder;->create()Lmiui/app/AlertDialog;
 
     move-result-object v1
 
-    .line 1231
-    .local v1, "d":Landroid/app/AlertDialog;
-    invoke-virtual {v1}, Landroid/app/AlertDialog;->getWindow()Landroid/view/Window;
+    .local v1, "d":Lmiui/app/AlertDialog;
+    invoke-virtual {v1}, Lmiui/app/AlertDialog;->getWindow()Landroid/view/Window;
 
     move-result-object v5
 
@@ -2732,10 +2696,8 @@
 
     invoke-virtual {v5, v6}, Landroid/view/Window;->setType(I)V
 
-    .line 1232
-    invoke-virtual {v1}, Landroid/app/AlertDialog;->show()V
+    invoke-virtual {v1}, Lmiui/app/AlertDialog;->show()V
 
-    .line 1211
     return-void
 .end method
 
@@ -2772,43 +2734,40 @@
 
     iput v6, v5, Lcom/android/internal/telephony/SMSDispatcher$SmsTracker;->mMessageRef:I
 
-    .line 638
     :goto_0
     iget-object v6, p1, Landroid/os/AsyncResult;->exception:Ljava/lang/Throwable;
 
     if-nez v6, :cond_2
 
-    .line 641
     iget-object v6, v5, Lcom/android/internal/telephony/SMSDispatcher$SmsTracker;->mDeliveryIntent:Landroid/app/PendingIntent;
 
     if-eqz v6, :cond_0
 
-    .line 643
     iget-object v6, p0, Lcom/android/internal/telephony/SMSDispatcher;->deliveryPendingList:Ljava/util/ArrayList;
 
     invoke-virtual {v6, v5}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
-    .line 645
     :cond_0
     iget-object v6, p0, Lcom/android/internal/telephony/SMSDispatcher;->mContext:Landroid/content/Context;
 
     invoke-virtual {v5, v6}, Lcom/android/internal/telephony/SMSDispatcher$SmsTracker;->onSent(Landroid/content/Context;)V
 
-    .line 628
+    iget-object v6, p0, Lcom/android/internal/telephony/SMSDispatcher;->mSmsQueue:Lcom/android/internal/telephony/MiuiSmsQueue;
+
+    invoke-virtual {v6}, Lcom/android/internal/telephony/MiuiSmsQueue;->processNextSms()V
+
     :goto_1
     return-void
 
-    .line 635
     :cond_1
-    const-string/jumbo v6, "SMSDispatcher"
+    const-string v6, "SMSDispatcher"
 
-    const-string/jumbo v7, "SmsResponse was null"
+    const-string v7, "SmsResponse was null"
 
     invoke-static {v6, v7}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     goto :goto_0
 
-    .line 649
     :cond_2
     iget-object v6, p0, Lcom/android/internal/telephony/SMSDispatcher;->mPhone:Lcom/android/internal/telephony/PhoneBase;
 
@@ -2951,6 +2910,10 @@
 
     invoke-virtual {v5, v6, v7, v9}, Lcom/android/internal/telephony/SMSDispatcher$SmsTracker;->onFailed(Landroid/content/Context;II)V
 
+    iget-object v6, p0, Lcom/android/internal/telephony/SMSDispatcher;->mSmsQueue:Lcom/android/internal/telephony/MiuiSmsQueue;
+
+    invoke-virtual {v6, v9}, Lcom/android/internal/telephony/MiuiSmsQueue;->enableSynced(Z)V
+
     goto/16 :goto_1
 
     .line 668
@@ -3040,6 +3003,10 @@
     iget-object v6, p0, Lcom/android/internal/telephony/SMSDispatcher;->mContext:Landroid/content/Context;
 
     invoke-virtual {v5, v6, v0, v1}, Lcom/android/internal/telephony/SMSDispatcher$SmsTracker;->onFailed(Landroid/content/Context;II)V
+
+    iget-object v6, p0, Lcom/android/internal/telephony/SMSDispatcher;->mSmsQueue:Lcom/android/internal/telephony/MiuiSmsQueue;
+
+    invoke-virtual {v6}, Lcom/android/internal/telephony/MiuiSmsQueue;->processNextSms()V
 
     goto/16 :goto_1
 .end method
@@ -3778,44 +3745,38 @@
 
     if-nez v6, :cond_4
 
-    .line 1040
     invoke-virtual {p0, v10, p1}, Lcom/android/internal/telephony/SMSDispatcher;->obtainMessage(ILjava/lang/Object;)Landroid/os/Message;
 
     move-result-object v6
 
     invoke-virtual {p0, v6}, Lcom/android/internal/telephony/SMSDispatcher;->sendMessage(Landroid/os/Message;)Z
 
-    .line 1041
     return-void
 
-    .line 1028
     .end local v0    # "appInfo":Landroid/content/pm/PackageInfo;
     :catch_0
     move-exception v1
 
-    .line 1029
     .local v1, "e":Landroid/content/pm/PackageManager$NameNotFoundException;
-    const-string/jumbo v6, "SMSDispatcher"
+    const-string v6, "SMSDispatcher"
 
-    const-string/jumbo v7, "Can\'t get calling app package info: refusing to send SMS"
+    const-string v7, "Can\'t get calling app package info: refusing to send SMS"
 
     invoke-static {v6, v7}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 1030
     iget-object v6, p0, Lcom/android/internal/telephony/SMSDispatcher;->mContext:Landroid/content/Context;
 
     invoke-virtual {p1, v6, v9, v8}, Lcom/android/internal/telephony/SMSDispatcher$SmsTracker;->onFailed(Landroid/content/Context;II)V
 
-    .line 1031
     return-void
 
-    .line 1044
     .end local v1    # "e":Landroid/content/pm/PackageManager$NameNotFoundException;
     .restart local v0    # "appInfo":Landroid/content/pm/PackageInfo;
     :cond_4
-    invoke-virtual {p0, p1}, Lcom/android/internal/telephony/SMSDispatcher;->sendSms(Lcom/android/internal/telephony/SMSDispatcher$SmsTracker;)V
+    iget-object v6, p0, Lcom/android/internal/telephony/SMSDispatcher;->mSmsQueue:Lcom/android/internal/telephony/MiuiSmsQueue;
 
-    .line 996
+    invoke-virtual {v6, p1}, Lcom/android/internal/telephony/MiuiSmsQueue;->enqueueOrSendSms(Lcom/android/internal/telephony/SMSDispatcher$SmsTracker;)V
+
     :cond_5
     return-void
 .end method

@@ -434,38 +434,37 @@
 
     move-object/from16 v9, p8
 
-    .line 1874
     invoke-virtual/range {v2 .. v12}, Landroid/app/ResourcesManager;->getTopLevelResources(Ljava/lang/String;[Ljava/lang/String;[Ljava/lang/String;[Ljava/lang/String;ILjava/lang/String;Landroid/content/res/Configuration;Landroid/content/res/CompatibilityInfo;Landroid/content/Context;Z)Landroid/content/res/Resources;
 
     move-result-object v14
 
-    .line 1885
+    iget-object v2, p0, Landroid/app/ContextImpl;->mPackageInfo:Landroid/app/LoadedApk;
+
+    iget-object v2, v2, Landroid/app/LoadedApk;->mPackageName:Ljava/lang/String;
+
+    invoke-static {v14, v2}, Landroid/miui/ResourcesManager;->initMiuiResource(Landroid/content/res/Resources;Ljava/lang/String;)V
+
     :cond_4
     :goto_4
     iput-object v14, p0, Landroid/app/ContextImpl;->mResources:Landroid/content/res/Resources;
 
-    .line 1887
     if-eqz p1, :cond_b
 
-    .line 1888
     move-object/from16 v0, p1
 
     iget-object v2, v0, Landroid/app/ContextImpl;->mBasePackageName:Ljava/lang/String;
 
     iput-object v2, p0, Landroid/app/ContextImpl;->mBasePackageName:Ljava/lang/String;
 
-    .line 1889
     move-object/from16 v0, p1
 
     iget-object v2, v0, Landroid/app/ContextImpl;->mOpPackageName:Ljava/lang/String;
 
     iput-object v2, p0, Landroid/app/ContextImpl;->mOpPackageName:Ljava/lang/String;
 
-    .line 1828
     :goto_5
     return-void
 
-    .line 1845
     .end local v7    # "displayId":I
     .end local v14    # "resources":Landroid/content/res/Resources;
     .restart local p7    # "display":Landroid/view/Display;
@@ -8931,4 +8930,18 @@
 
     .local v0, "e":Landroid/os/RemoteException;
     goto :goto_0
+.end method
+
+.method public getContentResolverForUser(Landroid/os/UserHandle;)Landroid/content/ContentResolver;
+    .locals 2
+    .param p1, "userHandle"    # Landroid/os/UserHandle;
+
+    .prologue
+    new-instance v0, Landroid/app/ContextImpl$ApplicationContentResolver;
+
+    iget-object v1, p0, Landroid/app/ContextImpl;->mMainThread:Landroid/app/ActivityThread;
+
+    invoke-direct {v0, p0, v1, p1}, Landroid/app/ContextImpl$ApplicationContentResolver;-><init>(Landroid/content/Context;Landroid/app/ActivityThread;Landroid/os/UserHandle;)V
+
+    return-object v0
 .end method

@@ -113,24 +113,22 @@
 
     invoke-static {v3, v4}, Landroid/util/Slog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 174
     :goto_0
+    invoke-static {p1}, Lcom/android/server/wifi/WifiServiceInjector;->handleClientMessage(Landroid/os/Message;)V
+
     return-void
 
-    .line 177
     :sswitch_0
     iget v3, p1, Landroid/os/Message;->arg1:I
 
     if-nez v3, :cond_0
 
-    .line 178
-    const-string/jumbo v3, "WifiService"
+    const-string v3, "WifiService"
 
-    const-string/jumbo v4, "New client listening to asynchronous messages"
+    const-string v4, "New client listening to asynchronous messages"
 
     invoke-static {v3, v4}, Landroid/util/Slog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 181
     iget-object v3, p0, Lcom/android/server/wifi/WifiServiceImpl$ClientHandler;->this$0:Lcom/android/server/wifi/WifiServiceImpl;
 
     invoke-static {v3}, Lcom/android/server/wifi/WifiServiceImpl;->-get6(Lcom/android/server/wifi/WifiServiceImpl;)Lcom/android/server/wifi/WifiTrafficPoller;
@@ -617,6 +615,8 @@
     invoke-virtual {v3, v4}, Lcom/android/server/wifi/WifiStateMachine;->sendMessage(Landroid/os/Message;)V
 
     goto/16 :goto_0
+
+    nop
 
     .line 175
     :sswitch_data_0

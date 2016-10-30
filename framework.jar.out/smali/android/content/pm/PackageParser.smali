@@ -8013,7 +8013,7 @@
 .end method
 
 .method private static parseApkLite(Ljava/lang/String;Landroid/content/res/Resources;Lorg/xmlpull/v1/XmlPullParser;Landroid/util/AttributeSet;I[Landroid/content/pm/Signature;)Landroid/content/pm/PackageParser$ApkLite;
-    .locals 21
+    .locals 26
     .param p0, "codePath"    # Ljava/lang/String;
     .param p1, "res"    # Landroid/content/res/Resources;
     .param p2, "parser"    # Lorg/xmlpull/v1/XmlPullParser;
@@ -8187,17 +8187,17 @@
 
     add-int/lit8 v16, v1, 0x4
 
-    .line 1413
     .local v16, "iconPackSearchDepth":I
     const/4 v13, 0x0
 
-    .line 1415
     .local v13, "isTheme":Z
+    const/16 v21, 0x0
+
+    .local v21, "originalPackages":Ljava/util/ArrayList;, "Ljava/util/ArrayList<Ljava/lang/String;>;"
     new-instance v8, Ljava/util/ArrayList;
 
     invoke-direct {v8}, Ljava/util/ArrayList;-><init>()V
 
-    .line 1416
     .end local v11    # "multiArch":Z
     .end local v12    # "extractNativeLibs":Z
     .local v8, "verifiers":Ljava/util/List;, "Ljava/util/List<Landroid/content/pm/VerifierInfo;>;"
@@ -8212,7 +8212,7 @@
 
     move/from16 v0, v19
 
-    if-eq v0, v1, :cond_e
+    if-eq v0, v1, :cond_10
 
     .line 1417
     const/4 v1, 0x3
@@ -8227,7 +8227,7 @@
 
     move/from16 v0, v18
 
-    if-lt v1, v0, :cond_e
+    if-lt v1, v0, :cond_10
 
     .line 1418
     :cond_6
@@ -8367,11 +8367,90 @@
     :cond_a
     invoke-interface/range {p2 .. p2}, Lorg/xmlpull/v1/XmlPullParser;->getDepth()I
 
+    move-result v2
+
+    move/from16 v0, v18
+
+    if-ne v2, v0, :cond_5
+
+    const-string v2, "original-package"
+
+    invoke-interface/range {p2 .. p2}, Lorg/xmlpull/v1/XmlPullParser;->getName()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-virtual {v2, v3}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_5
+
+    move-object/from16 v0, v17
+
+    iget-object v0, v0, Landroid/util/Pair;->first:Ljava/lang/Object;
+
+    move-object/from16 v22, v0
+
+    check-cast v22, Ljava/lang/String;
+
+    .local v22, "packageName":Ljava/lang/String;
+    sget-object v2, Lcom/android/internal/R$styleable;->AndroidManifestOriginalPackage:[I
+
+    move-object/from16 v0, p1
+
+    move-object/from16 v1, p3
+
+    invoke-virtual {v0, v1, v2}, Landroid/content/res/Resources;->obtainAttributes(Landroid/util/AttributeSet;[I)Landroid/content/res/TypedArray;
+
+    move-result-object v24
+
+    .local v24, "sa":Landroid/content/res/TypedArray;
+    const/4 v2, 0x0
+
+    const/4 v3, 0x0
+
+    move-object/from16 v0, v24
+
+    invoke-virtual {v0, v2, v3}, Landroid/content/res/TypedArray;->getNonConfigurationString(II)Ljava/lang/String;
+
+    move-result-object v23
+
+    .local v23, "orig":Ljava/lang/String;
+    move-object/from16 v0, v22
+
+    move-object/from16 v1, v23
+
+    invoke-virtual {v0, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v2
+
+    if-nez v2, :cond_c
+
+    if-nez v21, :cond_b
+
+    new-instance v21, Ljava/util/ArrayList;
+
+    invoke-direct/range {v21 .. v21}, Ljava/util/ArrayList;-><init>()V
+
+    :cond_b
+    move-object/from16 v0, v23
+
+    move-object/from16 v1, v21
+
+    invoke-virtual {v1, v0}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
+
+    :cond_c
+    invoke-virtual/range {v24 .. v24}, Landroid/content/res/TypedArray;->recycle()V
+
+    goto/16 :goto_2
+
+    invoke-interface/range {p2 .. p2}, Lorg/xmlpull/v1/XmlPullParser;->getDepth()I
+
     move-result v1
 
     move/from16 v0, v18
 
-    if-ne v1, v0, :cond_b
+    if-ne v1, v0, :cond_d
 
     const-string/jumbo v1, "meta-data"
 
@@ -8383,7 +8462,7 @@
 
     move-result v1
 
-    if-eqz v1, :cond_b
+    if-eqz v1, :cond_d
 
     .line 1442
     const/4 v15, 0x0
@@ -8393,7 +8472,7 @@
 
     move-result v1
 
-    if-ge v15, v1, :cond_b
+    if-ge v15, v1, :cond_d
 
     .line 1443
     const-string/jumbo v1, "name"
@@ -8408,7 +8487,7 @@
 
     move-result v1
 
-    if-eqz v1, :cond_d
+    if-eqz v1, :cond_f
 
     .line 1444
     const-string/jumbo v1, "org.cyanogenmod.theme.name"
@@ -8423,24 +8502,20 @@
 
     move-result v1
 
-    .line 1443
-    if-eqz v1, :cond_d
+    if-eqz v1, :cond_f
 
-    .line 1445
     const/4 v13, 0x1
 
-    .line 1446
     const/4 v7, 0x1
 
-    .line 1452
-    :cond_b
+    :cond_d
     invoke-interface/range {p2 .. p2}, Lorg/xmlpull/v1/XmlPullParser;->getDepth()I
 
     move-result v1
 
     move/from16 v0, v18
 
-    if-ne v1, v0, :cond_c
+    if-ne v1, v0, :cond_e
 
     const-string/jumbo v1, "theme"
 
@@ -8452,16 +8527,13 @@
 
     move-result v1
 
-    if-eqz v1, :cond_c
+    if-eqz v1, :cond_e
 
-    .line 1453
     const/4 v13, 0x1
 
-    .line 1454
     const/4 v7, 0x1
 
-    .line 1457
-    :cond_c
+    :cond_e
     invoke-interface/range {p2 .. p2}, Lorg/xmlpull/v1/XmlPullParser;->getDepth()I
 
     move-result v1
@@ -8476,22 +8548,18 @@
 
     if-eqz v1, :cond_5
 
-    .line 1458
     const/4 v13, 0x1
 
-    .line 1459
     const/4 v7, 0x1
 
     goto/16 :goto_2
 
-    .line 1442
-    :cond_d
+    :cond_f
     add-int/lit8 v15, v15, 0x1
 
     goto :goto_4
 
-    .line 1463
-    :cond_e
+    :cond_10
     new-instance v1, Landroid/content/pm/PackageParser$ApkLite;
 
     move-object/from16 v0, v17
@@ -8510,7 +8578,9 @@
 
     move-object/from16 v9, p5
 
-    invoke-direct/range {v1 .. v13}, Landroid/content/pm/PackageParser$ApkLite;-><init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIILjava/util/List;[Landroid/content/pm/Signature;ZZZZ)V
+    move-object/from16 v14, v21
+
+    invoke-direct/range {v1 .. v14}, Landroid/content/pm/PackageParser$ApkLite;-><init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIILjava/util/List;[Landroid/content/pm/Signature;ZZZZLjava/util/List;)V
 
     return-object v1
 .end method
@@ -11700,7 +11770,7 @@
     .line 916
     .local v32, "parser":Landroid/content/res/XmlResourceParser;
     :try_start_0
-    new-instance v35, Landroid/content/res/Resources;
+    new-instance v35, Landroid/content/res/MiuiResources;
 
     move-object/from16 v0, p0
 
@@ -11712,7 +11782,7 @@
 
     move-object/from16 v1, p2
 
-    invoke-direct {v0, v1, v5, v6}, Landroid/content/res/Resources;-><init>(Landroid/content/res/AssetManager;Landroid/util/DisplayMetrics;Landroid/content/res/Configuration;)V
+    invoke-direct {v0, v1, v5, v6}, Landroid/content/res/MiuiResources;-><init>(Landroid/content/res/AssetManager;Landroid/util/DisplayMetrics;Landroid/content/res/Configuration;)V
     :try_end_0
     .catch Landroid/content/pm/PackageParser$PackageParserException; {:try_start_0 .. :try_end_0} :catch_2
     .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_3

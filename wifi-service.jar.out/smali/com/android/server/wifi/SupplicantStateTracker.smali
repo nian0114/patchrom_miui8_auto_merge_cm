@@ -782,26 +782,31 @@
 
     move-result v1
 
-    .line 131
     if-eqz v1, :cond_2
 
-    .line 133
     const/4 v1, 0x3
 
     if-ne p2, v1, :cond_2
 
-    .line 134
     const/16 v1, 0x80
 
     invoke-virtual {v0, v1}, Landroid/net/wifi/WifiConfiguration;->setAutoJoinStatus(I)V
 
-    .line 138
     :cond_2
     iget-object v1, p0, Lcom/android/server/wifi/SupplicantStateTracker;->mWifiConfigStore:Lcom/android/server/wifi/WifiConfigStore;
 
     invoke-virtual {v1, p1, p2}, Lcom/android/server/wifi/WifiConfigStore;->disableNetwork(II)Z
 
-    .line 118
+    iget-object v0, p0, Lcom/android/server/wifi/SupplicantStateTracker;->mContext:Landroid/content/Context;
+
+    iget-object v1, p0, Lcom/android/server/wifi/SupplicantStateTracker;->mWifiConfigStore:Lcom/android/server/wifi/WifiConfigStore;
+
+    invoke-virtual {v1}, Lcom/android/server/wifi/WifiConfigStore;->getConfiguredNetworks()Ljava/util/List;
+
+    move-result-object v1
+
+    invoke-static {v0, v1, p1}, Landroid/net/wifi/SupplicantStateTrackerInjector;->handleNetworkConnectionFailure(Landroid/content/Context;Ljava/util/List;I)V
+
     return-void
 .end method
 

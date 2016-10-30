@@ -1091,34 +1091,22 @@
 .end method
 
 .method private static addEntryAndRemoveExpiredEntries(Landroid/content/Context;Landroid/net/Uri;Landroid/content/ContentValues;)Landroid/net/Uri;
-    .locals 4
+    .locals 2
     .param p0, "context"    # Landroid/content/Context;
     .param p1, "uri"    # Landroid/net/Uri;
     .param p2, "values"    # Landroid/content/ContentValues;
 
     .prologue
-    .line 676
     invoke-virtual {p0}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
 
     move-result-object v0
 
-    .line 677
     .local v0, "resolver":Landroid/content/ContentResolver;
     invoke-virtual {v0, p1, p2}, Landroid/content/ContentResolver;->insert(Landroid/net/Uri;Landroid/content/ContentValues;)Landroid/net/Uri;
 
     move-result-object v1
 
-    .line 678
     .local v1, "result":Landroid/net/Uri;
-    const-string/jumbo v2, "_id IN (SELECT _id FROM calls ORDER BY date DESC LIMIT -1 OFFSET 500)"
-
-    .line 680
-    const/4 v3, 0x0
-
-    .line 678
-    invoke-virtual {v0, p1, v2, v3}, Landroid/content/ContentResolver;->delete(Landroid/net/Uri;Ljava/lang/String;[Ljava/lang/String;)I
-
-    .line 681
     return-object v1
 .end method
 

@@ -765,28 +765,46 @@
 
     if-eqz v3, :cond_11
 
-    .line 157
     const/16 v3, 0x8
 
     invoke-static {v3}, Ljava/lang/String;->valueOf(I)Ljava/lang/String;
 
     move-result-object v3
 
-    .line 158
-    const-string/jumbo v4, "android.media.metadata.YEAR"
+    const-string v4, "android.media.metadata.YEAR"
 
     invoke-virtual {p0, v4}, Landroid/media/MediaMetadata;->getString(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v4
 
-    .line 157
     invoke-virtual {v2, v3, v4}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
 
-    .line 160
     :cond_11
+    const-string v3, "android.media.metadata.LYRIC"
+
+    invoke-virtual {p0, v3}, Landroid/media/MediaMetadata;->containsKey(Ljava/lang/String;)Z
+
+    move-result v3
+
+    if-eqz v3, :cond_miui_0
+
+    const/16 v3, 0x3e8
+
+    invoke-static {v3}, Ljava/lang/String;->valueOf(I)Ljava/lang/String;
+
+    move-result-object v3
+
+    const-string v4, "android.media.metadata.LYRIC"
+
+    invoke-virtual {p0, v4}, Landroid/media/MediaMetadata;->getString(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-virtual {v2, v3, v4}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
+
+    :cond_miui_0
     return-object v2
 
-    .line 79
     .end local v1    # "includeArtwork":Z
     .end local v2    # "oldMetadata":Landroid/os/Bundle;
     :cond_12

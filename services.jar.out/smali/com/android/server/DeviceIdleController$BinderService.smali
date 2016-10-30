@@ -391,7 +391,8 @@
     .line 802
     iget-object v0, p0, Lcom/android/server/DeviceIdleController$BinderService;->this$0:Lcom/android/server/DeviceIdleController;
 
-    invoke-static {v0}, Lcom/android/server/DeviceIdleController;->-get8(Lcom/android/server/DeviceIdleController;)I
+    # getter for: Lcom/android/server/DeviceIdleController;->mState:I
+    invoke-static {v0}, Lcom/android/server/DeviceIdleController;->access$mState(Lcom/android/server/DeviceIdleController;)I
 
     move-result v0
 

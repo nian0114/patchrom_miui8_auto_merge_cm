@@ -105,6 +105,10 @@
 
 .field public wifiSsid:Landroid/net/wifi/WifiSsid;
 
+.field public wpsDeviceName:Ljava/lang/String;
+
+.field public wpsState:Ljava/lang/String;
+
 
 # direct methods
 .method static constructor <clinit>()V
@@ -138,128 +142,183 @@
     .param p1, "source"    # Landroid/net/wifi/ScanResult;
 
     .prologue
-    .line 397
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    .line 398
     if-eqz p1, :cond_0
 
-    .line 399
     iget-object v0, p1, Landroid/net/wifi/ScanResult;->wifiSsid:Landroid/net/wifi/WifiSsid;
 
     iput-object v0, p0, Landroid/net/wifi/ScanResult;->wifiSsid:Landroid/net/wifi/WifiSsid;
 
-    .line 400
     iget-object v0, p1, Landroid/net/wifi/ScanResult;->SSID:Ljava/lang/String;
 
     iput-object v0, p0, Landroid/net/wifi/ScanResult;->SSID:Ljava/lang/String;
 
-    .line 401
     iget-object v0, p1, Landroid/net/wifi/ScanResult;->BSSID:Ljava/lang/String;
 
     iput-object v0, p0, Landroid/net/wifi/ScanResult;->BSSID:Ljava/lang/String;
 
-    .line 402
     iget-object v0, p1, Landroid/net/wifi/ScanResult;->capabilities:Ljava/lang/String;
 
     iput-object v0, p0, Landroid/net/wifi/ScanResult;->capabilities:Ljava/lang/String;
 
-    .line 403
     iget v0, p1, Landroid/net/wifi/ScanResult;->level:I
 
     iput v0, p0, Landroid/net/wifi/ScanResult;->level:I
 
-    .line 404
     iget v0, p1, Landroid/net/wifi/ScanResult;->frequency:I
 
     iput v0, p0, Landroid/net/wifi/ScanResult;->frequency:I
 
-    .line 405
     iget v0, p1, Landroid/net/wifi/ScanResult;->channelWidth:I
 
     iput v0, p0, Landroid/net/wifi/ScanResult;->channelWidth:I
 
-    .line 406
     iget v0, p1, Landroid/net/wifi/ScanResult;->centerFreq0:I
 
     iput v0, p0, Landroid/net/wifi/ScanResult;->centerFreq0:I
 
-    .line 407
     iget v0, p1, Landroid/net/wifi/ScanResult;->centerFreq1:I
 
     iput v0, p0, Landroid/net/wifi/ScanResult;->centerFreq1:I
 
-    .line 408
     iget-wide v0, p1, Landroid/net/wifi/ScanResult;->timestamp:J
 
     iput-wide v0, p0, Landroid/net/wifi/ScanResult;->timestamp:J
 
-    .line 409
     iget v0, p1, Landroid/net/wifi/ScanResult;->distanceCm:I
 
     iput v0, p0, Landroid/net/wifi/ScanResult;->distanceCm:I
 
-    .line 410
     iget v0, p1, Landroid/net/wifi/ScanResult;->distanceSdCm:I
 
     iput v0, p0, Landroid/net/wifi/ScanResult;->distanceSdCm:I
 
-    .line 411
     iget-wide v0, p1, Landroid/net/wifi/ScanResult;->seen:J
 
     iput-wide v0, p0, Landroid/net/wifi/ScanResult;->seen:J
 
-    .line 412
     iget v0, p1, Landroid/net/wifi/ScanResult;->autoJoinStatus:I
 
     iput v0, p0, Landroid/net/wifi/ScanResult;->autoJoinStatus:I
 
-    .line 413
     iget-boolean v0, p1, Landroid/net/wifi/ScanResult;->untrusted:Z
 
     iput-boolean v0, p0, Landroid/net/wifi/ScanResult;->untrusted:Z
 
-    .line 414
     iget v0, p1, Landroid/net/wifi/ScanResult;->numConnection:I
 
     iput v0, p0, Landroid/net/wifi/ScanResult;->numConnection:I
 
-    .line 415
     iget v0, p1, Landroid/net/wifi/ScanResult;->numUsage:I
 
     iput v0, p0, Landroid/net/wifi/ScanResult;->numUsage:I
 
-    .line 416
     iget v0, p1, Landroid/net/wifi/ScanResult;->numIpConfigFailures:I
 
     iput v0, p0, Landroid/net/wifi/ScanResult;->numIpConfigFailures:I
 
-    .line 417
     iget v0, p1, Landroid/net/wifi/ScanResult;->isAutoJoinCandidate:I
 
     iput v0, p0, Landroid/net/wifi/ScanResult;->isAutoJoinCandidate:I
 
-    .line 418
     iget-object v0, p1, Landroid/net/wifi/ScanResult;->venueName:Ljava/lang/CharSequence;
 
     iput-object v0, p0, Landroid/net/wifi/ScanResult;->venueName:Ljava/lang/CharSequence;
 
-    .line 419
     iget-object v0, p1, Landroid/net/wifi/ScanResult;->operatorFriendlyName:Ljava/lang/CharSequence;
 
     iput-object v0, p0, Landroid/net/wifi/ScanResult;->operatorFriendlyName:Ljava/lang/CharSequence;
 
-    .line 420
     iget-wide v0, p1, Landroid/net/wifi/ScanResult;->flags:J
 
     iput-wide v0, p0, Landroid/net/wifi/ScanResult;->flags:J
 
-    .line 397
+    iget-object v0, p1, Landroid/net/wifi/ScanResult;->wpsState:Ljava/lang/String;
+
+    iput-object v0, p0, Landroid/net/wifi/ScanResult;->wpsState:Ljava/lang/String;
+
+    iget-object v0, p1, Landroid/net/wifi/ScanResult;->wpsDeviceName:Ljava/lang/String;
+
+    iput-object v0, p0, Landroid/net/wifi/ScanResult;->wpsDeviceName:Ljava/lang/String;
+
     :cond_0
     return-void
 .end method
 
 .method public constructor <init>(Landroid/net/wifi/WifiSsid;Ljava/lang/String;Ljava/lang/String;IIJ)V
+    .locals 10
+    .param p1, "wifiSsid"    # Landroid/net/wifi/WifiSsid;
+    .param p2, "BSSID"    # Ljava/lang/String;
+    .param p3, "caps"    # Ljava/lang/String;
+    .param p4, "level"    # I
+    .param p5, "frequency"    # I
+    .param p6, "tsf"    # J
+
+    .prologue
+    const/4 v8, 0x0
+
+    const/4 v9, 0x0
+
+    move-object v0, p0
+
+    move-object v1, p1
+
+    move-object v2, p2
+
+    move-object v3, p3
+
+    move v4, p4
+
+    move v5, p5
+
+    move-wide/from16 v6, p6
+
+    invoke-direct/range {v0 .. v9}, Landroid/net/wifi/ScanResult;-><init>(Landroid/net/wifi/WifiSsid;Ljava/lang/String;Ljava/lang/String;IIJLjava/lang/String;Ljava/lang/String;)V
+
+    return-void
+.end method
+
+.method public constructor <init>(Landroid/net/wifi/WifiSsid;Ljava/lang/String;Ljava/lang/String;IIJII)V
+    .locals 12
+    .param p1, "wifiSsid"    # Landroid/net/wifi/WifiSsid;
+    .param p2, "BSSID"    # Ljava/lang/String;
+    .param p3, "caps"    # Ljava/lang/String;
+    .param p4, "level"    # I
+    .param p5, "frequency"    # I
+    .param p6, "tsf"    # J
+    .param p8, "distCm"    # I
+    .param p9, "distSdCm"    # I
+
+    .prologue
+    const/4 v10, 0x0
+
+    const/4 v11, 0x0
+
+    move-object v0, p0
+
+    move-object v1, p1
+
+    move-object v2, p2
+
+    move-object v3, p3
+
+    move/from16 v4, p4
+
+    move/from16 v5, p5
+
+    move-wide/from16 v6, p6
+
+    move/from16 v8, p8
+
+    move/from16 v9, p9
+
+    invoke-direct/range {v0 .. v11}, Landroid/net/wifi/ScanResult;-><init>(Landroid/net/wifi/WifiSsid;Ljava/lang/String;Ljava/lang/String;IIJIILjava/lang/String;Ljava/lang/String;)V
+
+    return-void
+.end method
+
+.method public constructor <init>(Landroid/net/wifi/WifiSsid;Ljava/lang/String;Ljava/lang/String;IIJIILjava/lang/String;Ljava/lang/String;)V
     .locals 2
     .param p1, "wifiSsid"    # Landroid/net/wifi/WifiSsid;
     .param p2, "BSSID"    # Ljava/lang/String;
@@ -267,6 +326,10 @@
     .param p4, "level"    # I
     .param p5, "frequency"    # I
     .param p6, "tsf"    # J
+    .param p8, "distCm"    # I
+    .param p9, "distSdCm"    # I
+    .param p10, "wpsState"    # Ljava/lang/String;
+    .param p11, "wpsDeviceName"    # Ljava/lang/String;
 
     .prologue
     const/4 v1, -0x1
@@ -287,52 +350,43 @@
     :goto_0
     iput-object v0, p0, Landroid/net/wifi/ScanResult;->SSID:Ljava/lang/String;
 
-    .line 334
     iput-object p2, p0, Landroid/net/wifi/ScanResult;->BSSID:Ljava/lang/String;
 
-    .line 335
     iput-object p3, p0, Landroid/net/wifi/ScanResult;->capabilities:Ljava/lang/String;
 
-    .line 336
     iput p4, p0, Landroid/net/wifi/ScanResult;->level:I
 
-    .line 337
     iput p5, p0, Landroid/net/wifi/ScanResult;->frequency:I
 
-    .line 338
     iput-wide p6, p0, Landroid/net/wifi/ScanResult;->timestamp:J
 
-    .line 339
-    iput v1, p0, Landroid/net/wifi/ScanResult;->distanceCm:I
+    iput p8, p0, Landroid/net/wifi/ScanResult;->distanceCm:I
 
-    .line 340
-    iput v1, p0, Landroid/net/wifi/ScanResult;->distanceSdCm:I
+    iput p9, p0, Landroid/net/wifi/ScanResult;->distanceSdCm:I
 
-    .line 341
     iput v1, p0, Landroid/net/wifi/ScanResult;->channelWidth:I
 
-    .line 342
     iput v1, p0, Landroid/net/wifi/ScanResult;->centerFreq0:I
 
-    .line 343
     iput v1, p0, Landroid/net/wifi/ScanResult;->centerFreq1:I
 
-    .line 344
     const-wide/16 v0, 0x0
 
     iput-wide v0, p0, Landroid/net/wifi/ScanResult;->flags:J
 
-    .line 331
+    iput-object p10, p0, Landroid/net/wifi/ScanResult;->wpsState:Ljava/lang/String;
+
+    iput-object p11, p0, Landroid/net/wifi/ScanResult;->wpsDeviceName:Ljava/lang/String;
+
     return-void
 
-    .line 333
     :cond_0
-    const-string/jumbo v0, "<unknown ssid>"
+    const-string v0, "<unknown ssid>"
 
     goto :goto_0
 .end method
 
-.method public constructor <init>(Landroid/net/wifi/WifiSsid;Ljava/lang/String;Ljava/lang/String;IIJII)V
+.method public constructor <init>(Landroid/net/wifi/WifiSsid;Ljava/lang/String;Ljava/lang/String;IIJLjava/lang/String;Ljava/lang/String;)V
     .locals 2
     .param p1, "wifiSsid"    # Landroid/net/wifi/WifiSsid;
     .param p2, "BSSID"    # Ljava/lang/String;
@@ -340,8 +394,8 @@
     .param p4, "level"    # I
     .param p5, "frequency"    # I
     .param p6, "tsf"    # J
-    .param p8, "distCm"    # I
-    .param p9, "distSdCm"    # I
+    .param p8, "wpsState"    # Ljava/lang/String;
+    .param p9, "wpsDeviceName"    # Ljava/lang/String;
 
     .prologue
     const/4 v1, -0x1
@@ -362,53 +416,44 @@
     :goto_0
     iput-object v0, p0, Landroid/net/wifi/ScanResult;->SSID:Ljava/lang/String;
 
-    .line 352
     iput-object p2, p0, Landroid/net/wifi/ScanResult;->BSSID:Ljava/lang/String;
 
-    .line 353
     iput-object p3, p0, Landroid/net/wifi/ScanResult;->capabilities:Ljava/lang/String;
 
-    .line 354
     iput p4, p0, Landroid/net/wifi/ScanResult;->level:I
 
-    .line 355
     iput p5, p0, Landroid/net/wifi/ScanResult;->frequency:I
 
-    .line 356
     iput-wide p6, p0, Landroid/net/wifi/ScanResult;->timestamp:J
 
-    .line 357
-    iput p8, p0, Landroid/net/wifi/ScanResult;->distanceCm:I
+    iput v1, p0, Landroid/net/wifi/ScanResult;->distanceCm:I
 
-    .line 358
-    iput p9, p0, Landroid/net/wifi/ScanResult;->distanceSdCm:I
+    iput v1, p0, Landroid/net/wifi/ScanResult;->distanceSdCm:I
 
-    .line 359
     iput v1, p0, Landroid/net/wifi/ScanResult;->channelWidth:I
 
-    .line 360
     iput v1, p0, Landroid/net/wifi/ScanResult;->centerFreq0:I
 
-    .line 361
     iput v1, p0, Landroid/net/wifi/ScanResult;->centerFreq1:I
 
-    .line 362
     const-wide/16 v0, 0x0
 
     iput-wide v0, p0, Landroid/net/wifi/ScanResult;->flags:J
 
-    .line 349
+    iput-object p8, p0, Landroid/net/wifi/ScanResult;->wpsState:Ljava/lang/String;
+
+    iput-object p9, p0, Landroid/net/wifi/ScanResult;->wpsDeviceName:Ljava/lang/String;
+
     return-void
 
-    .line 351
     :cond_0
-    const-string/jumbo v0, "<unknown ssid>"
+    const-string v0, "<unknown ssid>"
 
     goto :goto_0
 .end method
 
 .method public constructor <init>(Landroid/net/wifi/WifiSsid;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIJIIIIIZ)V
-    .locals 17
+    .locals 19
     .param p1, "wifiSsid"    # Landroid/net/wifi/WifiSsid;
     .param p2, "Ssid"    # Ljava/lang/String;
     .param p3, "BSSID"    # Ljava/lang/String;
@@ -422,6 +467,62 @@
     .param p12, "centerFreq0"    # I
     .param p13, "centerFreq1"    # I
     .param p14, "is80211McRTTResponder"    # Z
+
+    .prologue
+    const/16 v16, 0x0
+
+    const/16 v17, 0x0
+
+    move-object/from16 v1, p0
+
+    move-object/from16 v2, p1
+
+    move-object/from16 v3, p2
+
+    move-object/from16 v4, p3
+
+    move-object/from16 v5, p4
+
+    move/from16 v6, p5
+
+    move/from16 v7, p6
+
+    move-wide/from16 v8, p7
+
+    move/from16 v10, p9
+
+    move/from16 v11, p10
+
+    move/from16 v12, p11
+
+    move/from16 v13, p12
+
+    move/from16 v14, p13
+
+    move/from16 v15, p14
+
+    invoke-direct/range {v1 .. v17}, Landroid/net/wifi/ScanResult;-><init>(Landroid/net/wifi/WifiSsid;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIJIIIIIZLjava/lang/String;Ljava/lang/String;)V
+
+    return-void
+.end method
+
+.method public constructor <init>(Landroid/net/wifi/WifiSsid;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIJIIIIIZLjava/lang/String;Ljava/lang/String;)V
+    .locals 19
+    .param p1, "wifiSsid"    # Landroid/net/wifi/WifiSsid;
+    .param p2, "Ssid"    # Ljava/lang/String;
+    .param p3, "BSSID"    # Ljava/lang/String;
+    .param p4, "caps"    # Ljava/lang/String;
+    .param p5, "level"    # I
+    .param p6, "frequency"    # I
+    .param p7, "tsf"    # J
+    .param p9, "distCm"    # I
+    .param p10, "distSdCm"    # I
+    .param p11, "channelWidth"    # I
+    .param p12, "centerFreq0"    # I
+    .param p13, "centerFreq1"    # I
+    .param p14, "is80211McRTTResponder"    # Z
+    .param p15, "wpsState"    # Ljava/lang/String;
+    .param p16, "wpsDeviceName"    # Ljava/lang/String;
 
     .prologue
     move-object/from16 v2, p0
@@ -450,22 +551,23 @@
 
     move/from16 v15, p14
 
-    .line 391
-    invoke-direct/range {v2 .. v15}, Landroid/net/wifi/ScanResult;-><init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIJIIIIIZ)V
+    move-object/from16 v16, p15
 
-    .line 393
+    move-object/from16 v17, p16
+
+    invoke-direct/range {v2 .. v17}, Landroid/net/wifi/ScanResult;-><init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIJIIIIIZLjava/lang/String;Ljava/lang/String;)V
+
     move-object/from16 v0, p1
 
     move-object/from16 v1, p0
 
     iput-object v0, v1, Landroid/net/wifi/ScanResult;->wifiSsid:Landroid/net/wifi/WifiSsid;
 
-    .line 390
     return-void
 .end method
 
 .method public constructor <init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIJIIIIIZ)V
-    .locals 2
+    .locals 16
     .param p1, "Ssid"    # Ljava/lang/String;
     .param p2, "BSSID"    # Ljava/lang/String;
     .param p3, "caps"    # Ljava/lang/String;
@@ -480,59 +582,106 @@
     .param p13, "is80211McRTTResponder"    # Z
 
     .prologue
-    .line 366
+    const/4 v14, 0x0
+
+    const/4 v15, 0x0
+
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, p1
+
+    move-object/from16 v2, p2
+
+    move-object/from16 v3, p3
+
+    move/from16 v4, p4
+
+    move/from16 v5, p5
+
+    move-wide/from16 v6, p6
+
+    move/from16 v8, p8
+
+    move/from16 v9, p9
+
+    move/from16 v10, p10
+
+    move/from16 v11, p11
+
+    move/from16 v12, p12
+
+    move/from16 v13, p13
+
+    invoke-direct/range {v0 .. v15}, Landroid/net/wifi/ScanResult;-><init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIJIIIIIZLjava/lang/String;Ljava/lang/String;)V
+
+    return-void
+.end method
+
+.method public constructor <init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIJIIIIIZLjava/lang/String;Ljava/lang/String;)V
+    .locals 4
+    .param p1, "Ssid"    # Ljava/lang/String;
+    .param p2, "BSSID"    # Ljava/lang/String;
+    .param p3, "caps"    # Ljava/lang/String;
+    .param p4, "level"    # I
+    .param p5, "frequency"    # I
+    .param p6, "tsf"    # J
+    .param p8, "distCm"    # I
+    .param p9, "distSdCm"    # I
+    .param p10, "channelWidth"    # I
+    .param p11, "centerFreq0"    # I
+    .param p12, "centerFreq1"    # I
+    .param p13, "is80211McRTTResponder"    # Z
+    .param p14, "wpsState"    # Ljava/lang/String;
+    .param p15, "wpsDeviceName"    # Ljava/lang/String;
+
+    .prologue
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    .line 369
     iput-object p1, p0, Landroid/net/wifi/ScanResult;->SSID:Ljava/lang/String;
 
-    .line 370
     iput-object p2, p0, Landroid/net/wifi/ScanResult;->BSSID:Ljava/lang/String;
 
-    .line 371
     iput-object p3, p0, Landroid/net/wifi/ScanResult;->capabilities:Ljava/lang/String;
 
-    .line 372
     iput p4, p0, Landroid/net/wifi/ScanResult;->level:I
 
-    .line 373
     iput p5, p0, Landroid/net/wifi/ScanResult;->frequency:I
 
-    .line 374
     iput-wide p6, p0, Landroid/net/wifi/ScanResult;->timestamp:J
 
-    .line 375
     iput p8, p0, Landroid/net/wifi/ScanResult;->distanceCm:I
 
-    .line 376
     iput p9, p0, Landroid/net/wifi/ScanResult;->distanceSdCm:I
 
-    .line 377
     iput p10, p0, Landroid/net/wifi/ScanResult;->channelWidth:I
 
-    .line 378
     iput p11, p0, Landroid/net/wifi/ScanResult;->centerFreq0:I
 
-    .line 379
-    iput p12, p0, Landroid/net/wifi/ScanResult;->centerFreq1:I
+    move/from16 v0, p12
 
-    .line 380
+    iput v0, p0, Landroid/net/wifi/ScanResult;->centerFreq1:I
+
     if-eqz p13, :cond_0
 
-    .line 381
-    const-wide/16 v0, 0x2
+    const-wide/16 v2, 0x2
 
-    iput-wide v0, p0, Landroid/net/wifi/ScanResult;->flags:J
+    iput-wide v2, p0, Landroid/net/wifi/ScanResult;->flags:J
 
-    .line 368
     :goto_0
+    move-object/from16 v0, p14
+
+    iput-object v0, p0, Landroid/net/wifi/ScanResult;->wpsState:Ljava/lang/String;
+
+    move-object/from16 v0, p15
+
+    iput-object v0, p0, Landroid/net/wifi/ScanResult;->wpsDeviceName:Ljava/lang/String;
+
     return-void
 
-    .line 383
     :cond_0
-    const-wide/16 v0, 0x0
+    const-wide/16 v2, 0x0
 
-    iput-wide v0, p0, Landroid/net/wifi/ScanResult;->flags:J
+    iput-wide v2, p0, Landroid/net/wifi/ScanResult;->flags:J
 
     goto :goto_0
 .end method
@@ -1108,59 +1257,73 @@
 
     if-eqz v2, :cond_7
 
-    const-string/jumbo v2, "is supported"
+    const-string v2, "is supported"
 
     :goto_6
     invoke-virtual {v1, v2}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;
 
-    .line 464
+    const-string v2, ", wpsState :"
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;
+
+    move-result-object v2
+
+    iget-object v3, p0, Landroid/net/wifi/ScanResult;->wpsState:Ljava/lang/String;
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;
+
+    move-result-object v2
+
+    const-string v3, ", wpsDeviceName :"
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;
+
+    move-result-object v2
+
+    iget-object v3, p0, Landroid/net/wifi/ScanResult;->wpsDeviceName:Ljava/lang/String;
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;
+
     invoke-virtual {v1}, Ljava/lang/StringBuffer;->toString()Ljava/lang/String;
 
     move-result-object v2
 
     return-object v2
 
-    .line 437
     .restart local v0    # "none":Ljava/lang/String;
     :cond_1
     iget-object v2, p0, Landroid/net/wifi/ScanResult;->wifiSsid:Landroid/net/wifi/WifiSsid;
 
     goto/16 :goto_0
 
-    .line 439
     :cond_2
     iget-object v2, p0, Landroid/net/wifi/ScanResult;->BSSID:Ljava/lang/String;
 
     goto/16 :goto_1
 
-    .line 441
     :cond_3
     iget-object v0, p0, Landroid/net/wifi/ScanResult;->capabilities:Ljava/lang/String;
 
     goto/16 :goto_2
 
-    .line 449
     .end local v0    # "none":Ljava/lang/String;
     :cond_4
-    const-string/jumbo v2, "?"
+    const-string v2, "?"
 
     goto/16 :goto_3
 
-    .line 451
     :cond_5
-    const-string/jumbo v2, "?"
+    const-string v2, "?"
 
     goto/16 :goto_4
 
-    .line 455
     :cond_6
-    const-string/jumbo v2, "no"
+    const-string v2, "no"
 
     goto :goto_5
 
-    .line 463
     :cond_7
-    const-string/jumbo v2, "is not supported"
+    const-string v2, "is not supported"
 
     goto :goto_6
 .end method
@@ -1175,86 +1338,77 @@
 
     const/4 v2, 0x0
 
-    .line 474
     iget-object v3, p0, Landroid/net/wifi/ScanResult;->wifiSsid:Landroid/net/wifi/WifiSsid;
 
     if-eqz v3, :cond_0
 
-    .line 475
     invoke-virtual {p1, v1}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 476
     iget-object v3, p0, Landroid/net/wifi/ScanResult;->wifiSsid:Landroid/net/wifi/WifiSsid;
 
     invoke-virtual {v3, p1, p2}, Landroid/net/wifi/WifiSsid;->writeToParcel(Landroid/os/Parcel;I)V
 
-    .line 480
     :goto_0
     iget-object v3, p0, Landroid/net/wifi/ScanResult;->SSID:Ljava/lang/String;
 
     invoke-virtual {p1, v3}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
-    .line 481
     iget-object v3, p0, Landroid/net/wifi/ScanResult;->BSSID:Ljava/lang/String;
 
     invoke-virtual {p1, v3}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
-    .line 482
     iget-object v3, p0, Landroid/net/wifi/ScanResult;->capabilities:Ljava/lang/String;
 
     invoke-virtual {p1, v3}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
-    .line 483
     iget v3, p0, Landroid/net/wifi/ScanResult;->level:I
 
     invoke-virtual {p1, v3}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 484
     iget v3, p0, Landroid/net/wifi/ScanResult;->frequency:I
 
     invoke-virtual {p1, v3}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 485
     iget-wide v4, p0, Landroid/net/wifi/ScanResult;->timestamp:J
 
     invoke-virtual {p1, v4, v5}, Landroid/os/Parcel;->writeLong(J)V
 
-    .line 486
     iget v3, p0, Landroid/net/wifi/ScanResult;->distanceCm:I
 
     invoke-virtual {p1, v3}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 487
     iget v3, p0, Landroid/net/wifi/ScanResult;->distanceSdCm:I
 
     invoke-virtual {p1, v3}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 488
     iget v3, p0, Landroid/net/wifi/ScanResult;->channelWidth:I
 
     invoke-virtual {p1, v3}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 489
     iget v3, p0, Landroid/net/wifi/ScanResult;->centerFreq0:I
 
     invoke-virtual {p1, v3}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 490
     iget v3, p0, Landroid/net/wifi/ScanResult;->centerFreq1:I
 
     invoke-virtual {p1, v3}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 491
+    iget-object v3, p0, Landroid/net/wifi/ScanResult;->wpsState:Ljava/lang/String;
+
+    invoke-virtual {p1, v3}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
+
+    iget-object v3, p0, Landroid/net/wifi/ScanResult;->wpsDeviceName:Ljava/lang/String;
+
+    invoke-virtual {p1, v3}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
+
     iget-wide v4, p0, Landroid/net/wifi/ScanResult;->seen:J
 
     invoke-virtual {p1, v4, v5}, Landroid/os/Parcel;->writeLong(J)V
 
-    .line 492
     iget v3, p0, Landroid/net/wifi/ScanResult;->autoJoinStatus:I
 
     invoke-virtual {p1, v3}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 493
     iget-boolean v3, p0, Landroid/net/wifi/ScanResult;->untrusted:Z
 
     if-eqz v3, :cond_1

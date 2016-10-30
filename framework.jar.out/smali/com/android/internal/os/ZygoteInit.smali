@@ -391,25 +391,21 @@
     .param p0, "argv"    # [Ljava/lang/String;
 
     .prologue
-    .line 567
     :try_start_0
     invoke-static {}, Lcom/android/internal/os/RuntimeInit;->enableDdms()V
 
-    .line 569
     invoke-static {}, Lcom/android/internal/os/SamplingProfilerIntegration;->start()V
 
-    .line 571
+    invoke-static {}, Lmiui/security/SecurityManager;->init()V
+
     const/4 v5, 0x0
 
-    .line 572
     .local v5, "startSystemServer":Z
-    const-string/jumbo v4, "zygote"
+    const-string v4, "zygote"
 
-    .line 573
     .local v4, "socketName":Ljava/lang/String;
     const/4 v0, 0x0
 
-    .line 574
     .local v0, "abiList":Ljava/lang/String;
     const/4 v3, 0x1
 
@@ -1891,6 +1887,10 @@
 
     invoke-static {v6, v7}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
 
+    sget-object v6, Lcom/android/internal/os/ZygoteInit;->mResources:Landroid/content/res/Resources;
+
+    invoke-static {v6}, Lcom/android/internal/os/ZygoteInitInjector;->preloadMiuiResources(Landroid/content/res/Resources;)V
+
     .line 343
     invoke-static {}, Landroid/os/SystemClock;->uptimeMillis()J
 
@@ -2375,126 +2375,108 @@
     .end annotation
 
     .prologue
-    .line 495
     const/16 v1, 0xb
 
     new-array v1, v1, [I
 
-    .line 496
     sget v2, Landroid/system/OsConstants;->CAP_BLOCK_SUSPEND:I
 
     const/4 v3, 0x0
 
     aput v2, v1, v3
 
-    .line 497
     sget v2, Landroid/system/OsConstants;->CAP_KILL:I
 
     const/4 v3, 0x1
 
     aput v2, v1, v3
 
-    .line 498
     sget v2, Landroid/system/OsConstants;->CAP_NET_ADMIN:I
 
     const/4 v3, 0x2
 
     aput v2, v1, v3
 
-    .line 499
     sget v2, Landroid/system/OsConstants;->CAP_NET_BIND_SERVICE:I
 
     const/4 v3, 0x3
 
     aput v2, v1, v3
 
-    .line 500
     sget v2, Landroid/system/OsConstants;->CAP_NET_BROADCAST:I
 
     const/4 v3, 0x4
 
     aput v2, v1, v3
 
-    .line 501
     sget v2, Landroid/system/OsConstants;->CAP_NET_RAW:I
 
     const/4 v3, 0x5
 
     aput v2, v1, v3
 
-    .line 502
     sget v2, Landroid/system/OsConstants;->CAP_SYS_MODULE:I
 
     const/4 v3, 0x6
 
     aput v2, v1, v3
 
-    .line 503
     sget v2, Landroid/system/OsConstants;->CAP_SYS_NICE:I
 
     const/4 v3, 0x7
 
     aput v2, v1, v3
 
-    .line 504
     sget v2, Landroid/system/OsConstants;->CAP_SYS_RESOURCE:I
 
     const/16 v3, 0x8
 
     aput v2, v1, v3
 
-    .line 505
     sget v2, Landroid/system/OsConstants;->CAP_SYS_TIME:I
 
     const/16 v3, 0x9
 
     aput v2, v1, v3
 
-    .line 506
     sget v2, Landroid/system/OsConstants;->CAP_SYS_TTY_CONFIG:I
 
     const/16 v3, 0xa
 
     aput v2, v1, v3
 
-    .line 495
     invoke-static {v1}, Lcom/android/internal/os/ZygoteInit;->posixCapabilitiesAsBits([I)J
 
     move-result-wide v10
 
-    .line 509
     .local v10, "capabilities":J
     const/4 v1, 0x7
 
     new-array v0, v1, [Ljava/lang/String;
 
-    .line 510
-    const-string/jumbo v1, "--setuid=1000"
+    const-string v1, "--setuid=1000"
 
     const/4 v2, 0x0
 
     aput-object v1, v0, v2
 
-    .line 511
-    const-string/jumbo v1, "--setgid=1000"
+    const-string v1, "--setgid=1000"
 
     const/4 v2, 0x1
 
     aput-object v1, v0, v2
 
-    .line 512
-    const-string/jumbo v1, "--setgroups=1001,1002,1003,1004,1005,1006,1007,1008,1009,1010,1018,1021,1032,3001,3002,3003,3006,3007"
+    const-string v1, "--setgroups=1001,1002,1003,1004,1005,1006,1007,1008,1009,1010,1018,1021,1032,3001,3002,3003,3006,3007,9801"
 
     const/4 v2, 0x2
 
     aput-object v1, v0, v2
 
-    .line 513
     new-instance v1, Ljava/lang/StringBuilder;
 
     invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string/jumbo v2, "--capabilities="
+    const-string v2, "--capabilities="
 
     invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 

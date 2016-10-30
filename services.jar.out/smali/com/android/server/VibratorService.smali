@@ -28,6 +28,10 @@
 
 
 # instance fields
+.field private final MAX_VIBRATOR_TIMEOUT:J
+
+.field private final PERFECT_VIBRATOR_TIMEOUT:J
+
 .field private final mAppOpsService:Lcom/android/internal/app/IAppOpsService;
 
 .field private final mBatteryStatsService:Lcom/android/internal/app/IBatteryStats;
@@ -194,88 +198,82 @@
 .end method
 
 .method constructor <init>(Landroid/content/Context;)V
-    .locals 4
+    .locals 5
     .param p1, "context"    # Landroid/content/Context;
 
     .prologue
-    const/4 v3, 0x1
+    const/4 v4, 0x1
 
-    .line 205
     invoke-direct {p0}, Landroid/os/IVibratorService$Stub;-><init>()V
 
-    .line 72
     new-instance v2, Landroid/os/WorkSource;
 
     invoke-direct {v2}, Landroid/os/WorkSource;-><init>()V
 
     iput-object v2, p0, Lcom/android/server/VibratorService;->mTmpWorkSource:Landroid/os/WorkSource;
 
-    .line 73
     new-instance v2, Landroid/os/Handler;
 
     invoke-direct {v2}, Landroid/os/Handler;-><init>()V
 
     iput-object v2, p0, Lcom/android/server/VibratorService;->mH:Landroid/os/Handler;
 
-    .line 86
     new-instance v2, Ljava/util/ArrayList;
 
     invoke-direct {v2}, Ljava/util/ArrayList;-><init>()V
 
     iput-object v2, p0, Lcom/android/server/VibratorService;->mInputDeviceVibrators:Ljava/util/ArrayList;
 
-    .line 90
     const/4 v2, -0x1
 
     iput v2, p0, Lcom/android/server/VibratorService;->mCurVibUid:I
 
-    .line 442
     new-instance v2, Lcom/android/server/VibratorService$1;
 
     invoke-direct {v2, p0}, Lcom/android/server/VibratorService$1;-><init>(Lcom/android/server/VibratorService;)V
 
     iput-object v2, p0, Lcom/android/server/VibratorService;->mVibrationRunnable:Ljava/lang/Runnable;
 
-    .line 751
     new-instance v2, Lcom/android/server/VibratorService$2;
 
     invoke-direct {v2, p0}, Lcom/android/server/VibratorService$2;-><init>(Lcom/android/server/VibratorService;)V
 
     iput-object v2, p0, Lcom/android/server/VibratorService;->mIntentReceiver:Landroid/content/BroadcastReceiver;
 
-    .line 208
+    const-wide/16 v2, 0x2710
+
+    iput-wide v2, p0, Lcom/android/server/VibratorService;->MAX_VIBRATOR_TIMEOUT:J
+
+    const-wide/16 v2, 0x3e8
+
+    iput-wide v2, p0, Lcom/android/server/VibratorService;->PERFECT_VIBRATOR_TIMEOUT:J
+
     invoke-static {}, Lcom/android/server/VibratorService;->vibratorOff()V
 
-    .line 210
     iput-object p1, p0, Lcom/android/server/VibratorService;->mContext:Landroid/content/Context;
 
-    .line 212
-    const-string/jumbo v2, "power"
+    const-string v2, "power"
 
-    .line 211
     invoke-virtual {p1, v2}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
 
     move-result-object v1
 
     check-cast v1, Landroid/os/PowerManager;
 
-    .line 213
     .local v1, "pm":Landroid/os/PowerManager;
-    const-string/jumbo v2, "*vibrator*"
+    const-string v2, "*vibrator*"
 
-    invoke-virtual {v1, v3, v2}, Landroid/os/PowerManager;->newWakeLock(ILjava/lang/String;)Landroid/os/PowerManager$WakeLock;
+    invoke-virtual {v1, v4, v2}, Landroid/os/PowerManager;->newWakeLock(ILjava/lang/String;)Landroid/os/PowerManager$WakeLock;
 
     move-result-object v2
 
     iput-object v2, p0, Lcom/android/server/VibratorService;->mWakeLock:Landroid/os/PowerManager$WakeLock;
 
-    .line 214
     iget-object v2, p0, Lcom/android/server/VibratorService;->mWakeLock:Landroid/os/PowerManager$WakeLock;
 
-    invoke-virtual {v2, v3}, Landroid/os/PowerManager$WakeLock;->setReferenceCounted(Z)V
+    invoke-virtual {v2, v4}, Landroid/os/PowerManager$WakeLock;->setReferenceCounted(Z)V
 
-    .line 216
-    const-string/jumbo v2, "appops"
+    const-string v2, "appops"
 
     invoke-static {v2}, Landroid/os/ServiceManager;->getService(Ljava/lang/String;)Landroid/os/IBinder;
 
@@ -1906,42 +1904,47 @@
     .param p6, "token"    # Landroid/os/IBinder;
 
     .prologue
-    .line 310
+    const-wide/16 v4, 0x2710
+
+    cmp-long v2, p3, v4
+
+    if-lez v2, :cond_0
+
+    const-wide/16 p3, 0x3e8
+
+    :cond_0
     iget-object v2, p0, Lcom/android/server/VibratorService;->mContext:Landroid/content/Context;
 
-    const-string/jumbo v4, "android.permission.VIBRATE"
+    const-string v4, "android.permission.VIBRATE"
 
     invoke-virtual {v2, v4}, Landroid/content/Context;->checkCallingOrSelfPermission(Ljava/lang/String;)I
 
     move-result v2
 
-    if-eqz v2, :cond_0
+    if-eqz v2, :cond_1
 
-    .line 312
     new-instance v2, Ljava/lang/SecurityException;
 
-    const-string/jumbo v4, "Requires VIBRATE permission"
+    const-string v4, "Requires VIBRATE permission"
 
     invoke-direct {v2, v4}, Ljava/lang/SecurityException;-><init>(Ljava/lang/String;)V
 
     throw v2
 
-    .line 314
-    :cond_0
+    :cond_1
     invoke-direct/range {p0 .. p1}, Lcom/android/server/VibratorService;->verifyIncomingUid(I)V
 
-    .line 318
     const-wide/16 v4, 0x0
 
     cmp-long v2, p3, v4
 
-    if-lez v2, :cond_1
-
-    iget-object v2, p0, Lcom/android/server/VibratorService;->mCurrentVibration:Lcom/android/server/VibratorService$Vibration;
-
-    if-eqz v2, :cond_2
+    if-lez v2, :cond_2
 
     .line 319
+    iget-object v2, p0, Lcom/android/server/VibratorService;->mCurrentVibration:Lcom/android/server/VibratorService$Vibration;
+
+    if-eqz v2, :cond_3
+
     iget-object v2, p0, Lcom/android/server/VibratorService;->mCurrentVibration:Lcom/android/server/VibratorService$Vibration;
 
     move-wide/from16 v0, p3
@@ -1950,15 +1953,12 @@
 
     move-result v2
 
-    .line 318
-    if-eqz v2, :cond_2
+    if-eqz v2, :cond_3
 
-    .line 322
-    :cond_1
+    :cond_2
     return-void
 
-    .line 329
-    :cond_2
+    :cond_3
     new-instance v3, Lcom/android/server/VibratorService$Vibration;
 
     move-object v4, p0

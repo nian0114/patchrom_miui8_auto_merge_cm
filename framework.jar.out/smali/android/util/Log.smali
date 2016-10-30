@@ -32,6 +32,8 @@
 
 .field public static final LOG_ID_SYSTEM:I = 0x3
 
+.field public static final LOG_ID_WSEVENTS:I = 0x5
+
 .field public static final VERBOSE:I = 0x2
 
 .field public static final WARN:I = 0x5
@@ -519,6 +521,23 @@
     const/4 v2, 0x5
 
     invoke-static {v1, v2, p0, v0}, Landroid/util/Log;->println_native(IILjava/lang/String;Ljava/lang/String;)I
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public static ws(Ljava/lang/String;Ljava/lang/String;)I
+    .locals 2
+    .param p0, "tag"    # Ljava/lang/String;
+    .param p1, "msg"    # Ljava/lang/String;
+
+    .prologue
+    const/4 v0, 0x5
+
+    const/4 v1, 0x2
+
+    invoke-static {v0, v1, p0, p1}, Landroid/util/Log;->println_native(IILjava/lang/String;Ljava/lang/String;)I
 
     move-result v0
 

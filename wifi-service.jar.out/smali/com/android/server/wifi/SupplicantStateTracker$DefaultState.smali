@@ -228,20 +228,21 @@
 
     goto :goto_0
 
-    .line 250
     :sswitch_3
     iget-object v2, p0, Lcom/android/server/wifi/SupplicantStateTracker$DefaultState;->this$0:Lcom/android/server/wifi/SupplicantStateTracker;
 
     invoke-static {v2, v5}, Lcom/android/server/wifi/SupplicantStateTracker;->-set3(Lcom/android/server/wifi/SupplicantStateTracker;Z)Z
 
-    .line 251
     iget-object v2, p0, Lcom/android/server/wifi/SupplicantStateTracker$DefaultState;->this$0:Lcom/android/server/wifi/SupplicantStateTracker;
 
     invoke-static {v2, v6}, Lcom/android/server/wifi/SupplicantStateTracker;->-set0(Lcom/android/server/wifi/SupplicantStateTracker;I)I
 
+    iget v2, p1, Landroid/os/Message;->arg1:I
+
+    invoke-static {v2}, Landroid/net/wifi/SupplicantStateTrackerInjector;->handleConnectNetwork(I)V
+
     goto :goto_0
 
-    .line 254
     :sswitch_4
     iget-object v2, p0, Lcom/android/server/wifi/SupplicantStateTracker$DefaultState;->this$0:Lcom/android/server/wifi/SupplicantStateTracker;
 
@@ -254,6 +255,8 @@
     invoke-static {v2, v3}, Lcom/android/server/wifi/SupplicantStateTracker;->-set0(Lcom/android/server/wifi/SupplicantStateTracker;I)I
 
     goto :goto_0
+
+    nop
 
     .line 234
     :sswitch_data_0

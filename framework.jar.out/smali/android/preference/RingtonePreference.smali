@@ -439,23 +439,19 @@
 
     invoke-virtual {p1, v0, v1}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Ljava/lang/CharSequence;)Landroid/content/Intent;
 
-    .line 229
-    const-string/jumbo v0, "android.intent.extra.ringtone.AUDIO_ATTRIBUTES_FLAGS"
+    const-string v0, "android.intent.extra.ringtone.AUDIO_ATTRIBUTES_FLAGS"
 
-    .line 230
     const/16 v1, 0x40
 
-    .line 229
     invoke-virtual {p1, v0, v1}, Landroid/content/Intent;->putExtra(Ljava/lang/String;I)Landroid/content/Intent;
 
-    .line 206
+    invoke-static {p1}, Landroid/preference/RingtonePreferenceInjector;->specifyRingtonePickIntentActivity(Landroid/content/Intent;)V
+
     return-void
 
-    .line 217
     :cond_2
-    const-string/jumbo v0, "android.intent.extra.ringtone.DEFAULT_URI"
+    const-string v0, "android.intent.extra.ringtone.DEFAULT_URI"
 
-    .line 218
     invoke-virtual {p0}, Landroid/preference/RingtonePreference;->getRingtoneType()I
 
     move-result v1

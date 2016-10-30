@@ -123,22 +123,27 @@
 
     move-result v2
 
-    .line 3969
     .local v2, "result":I
-    if-ne v2, v5, :cond_2
+    const/16 v3, 0x63
 
-    .line 3970
+    if-ne v2, v3, :cond_2
+
+    move v5, v4
+
+    goto :goto_0
+
+    :cond_2
+    if-ne v2, v5, :cond_3
+
+    :goto_0
     return v5
 
-    .line 3971
-    :cond_2
-    if-nez v2, :cond_3
+    :cond_3
+    if-nez v2, :cond_4
 
-    .line 3973
     return v4
 
-    .line 3975
-    :cond_3
+    :cond_4
     const/4 v3, 0x3
 
     return v3

@@ -3174,54 +3174,62 @@
 
     goto :goto_1
 
-    .line 2285
     .end local v1    # "e":Ljava/io/FileNotFoundException;
     .end local v2    # "file":Landroid/util/AtomicFile;
     .end local v5    # "profileId":I
     :cond_0
     if-ltz v8, :cond_2
 
-    .line 2287
     invoke-direct {p0, v4}, Lcom/android/server/appwidget/AppWidgetServiceImpl;->bindLoadedWidgetsLocked(Ljava/util/List;)V
 
-    .line 2290
     invoke-direct {p0, v8}, Lcom/android/server/appwidget/AppWidgetServiceImpl;->performUpgradeLocked(I)V
 
-    .line 2262
+    const/4 v3, 0x0
+
+    :goto_2
+    if-ge v3, v6, :cond_1
+
+    aget v5, p1, v3
+
+    .restart local v5    # "profileId":I
+    iget-object v9, p0, Lcom/android/server/appwidget/AppWidgetServiceImpl;->mContext:Landroid/content/Context;
+
+    iget-object v10, p0, Lcom/android/server/appwidget/AppWidgetServiceImpl;->mProviders:Ljava/util/ArrayList;
+
+    invoke-static {v9, v10, v5}, Lcom/android/server/appwidget/AppWidgetServiceImplInjector;->updateWidgetPackagesLocked(Landroid/content/Context;Ljava/util/List;I)V
+
+    add-int/lit8 v3, v3, 0x1
+
+    goto :goto_2
+
     :cond_1
     return-void
 
-    .line 2293
     :cond_2
-    const-string/jumbo v9, "AppWidgetServiceImpl"
+    const-string v9, "AppWidgetServiceImpl"
 
-    const-string/jumbo v10, "Failed to read state, clearing widgets and hosts."
+    const-string v10, "Failed to read state, clearing widgets and hosts."
 
     invoke-static {v9, v10}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 2294
     invoke-virtual {p0}, Lcom/android/server/appwidget/AppWidgetServiceImpl;->clearWidgetsLocked()V
 
-    .line 2295
     iget-object v9, p0, Lcom/android/server/appwidget/AppWidgetServiceImpl;->mHosts:Ljava/util/ArrayList;
 
     invoke-virtual {v9}, Ljava/util/ArrayList;->clear()V
 
-    .line 2296
     iget-object v9, p0, Lcom/android/server/appwidget/AppWidgetServiceImpl;->mProviders:Ljava/util/ArrayList;
 
     invoke-virtual {v9}, Ljava/util/ArrayList;->size()I
 
     move-result v0
 
-    .line 2297
     .local v0, "N":I
     const/4 v3, 0x0
 
-    :goto_2
+    :goto_3
     if-ge v3, v0, :cond_1
 
-    .line 2298
     iget-object v9, p0, Lcom/android/server/appwidget/AppWidgetServiceImpl;->mProviders:Ljava/util/ArrayList;
 
     invoke-virtual {v9, v3}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -3237,7 +3245,7 @@
     .line 2297
     add-int/lit8 v3, v3, 0x1
 
-    goto :goto_2
+    goto :goto_3
 .end method
 
 .method private loadGroupWidgetProvidersLocked([I)V
@@ -5289,11 +5297,7 @@
     :try_start_2
     new-instance v12, Lcom/android/server/appwidget/AppWidgetServiceImpl$Provider;
 
-    const/16 v17, 0x0
-
-    move-object/from16 v0, v17
-
-    invoke-direct {v12, v0}, Lcom/android/server/appwidget/AppWidgetServiceImpl$Provider;-><init>(Lcom/android/server/appwidget/AppWidgetServiceImpl$Provider;)V
+    invoke-direct {v12}, Lcom/android/server/appwidget/AppWidgetServiceImpl$Provider;-><init>()V
     :try_end_2
     .catch Ljava/io/IOException; {:try_start_2 .. :try_end_2} :catch_1
     .catch Landroid/content/pm/PackageManager$NameNotFoundException; {:try_start_2 .. :try_end_2} :catch_1
@@ -6324,7 +6328,6 @@
     :try_end_1
     .catch Ljava/lang/NumberFormatException; {:try_start_1 .. :try_end_1} :catch_0
     .catch Ljava/lang/NullPointerException; {:try_start_1 .. :try_end_1} :catch_1
-    .catch Ljava/lang/NumberFormatException; {:try_start_1 .. :try_end_1} :catch_1
     .catch Lorg/xmlpull/v1/XmlPullParserException; {:try_start_1 .. :try_end_1} :catch_1
     .catch Ljava/io/IOException; {:try_start_1 .. :try_end_1} :catch_1
     .catch Ljava/lang/IndexOutOfBoundsException; {:try_start_1 .. :try_end_1} :catch_1
@@ -6500,13 +6503,7 @@
     new-instance v24, Lcom/android/server/appwidget/AppWidgetServiceImpl$Provider;
 
     .end local v24    # "provider":Lcom/android/server/appwidget/AppWidgetServiceImpl$Provider;
-    const/16 v36, 0x0
-
-    move-object/from16 v0, v24
-
-    move-object/from16 v1, v36
-
-    invoke-direct {v0, v1}, Lcom/android/server/appwidget/AppWidgetServiceImpl$Provider;-><init>(Lcom/android/server/appwidget/AppWidgetServiceImpl$Provider;)V
+    invoke-direct/range {v24 .. v24}, Lcom/android/server/appwidget/AppWidgetServiceImpl$Provider;-><init>()V
 
     .line 2608
     .restart local v24    # "provider":Lcom/android/server/appwidget/AppWidgetServiceImpl$Provider;
@@ -8102,29 +8099,34 @@
 
     if-eqz v7, :cond_0
 
-    .line 2455
     invoke-virtual {v1, v6}, Landroid/util/AtomicFile;->finishWrite(Ljava/io/FileOutputStream;)V
+    :try_end_0
+    .catch Ljava/io/IOException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 2447
     .end local v6    # "stream":Ljava/io/FileOutputStream;
     :goto_1
+    iget-object v7, p0, Lcom/android/server/appwidget/AppWidgetServiceImpl;->mContext:Landroid/content/Context;
+
+    iget-object v8, p0, Lcom/android/server/appwidget/AppWidgetServiceImpl;->mProviders:Ljava/util/ArrayList;
+
+    invoke-static {v7, v8, v4}, Lcom/android/server/appwidget/AppWidgetServiceImplInjector;->updateWidgetPackagesLocked(Landroid/content/Context;Ljava/util/List;I)V
+
     add-int/lit8 v2, v2, 0x1
 
     goto :goto_0
 
-    .line 2457
     .restart local v6    # "stream":Ljava/io/FileOutputStream;
     :cond_0
+    :try_start_1
     invoke-virtual {v1, v6}, Landroid/util/AtomicFile;->failWrite(Ljava/io/FileOutputStream;)V
 
-    .line 2458
-    const-string/jumbo v7, "AppWidgetServiceImpl"
+    const-string v7, "AppWidgetServiceImpl"
 
-    const-string/jumbo v8, "Failed to save state, restoring backup."
+    const-string v8, "Failed to save state, restoring backup."
 
     invoke-static {v7, v8}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
-    :try_end_0
-    .catch Ljava/io/IOException; {:try_start_0 .. :try_end_0} :catch_0
+    :try_end_1
+    .catch Ljava/io/IOException; {:try_start_1 .. :try_end_1} :catch_0
 
     goto :goto_1
 

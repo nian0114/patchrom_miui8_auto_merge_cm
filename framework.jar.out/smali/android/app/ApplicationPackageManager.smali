@@ -246,6 +246,17 @@
 
     .line 2203
     :cond_0
+    invoke-static {v0}, Lmiui/securityspace/XSpaceUserHandle;->isXSpaceUser(Landroid/content/pm/UserInfo;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_1
+
+    sget v1, Landroid/miui/R$drawable;->ic_corp_icon_xspace:I
+
+    return v1
+
+    :cond_1
     const/4 v1, 0x0
 
     return v1
@@ -4805,22 +4816,21 @@
 
     iget-object v9, p1, Landroid/content/pm/ApplicationInfo;->packageName:Ljava/lang/String;
 
-    .line 1037
     const/4 v5, 0x0
 
-    .line 1034
     invoke-virtual/range {v0 .. v9}, Landroid/app/ActivityThread;->getTopLevelResources(Ljava/lang/String;[Ljava/lang/String;[Ljava/lang/String;[Ljava/lang/String;ILandroid/content/res/Configuration;Landroid/app/LoadedApk;Landroid/content/Context;Ljava/lang/String;)Landroid/content/res/Resources;
 
     move-result-object v10
 
-    .line 1039
     .local v10, "r":Landroid/content/res/Resources;
+    iget-object v0, p1, Landroid/content/pm/ApplicationInfo;->packageName:Ljava/lang/String;
+
+    invoke-static {v10, v0}, Landroid/miui/ResourcesManager;->initMiuiResource(Landroid/content/res/Resources;Ljava/lang/String;)V
+
     if-eqz v10, :cond_4
 
-    .line 1040
     return-object v10
 
-    .line 1033
     .end local v10    # "r":Landroid/content/res/Resources;
     .end local v11    # "sameUid":Z
     :cond_1
@@ -8787,4 +8797,13 @@
 
     .local v0, "e":Landroid/os/RemoteException;
     goto :goto_0
+.end method
+
+.method getContext()Landroid/app/ContextImpl;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Landroid/app/ApplicationPackageManager;->mContext:Landroid/app/ContextImpl;
+
+    return-object v0
 .end method

@@ -342,3 +342,19 @@
         }
     .end annotation
 .end method
+
+.method public abstract registerStatisticsClient(Landroid/bluetooth/IBluetoothGattCallback;)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method
+
+.method public abstract unregisterStatisticsClient(Landroid/bluetooth/IBluetoothGattCallback;)V
+    .annotation system Ldalvik/annotation/Throws;
+        value = {
+            Landroid/os/RemoteException;
+        }
+    .end annotation
+.end method

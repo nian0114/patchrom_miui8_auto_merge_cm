@@ -35,6 +35,8 @@
 # instance fields
 .field private mDataCodingScheme:I
 
+.field private mEncodingType:I
+
 .field private mIsStatusReportMessage:Z
 
 .field private mMti:I
@@ -57,19 +59,16 @@
     .prologue
     const/4 v0, 0x0
 
-    .line 51
     invoke-direct {p0}, Lcom/android/internal/telephony/SmsMessageBase;-><init>()V
 
-    .line 72
     iput-boolean v0, p0, Lcom/android/internal/telephony/gsm/SmsMessage;->mReplyPathPresent:Z
 
-    .line 85
     iput-boolean v0, p0, Lcom/android/internal/telephony/gsm/SmsMessage;->mIsStatusReportMessage:Z
 
-    .line 87
     iput v0, p0, Lcom/android/internal/telephony/gsm/SmsMessage;->mVoiceMailCount:I
 
-    .line 51
+    iput v0, p0, Lcom/android/internal/telephony/gsm/SmsMessage;->mEncodingType:I
+
     return-void
 .end method
 
@@ -2110,14 +2109,14 @@
 
     iput-object v9, p0, Lcom/android/internal/telephony/gsm/SmsMessage;->mUserData:[B
 
-    .line 1303
     invoke-virtual {p1}, Lcom/android/internal/telephony/gsm/SmsMessage$PduParser;->getUserDataHeader()Lcom/android/internal/telephony/SmsHeader;
 
     move-result-object v9
 
     iput-object v9, p0, Lcom/android/internal/telephony/gsm/SmsMessage;->mUserDataHeader:Lcom/android/internal/telephony/SmsHeader;
 
-    .line 1313
+    iput v2, p0, Lcom/android/internal/telephony/gsm/SmsMessage;->mEncodingType:I
+
     if-eqz p2, :cond_17
 
     iget-object v9, p0, Lcom/android/internal/telephony/gsm/SmsMessage;->mUserDataHeader:Lcom/android/internal/telephony/SmsHeader;
@@ -3007,6 +3006,15 @@
     .prologue
     .line 919
     iget v0, p0, Lcom/android/internal/telephony/gsm/SmsMessage;->mDataCodingScheme:I
+
+    return v0
+.end method
+
+.method public getEncodingType()I
+    .locals 1
+
+    .prologue
+    iget v0, p0, Lcom/android/internal/telephony/gsm/SmsMessage;->mEncodingType:I
 
     return v0
 .end method

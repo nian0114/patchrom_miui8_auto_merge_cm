@@ -1327,7 +1327,7 @@
 .end method
 
 .method public dispose()V
-    .locals 5
+    .locals 6
 
     .prologue
     .line 138
@@ -1363,37 +1363,32 @@
 
     aget-object v0, v3, v1
 
-    .line 142
     .local v0, "app":Lcom/android/internal/telephony/uicc/UiccCardApplication;
     if-eqz v0, :cond_1
 
-    .line 143
     invoke-virtual {v0}, Lcom/android/internal/telephony/uicc/UiccCardApplication;->dispose()V
 
-    .line 141
     :cond_1
     add-int/lit8 v1, v1, 0x1
 
     goto :goto_0
 
-    .line 146
     .end local v0    # "app":Lcom/android/internal/telephony/uicc/UiccCardApplication;
     :cond_2
     const/4 v1, 0x0
 
     iput-object v1, p0, Lcom/android/internal/telephony/uicc/UiccCard;->mCatService:Lcom/android/internal/telephony/cat/CatService;
 
-    .line 147
-    const/4 v1, 0x0
+    iget-object v1, p0, Lcom/android/internal/telephony/uicc/UiccCard;->mUiccApplications:[Lcom/android/internal/telephony/uicc/UiccCardApplication;
 
-    iput-object v1, p0, Lcom/android/internal/telephony/uicc/UiccCard;->mUiccApplications:[Lcom/android/internal/telephony/uicc/UiccCardApplication;
+    const/4 v5, 0x0
 
-    .line 148
+    invoke-static {v1, v5}, Ljava/util/Arrays;->fill([Ljava/lang/Object;Ljava/lang/Object;)V
+
     const/4 v1, 0x0
 
     iput-object v1, p0, Lcom/android/internal/telephony/uicc/UiccCard;->mCarrierPrivilegeRules:Lcom/android/internal/telephony/uicc/UiccCarrierPrivilegeRules;
 
-    .line 149
     const/4 v1, 0x0
 
     iput-object v1, p0, Lcom/android/internal/telephony/uicc/UiccCard;->mUICCConfig:Lcom/android/internal/telephony/uicc/UICCConfig;

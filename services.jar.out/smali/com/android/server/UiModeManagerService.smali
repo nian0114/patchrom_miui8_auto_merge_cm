@@ -243,6 +243,27 @@
     return-void
 .end method
 
+.method static synthetic access$mDefaultUiModeType(Lcom/android/server/UiModeManagerService;I)I
+    .locals 0
+    .param p0, "x0"    # Lcom/android/server/UiModeManagerService;
+    .param p1, "x1"    # I
+
+    .prologue
+    iput p1, p0, Lcom/android/server/UiModeManagerService;->mDefaultUiModeType:I
+
+    return p1
+.end method
+
+.method static synthetic access$updateConfigurationLocked(Lcom/android/server/UiModeManagerService;)V
+    .locals 0
+    .param p0, "x0"    # Lcom/android/server/UiModeManagerService;
+
+    .prologue
+    invoke-direct {p0}, Lcom/android/server/UiModeManagerService;->updateConfigurationLocked()V
+
+    return-void
+.end method
+
 .method private adjustStatusBarCarModeLocked()V
     .locals 11
 
@@ -515,6 +536,41 @@
         :pswitch_1
         :pswitch_1
     .end packed-switch
+.end method
+
+.method private static registUIModeScaleChangeObserver(Lcom/android/server/UiModeManagerService;Landroid/content/Context;Ljava/lang/Object;)V
+    .locals 4
+    .param p0, "service"    # Lcom/android/server/UiModeManagerService;
+    .param p1, "context"    # Landroid/content/Context;
+    .param p2, "lock"    # Ljava/lang/Object;
+
+    .prologue
+    const/4 v3, 0x0
+
+    new-instance v0, Lcom/android/server/UiModeManagerService$UIModeScaleChangeObserver;
+
+    new-instance v1, Landroid/os/Handler;
+
+    invoke-direct {v1}, Landroid/os/Handler;-><init>()V
+
+    invoke-direct {v0, v1, p0, p1, p2}, Lcom/android/server/UiModeManagerService$UIModeScaleChangeObserver;-><init>(Landroid/os/Handler;Lcom/android/server/UiModeManagerService;Landroid/content/Context;Ljava/lang/Object;)V
+
+    .local v0, "uiModeScaleChangedObserver":Landroid/database/ContentObserver;
+    invoke-virtual {p1}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
+
+    move-result-object v1
+
+    const-string v2, "ui_mode_scale"
+
+    invoke-static {v2}, Landroid/provider/Settings$System;->getUriFor(Ljava/lang/String;)Landroid/net/Uri;
+
+    move-result-object v2
+
+    invoke-virtual {v1, v2, v3, v0}, Landroid/content/ContentResolver;->registerContentObserver(Landroid/net/Uri;ZLandroid/database/ContentObserver;)V
+
+    invoke-virtual {v0, v3}, Landroid/database/ContentObserver;->onChange(Z)V
+
+    return-void
 .end method
 
 .method private sendConfigurationAndStartDreamOrDockAppLocked(Ljava/lang/String;)V
@@ -1437,52 +1493,46 @@
 
     iput-boolean v5, p0, Lcom/android/server/UiModeManagerService;->mWatch:Z
 
-    .line 186
     const v5, 0x10e004c
 
-    .line 185
     invoke-virtual {v4, v5}, Landroid/content/res/Resources;->getInteger(I)I
 
     move-result v1
 
-    .line 187
     .local v1, "defaultNightMode":I
     invoke-virtual {v0}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
 
     move-result-object v5
 
-    .line 188
-    const-string/jumbo v6, "ui_night_mode"
+    const-string v6, "ui_night_mode"
 
-    .line 187
     invoke-static {v5, v6, v1}, Landroid/provider/Settings$Secure;->getInt(Landroid/content/ContentResolver;Ljava/lang/String;I)I
 
     move-result v5
 
     iput v5, p0, Lcom/android/server/UiModeManagerService;->mNightMode:I
 
-    .line 191
     monitor-enter p0
 
-    .line 192
     :try_start_0
     invoke-direct {p0}, Lcom/android/server/UiModeManagerService;->updateConfigurationLocked()V
 
-    .line 193
     invoke-direct {p0}, Lcom/android/server/UiModeManagerService;->sendConfigurationLocked()V
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
     monitor-exit p0
 
-    .line 196
-    const-string/jumbo v5, "uimode"
+    const-string v5, "uimode"
 
     iget-object v6, p0, Lcom/android/server/UiModeManagerService;->mService:Landroid/os/IBinder;
 
     invoke-virtual {p0, v5, v6}, Lcom/android/server/UiModeManagerService;->publishBinderService(Ljava/lang/String;Landroid/os/IBinder;)V
 
-    .line 158
+    iget-object v5, p0, Lcom/android/server/UiModeManagerService;->mLock:Ljava/lang/Object;
+
+    invoke-static {p0, v0, v5}, Lcom/android/server/UiModeManagerService;->registUIModeScaleChangeObserver(Lcom/android/server/UiModeManagerService;Landroid/content/Context;Ljava/lang/Object;)V
+
     return-void
 
     .end local v1    # "defaultNightMode":I

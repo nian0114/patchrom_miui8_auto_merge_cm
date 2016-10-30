@@ -432,6 +432,16 @@
     return-void
 .end method
 
+.method static synthetic access$mState(Lcom/android/server/DeviceIdleController;)I
+    .locals 1
+    .param p0, "x0"    # Lcom/android/server/DeviceIdleController;
+
+    .prologue
+    iget v0, p0, Lcom/android/server/DeviceIdleController;->mState:I
+
+    return v0
+.end method
+
 .method private static buildAppIdArray(Landroid/util/ArrayMap;Landroid/util/ArrayMap;Landroid/util/SparseBooleanArray;)[I
     .locals 5
     .param p2, "outAppIds"    # Landroid/util/SparseBooleanArray;

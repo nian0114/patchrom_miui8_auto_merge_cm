@@ -11880,6 +11880,14 @@
 
     if-nez v0, :cond_2
 
+    const-string v0, "identity"
+
+    invoke-virtual {p2, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v0
+
+    if-nez v0, :cond_2
+
     .line 301
     const-string/jumbo v0, "password"
 
