@@ -23,7 +23,6 @@
     .locals 0
 
     .prologue
-    .line 2404
     iput-object p1, p0, Landroid/widget/AbsListView$ListItemAccessibilityDelegate;->this$0:Landroid/widget/AbsListView;
 
     invoke-direct {p0}, Landroid/view/View$AccessibilityDelegate;-><init>()V
@@ -39,23 +38,19 @@
     .param p2, "info"    # Landroid/view/accessibility/AccessibilityNodeInfo;
 
     .prologue
-    .line 2407
     invoke-super {p0, p1, p2}, Landroid/view/View$AccessibilityDelegate;->onInitializeAccessibilityNodeInfo(Landroid/view/View;Landroid/view/accessibility/AccessibilityNodeInfo;)V
 
-    .line 2409
     iget-object v1, p0, Landroid/widget/AbsListView$ListItemAccessibilityDelegate;->this$0:Landroid/widget/AbsListView;
 
     invoke-virtual {v1, p1}, Landroid/widget/AbsListView;->getPositionForView(Landroid/view/View;)I
 
     move-result v0
 
-    .line 2410
     .local v0, "position":I
     iget-object v1, p0, Landroid/widget/AbsListView$ListItemAccessibilityDelegate;->this$0:Landroid/widget/AbsListView;
 
     invoke-virtual {v1, p1, v0, p2}, Landroid/widget/AbsListView;->onInitializeAccessibilityNodeInfoForItem(Landroid/view/View;ILandroid/view/accessibility/AccessibilityNodeInfo;)V
 
-    .line 2406
     return-void
 .end method
 
@@ -88,7 +83,6 @@
 
     move-result v4
 
-    .line 2420
     .local v4, "position":I
     if-eq v4, v8, :cond_1
 
@@ -215,14 +209,12 @@
 
     if-eqz v5, :cond_9
 
-    .line 2463
     iget-object v5, p0, Landroid/widget/AbsListView$ListItemAccessibilityDelegate;->this$0:Landroid/widget/AbsListView;
 
     invoke-virtual {v5, v4}, Landroid/widget/AbsListView;->getItemIdAtPosition(I)J
 
     move-result-wide v0
 
-    .line 2464
     .local v0, "id":J
     iget-object v5, p0, Landroid/widget/AbsListView$ListItemAccessibilityDelegate;->this$0:Landroid/widget/AbsListView;
 
@@ -247,14 +239,12 @@
 
     if-eqz v5, :cond_a
 
-    .line 2469
     iget-object v5, p0, Landroid/widget/AbsListView$ListItemAccessibilityDelegate;->this$0:Landroid/widget/AbsListView;
 
     invoke-virtual {v5, v4}, Landroid/widget/AbsListView;->getItemIdAtPosition(I)J
 
     move-result-wide v0
 
-    .line 2470
     .restart local v0    # "id":J
     iget-object v5, p0, Landroid/widget/AbsListView$ListItemAccessibilityDelegate;->this$0:Landroid/widget/AbsListView;
 

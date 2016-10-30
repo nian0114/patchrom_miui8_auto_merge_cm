@@ -93,7 +93,6 @@
     .locals 1
 
     .prologue
-    .line 63
     invoke-static {}, Landroid/app/ActivityManager;->isLowRamDeviceStatic()Z
 
     move-result v0
@@ -105,7 +104,6 @@
     :goto_0
     sput v0, Lcom/android/server/am/BroadcastQueue;->MAX_BROADCAST_HISTORY:I
 
-    .line 65
     invoke-static {}, Landroid/app/ActivityManager;->isLowRamDeviceStatic()Z
 
     move-result v0
@@ -114,20 +112,16 @@
 
     const/16 v0, 0x19
 
-    .line 64
     :goto_1
     sput v0, Lcom/android/server/am/BroadcastQueue;->MAX_BROADCAST_SUMMARY_HISTORY:I
 
-    .line 58
     return-void
 
-    .line 63
     :cond_0
     const/16 v0, 0x32
 
     goto :goto_0
 
-    .line 65
     :cond_1
     const/16 v0, 0x12c
 
@@ -147,77 +141,62 @@
 
     const/4 v1, 0x0
 
-    .line 206
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    .line 92
     new-instance v0, Ljava/util/ArrayList;
 
     invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
 
     iput-object v0, p0, Lcom/android/server/am/BroadcastQueue;->mParallelBroadcasts:Ljava/util/ArrayList;
 
-    .line 101
     new-instance v0, Ljava/util/ArrayList;
 
     invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
 
     iput-object v0, p0, Lcom/android/server/am/BroadcastQueue;->mOrderedBroadcasts:Ljava/util/ArrayList;
 
-    .line 107
     sget v0, Lcom/android/server/am/BroadcastQueue;->MAX_BROADCAST_HISTORY:I
 
     new-array v0, v0, [Lcom/android/server/am/BroadcastRecord;
 
     iput-object v0, p0, Lcom/android/server/am/BroadcastQueue;->mBroadcastHistory:[Lcom/android/server/am/BroadcastRecord;
 
-    .line 108
     iput v1, p0, Lcom/android/server/am/BroadcastQueue;->mHistoryNext:I
 
-    .line 114
     sget v0, Lcom/android/server/am/BroadcastQueue;->MAX_BROADCAST_SUMMARY_HISTORY:I
 
     new-array v0, v0, [Landroid/content/Intent;
 
     iput-object v0, p0, Lcom/android/server/am/BroadcastQueue;->mBroadcastSummaryHistory:[Landroid/content/Intent;
 
-    .line 115
     iput v1, p0, Lcom/android/server/am/BroadcastQueue;->mSummaryHistoryNext:I
 
-    .line 122
     sget v0, Lcom/android/server/am/BroadcastQueue;->MAX_BROADCAST_SUMMARY_HISTORY:I
 
     new-array v0, v0, [J
 
     iput-object v0, p0, Lcom/android/server/am/BroadcastQueue;->mSummaryHistoryEnqueueTime:[J
 
-    .line 123
     sget v0, Lcom/android/server/am/BroadcastQueue;->MAX_BROADCAST_SUMMARY_HISTORY:I
 
     new-array v0, v0, [J
 
     iput-object v0, p0, Lcom/android/server/am/BroadcastQueue;->mSummaryHistoryDispatchTime:[J
 
-    .line 124
     sget v0, Lcom/android/server/am/BroadcastQueue;->MAX_BROADCAST_SUMMARY_HISTORY:I
 
     new-array v0, v0, [J
 
     iput-object v0, p0, Lcom/android/server/am/BroadcastQueue;->mSummaryHistoryFinishTime:[J
 
-    .line 129
     iput-boolean v1, p0, Lcom/android/server/am/BroadcastQueue;->mBroadcastsScheduled:Z
 
-    .line 143
     iput-object v2, p0, Lcom/android/server/am/BroadcastQueue;->mPendingBroadcast:Lcom/android/server/am/BroadcastRecord;
 
-    .line 148
     iput-object v2, p0, Lcom/android/server/am/BroadcastQueue;->mCurrentBroadcast:Lcom/android/server/am/BroadcastRecord;
 
-    .line 208
     iput-object p1, p0, Lcom/android/server/am/BroadcastQueue;->mService:Lcom/android/server/am/ActivityManagerService;
 
-    .line 209
     new-instance v0, Lcom/android/server/am/BroadcastQueue$BroadcastHandler;
 
     invoke-virtual {p2}, Landroid/os/Handler;->getLooper()Landroid/os/Looper;
@@ -228,16 +207,12 @@
 
     iput-object v0, p0, Lcom/android/server/am/BroadcastQueue;->mHandler:Lcom/android/server/am/BroadcastQueue$BroadcastHandler;
 
-    .line 210
     iput-object p3, p0, Lcom/android/server/am/BroadcastQueue;->mQueueName:Ljava/lang/String;
 
-    .line 211
     iput-wide p4, p0, Lcom/android/server/am/BroadcastQueue;->mTimeoutPeriod:J
 
-    .line 212
     iput-boolean p6, p0, Lcom/android/server/am/BroadcastQueue;->mDelayBehindServices:Z
 
-    .line 207
     return-void
 .end method
 
@@ -248,15 +223,12 @@
     .prologue
     const/4 v4, 0x1
 
-    .line 1235
     iget v0, p1, Lcom/android/server/am/BroadcastRecord;->callingUid:I
 
     if-gez v0, :cond_0
 
-    .line 1237
     return-void
 
-    .line 1239
     :cond_0
     invoke-static {}, Landroid/os/SystemClock;->uptimeMillis()J
 
@@ -264,14 +236,12 @@
 
     iput-wide v0, p1, Lcom/android/server/am/BroadcastRecord;->finishTime:J
 
-    .line 1241
     iget-object v0, p0, Lcom/android/server/am/BroadcastQueue;->mBroadcastHistory:[Lcom/android/server/am/BroadcastRecord;
 
     iget v1, p0, Lcom/android/server/am/BroadcastQueue;->mHistoryNext:I
 
     aput-object p1, v0, v1
 
-    .line 1242
     iget v0, p0, Lcom/android/server/am/BroadcastQueue;->mHistoryNext:I
 
     sget v1, Lcom/android/server/am/BroadcastQueue;->MAX_BROADCAST_HISTORY:I
@@ -282,7 +252,6 @@
 
     iput v0, p0, Lcom/android/server/am/BroadcastQueue;->mHistoryNext:I
 
-    .line 1244
     iget-object v0, p0, Lcom/android/server/am/BroadcastQueue;->mBroadcastSummaryHistory:[Landroid/content/Intent;
 
     iget v1, p0, Lcom/android/server/am/BroadcastQueue;->mSummaryHistoryNext:I
@@ -291,7 +260,6 @@
 
     aput-object v2, v0, v1
 
-    .line 1245
     iget-object v0, p0, Lcom/android/server/am/BroadcastQueue;->mSummaryHistoryEnqueueTime:[J
 
     iget v1, p0, Lcom/android/server/am/BroadcastQueue;->mSummaryHistoryNext:I
@@ -300,7 +268,6 @@
 
     aput-wide v2, v0, v1
 
-    .line 1246
     iget-object v0, p0, Lcom/android/server/am/BroadcastQueue;->mSummaryHistoryDispatchTime:[J
 
     iget v1, p0, Lcom/android/server/am/BroadcastQueue;->mSummaryHistoryNext:I
@@ -309,7 +276,6 @@
 
     aput-wide v2, v0, v1
 
-    .line 1247
     iget-object v0, p0, Lcom/android/server/am/BroadcastQueue;->mSummaryHistoryFinishTime:[J
 
     iget v1, p0, Lcom/android/server/am/BroadcastQueue;->mSummaryHistoryNext:I
@@ -320,7 +286,6 @@
 
     aput-wide v2, v0, v1
 
-    .line 1248
     iget v0, p0, Lcom/android/server/am/BroadcastQueue;->mSummaryHistoryNext:I
 
     sget v1, Lcom/android/server/am/BroadcastQueue;->MAX_BROADCAST_SUMMARY_HISTORY:I
@@ -331,7 +296,6 @@
 
     iput v0, p0, Lcom/android/server/am/BroadcastQueue;->mSummaryHistoryNext:I
 
-    .line 1234
     return-void
 .end method
 
@@ -342,10 +306,8 @@
     .param p3, "ordered"    # Z
 
     .prologue
-    .line 472
     const/16 v18, 0x0
 
-    .line 473
     .local v18, "skip":Z
     move-object/from16 v0, p2
 
@@ -353,7 +315,6 @@
 
     if-eqz v2, :cond_0
 
-    .line 474
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/am/BroadcastQueue;->mService:Lcom/android/server/am/ActivityManagerService;
@@ -362,7 +323,6 @@
 
     iget-object v3, v0, Lcom/android/server/am/BroadcastFilter;->requiredPermission:Ljava/lang/String;
 
-    .line 475
     move-object/from16 v0, p1
 
     iget v4, v0, Lcom/android/server/am/BroadcastRecord;->callingPid:I
@@ -402,95 +362,74 @@
 
     move-result-object v5
 
-    .line 477
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 479
-    const-string/jumbo v5, " from "
+    const-string v5, " from "
 
-    .line 477
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 479
     move-object/from16 v0, p1
 
     iget-object v5, v0, Lcom/android/server/am/BroadcastRecord;->callerPackage:Ljava/lang/String;
 
-    .line 477
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 479
-    const-string/jumbo v5, " (pid="
+    const-string v5, " (pid="
 
-    .line 477
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 480
     move-object/from16 v0, p1
 
     iget v5, v0, Lcom/android/server/am/BroadcastRecord;->callingPid:I
 
-    .line 477
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 480
-    const-string/jumbo v5, ", uid="
+    const-string v5, ", uid="
 
-    .line 477
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 480
     move-object/from16 v0, p1
 
     iget v5, v0, Lcom/android/server/am/BroadcastRecord;->callingUid:I
 
-    .line 477
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 480
-    const-string/jumbo v5, ")"
+    const-string v5, ")"
 
-    .line 477
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 481
-    const-string/jumbo v5, " requires "
+    const-string v5, " requires "
 
-    .line 477
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 481
     move-object/from16 v0, p2
 
     iget-object v5, v0, Lcom/android/server/am/BroadcastFilter;->requiredPermission:Ljava/lang/String;
 
-    .line 477
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 482
-    const-string/jumbo v5, " due to registered receiver "
+    const-string v5, " due to registered receiver "
 
-    .line 477
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
@@ -507,10 +446,8 @@
 
     invoke-static {v2, v4}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 483
     const/16 v18, 0x1
 
-    .line 500
     .end local v17    # "perm":I
     :cond_0
     :goto_0
@@ -530,7 +467,6 @@
 
     if-lez v2, :cond_1
 
-    .line 501
     const/4 v15, 0x0
 
     .local v15, "i":I
@@ -543,20 +479,17 @@
 
     if-ge v15, v2, :cond_1
 
-    .line 502
     move-object/from16 v0, p1
 
     iget-object v2, v0, Lcom/android/server/am/BroadcastRecord;->requiredPermissions:[Ljava/lang/String;
 
     aget-object v3, v2, v15
 
-    .line 503
     .local v3, "requiredPermission":Ljava/lang/String;
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/am/BroadcastQueue;->mService:Lcom/android/server/am/ActivityManagerService;
 
-    .line 504
     move-object/from16 v0, p2
 
     iget-object v4, v0, Lcom/android/server/am/BroadcastFilter;->receiverList:Lcom/android/server/am/ReceiverList;
@@ -600,83 +533,66 @@
 
     move-result-object v5
 
-    .line 506
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 508
-    const-string/jumbo v5, " to "
+    const-string v5, " to "
 
-    .line 506
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 508
     move-object/from16 v0, p2
 
     iget-object v5, v0, Lcom/android/server/am/BroadcastFilter;->receiverList:Lcom/android/server/am/ReceiverList;
 
     iget-object v5, v5, Lcom/android/server/am/ReceiverList;->app:Lcom/android/server/am/ProcessRecord;
 
-    .line 506
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 509
-    const-string/jumbo v5, " (pid="
+    const-string v5, " (pid="
 
-    .line 506
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 509
     move-object/from16 v0, p2
 
     iget-object v5, v0, Lcom/android/server/am/BroadcastFilter;->receiverList:Lcom/android/server/am/ReceiverList;
 
     iget v5, v5, Lcom/android/server/am/ReceiverList;->pid:I
 
-    .line 506
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 510
-    const-string/jumbo v5, ", uid="
+    const-string v5, ", uid="
 
-    .line 506
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 510
     move-object/from16 v0, p2
 
     iget-object v5, v0, Lcom/android/server/am/BroadcastFilter;->receiverList:Lcom/android/server/am/ReceiverList;
 
     iget v5, v5, Lcom/android/server/am/ReceiverList;->uid:I
 
-    .line 506
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 510
-    const-string/jumbo v5, ")"
+    const-string v5, ")"
 
-    .line 506
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 511
-    const-string/jumbo v5, " requires "
+    const-string v5, " requires "
 
-    .line 506
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
@@ -685,46 +601,36 @@
 
     move-result-object v4
 
-    .line 512
-    const-string/jumbo v5, " due to sender "
+    const-string v5, " due to sender "
 
-    .line 506
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 512
     move-object/from16 v0, p1
 
     iget-object v5, v0, Lcom/android/server/am/BroadcastRecord;->callerPackage:Ljava/lang/String;
 
-    .line 506
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 513
-    const-string/jumbo v5, " (uid "
+    const-string v5, " (uid "
 
-    .line 506
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 513
     move-object/from16 v0, p1
 
     iget v5, v0, Lcom/android/server/am/BroadcastRecord;->callingUid:I
 
-    .line 506
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 513
-    const-string/jumbo v5, ")"
+    const-string v5, ")"
 
-    .line 506
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
@@ -735,10 +641,8 @@
 
     invoke-static {v2, v4}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 514
     const/16 v18, 0x1
 
-    .line 536
     .end local v3    # "requiredPermission":Ljava/lang/String;
     .end local v15    # "i":I
     .end local v17    # "perm":I
@@ -760,13 +664,11 @@
 
     if-nez v2, :cond_3
 
-    .line 537
     :cond_2
     move-object/from16 v0, p0
 
     iget-object v4, v0, Lcom/android/server/am/BroadcastQueue;->mService:Lcom/android/server/am/ActivityManagerService;
 
-    .line 538
     move-object/from16 v0, p2
 
     iget-object v2, v0, Lcom/android/server/am/BroadcastFilter;->receiverList:Lcom/android/server/am/ReceiverList;
@@ -779,37 +681,31 @@
 
     iget v7, v2, Lcom/android/server/am/ReceiverList;->uid:I
 
-    .line 537
     const/4 v5, 0x0
 
-    .line 538
     const/4 v8, -0x1
 
     const/4 v9, 0x1
 
-    .line 537
     invoke-virtual/range {v4 .. v9}, Lcom/android/server/am/ActivityManagerService;->checkComponentPermission(Ljava/lang/String;IIIZ)I
 
     move-result v17
 
-    .line 539
     .restart local v17    # "perm":I
     if-eqz v17, :cond_3
 
-    .line 540
-    const-string/jumbo v2, "BroadcastQueue"
+    const-string v2, "BroadcastQueue"
 
     new-instance v4, Ljava/lang/StringBuilder;
 
     invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string/jumbo v5, "Permission Denial: security check failed when receiving "
+    const-string v5, "Permission Denial: security check failed when receiving "
 
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 541
     move-object/from16 v0, p1
 
     iget-object v5, v0, Lcom/android/server/am/BroadcastRecord;->intent:Landroid/content/Intent;
@@ -818,119 +714,94 @@
 
     move-result-object v5
 
-    .line 540
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 542
-    const-string/jumbo v5, " to "
+    const-string v5, " to "
 
-    .line 540
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 542
     move-object/from16 v0, p2
 
     iget-object v5, v0, Lcom/android/server/am/BroadcastFilter;->receiverList:Lcom/android/server/am/ReceiverList;
 
     iget-object v5, v5, Lcom/android/server/am/ReceiverList;->app:Lcom/android/server/am/ProcessRecord;
 
-    .line 540
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 543
-    const-string/jumbo v5, " (pid="
+    const-string v5, " (pid="
 
-    .line 540
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 543
     move-object/from16 v0, p2
 
     iget-object v5, v0, Lcom/android/server/am/BroadcastFilter;->receiverList:Lcom/android/server/am/ReceiverList;
 
     iget v5, v5, Lcom/android/server/am/ReceiverList;->pid:I
 
-    .line 540
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 544
-    const-string/jumbo v5, ", uid="
+    const-string v5, ", uid="
 
-    .line 540
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 544
     move-object/from16 v0, p2
 
     iget-object v5, v0, Lcom/android/server/am/BroadcastFilter;->receiverList:Lcom/android/server/am/ReceiverList;
 
     iget v5, v5, Lcom/android/server/am/ReceiverList;->uid:I
 
-    .line 540
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 544
-    const-string/jumbo v5, ")"
+    const-string v5, ")"
 
-    .line 540
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 545
-    const-string/jumbo v5, " due to sender "
+    const-string v5, " due to sender "
 
-    .line 540
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 545
     move-object/from16 v0, p1
 
     iget-object v5, v0, Lcom/android/server/am/BroadcastRecord;->callerPackage:Ljava/lang/String;
 
-    .line 540
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 546
-    const-string/jumbo v5, " (uid "
+    const-string v5, " (uid "
 
-    .line 540
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 546
     move-object/from16 v0, p1
 
     iget v5, v0, Lcom/android/server/am/BroadcastRecord;->callingUid:I
 
-    .line 540
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 546
-    const-string/jumbo v5, ")"
+    const-string v5, ")"
 
-    .line 540
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
@@ -941,10 +812,8 @@
 
     invoke-static {v2, v4}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 547
     const/16 v18, 0x1
 
-    .line 550
     .end local v17    # "perm":I
     :cond_3
     if-nez v18, :cond_4
@@ -957,7 +826,6 @@
 
     if-eq v2, v4, :cond_4
 
-    .line 551
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/am/BroadcastQueue;->mService:Lcom/android/server/am/ActivityManagerService;
@@ -968,7 +836,6 @@
 
     iget v4, v0, Lcom/android/server/am/BroadcastRecord;->appOp:I
 
-    .line 552
     move-object/from16 v0, p2
 
     iget-object v5, v0, Lcom/android/server/am/BroadcastFilter;->receiverList:Lcom/android/server/am/ReceiverList;
@@ -979,27 +846,24 @@
 
     iget-object v6, v0, Lcom/android/server/am/BroadcastFilter;->packageName:Ljava/lang/String;
 
-    .line 551
     invoke-virtual {v2, v4, v5, v6}, Lcom/android/server/AppOpsService;->noteOperation(IILjava/lang/String;)I
 
     move-result v2
 
     if-eqz v2, :cond_4
 
-    .line 554
-    const-string/jumbo v2, "BroadcastQueue"
+    const-string v2, "BroadcastQueue"
 
     new-instance v4, Ljava/lang/StringBuilder;
 
     invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string/jumbo v5, "Appop Denial: receiving "
+    const-string v5, "Appop Denial: receiving "
 
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 555
     move-object/from16 v0, p1
 
     iget-object v5, v0, Lcom/android/server/am/BroadcastRecord;->intent:Landroid/content/Intent;
@@ -1008,88 +872,70 @@
 
     move-result-object v5
 
-    .line 554
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 556
-    const-string/jumbo v5, " to "
+    const-string v5, " to "
 
-    .line 554
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 556
     move-object/from16 v0, p2
 
     iget-object v5, v0, Lcom/android/server/am/BroadcastFilter;->receiverList:Lcom/android/server/am/ReceiverList;
 
     iget-object v5, v5, Lcom/android/server/am/ReceiverList;->app:Lcom/android/server/am/ProcessRecord;
 
-    .line 554
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 557
-    const-string/jumbo v5, " (pid="
+    const-string v5, " (pid="
 
-    .line 554
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 557
     move-object/from16 v0, p2
 
     iget-object v5, v0, Lcom/android/server/am/BroadcastFilter;->receiverList:Lcom/android/server/am/ReceiverList;
 
     iget v5, v5, Lcom/android/server/am/ReceiverList;->pid:I
 
-    .line 554
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 558
-    const-string/jumbo v5, ", uid="
+    const-string v5, ", uid="
 
-    .line 554
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 558
     move-object/from16 v0, p2
 
     iget-object v5, v0, Lcom/android/server/am/BroadcastFilter;->receiverList:Lcom/android/server/am/ReceiverList;
 
     iget v5, v5, Lcom/android/server/am/ReceiverList;->uid:I
 
-    .line 554
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 558
-    const-string/jumbo v5, ")"
+    const-string v5, ")"
 
-    .line 554
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 559
-    const-string/jumbo v5, " requires appop "
+    const-string v5, " requires appop "
 
-    .line 554
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 559
     move-object/from16 v0, p1
 
     iget v5, v0, Lcom/android/server/am/BroadcastRecord;->appOp:I
@@ -1098,51 +944,40 @@
 
     move-result-object v5
 
-    .line 554
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 560
-    const-string/jumbo v5, " due to sender "
+    const-string v5, " due to sender "
 
-    .line 554
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 560
     move-object/from16 v0, p1
 
     iget-object v5, v0, Lcom/android/server/am/BroadcastRecord;->callerPackage:Ljava/lang/String;
 
-    .line 554
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 561
-    const-string/jumbo v5, " (uid "
+    const-string v5, " (uid "
 
-    .line 554
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 561
     move-object/from16 v0, p1
 
     iget v5, v0, Lcom/android/server/am/BroadcastRecord;->callingUid:I
 
-    .line 554
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 561
-    const-string/jumbo v5, ")"
+    const-string v5, ")"
 
-    .line 554
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
@@ -1153,10 +988,8 @@
 
     invoke-static {v2, v4}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 562
     const/16 v18, 0x1
 
-    .line 565
     :cond_4
     if-nez v18, :cond_5
 
@@ -1203,7 +1036,6 @@
 
     iget v6, v0, Lcom/android/server/am/BroadcastRecord;->callingUid:I
 
-    .line 566
     move-object/from16 v0, p1
 
     iget v7, v0, Lcom/android/server/am/BroadcastRecord;->callingPid:I
@@ -1236,7 +1068,6 @@
 
     move-result v16
 
-    .line 486
     .local v16, "opCode":I
     const/4 v2, -0x1
 
@@ -1244,7 +1075,6 @@
 
     if-eq v0, v2, :cond_0
 
-    .line 487
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/am/BroadcastQueue;->mService:Lcom/android/server/am/ActivityManagerService;
@@ -1255,12 +1085,10 @@
 
     iget v4, v0, Lcom/android/server/am/BroadcastRecord;->callingUid:I
 
-    .line 488
     move-object/from16 v0, p1
 
     iget-object v5, v0, Lcom/android/server/am/BroadcastRecord;->callerPackage:Ljava/lang/String;
 
-    .line 487
     move/from16 v0, v16
 
     invoke-virtual {v2, v0, v4, v5}, Lcom/android/server/AppOpsService;->noteOperation(IILjava/lang/String;)I
@@ -1269,20 +1097,18 @@
 
     if-eqz v2, :cond_0
 
-    .line 489
-    const-string/jumbo v2, "BroadcastQueue"
+    const-string v2, "BroadcastQueue"
 
     new-instance v4, Ljava/lang/StringBuilder;
 
     invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string/jumbo v5, "Appop Denial: broadcasting "
+    const-string v5, "Appop Denial: broadcasting "
 
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 490
     move-object/from16 v0, p1
 
     iget-object v5, v0, Lcom/android/server/am/BroadcastRecord;->intent:Landroid/content/Intent;
@@ -1291,100 +1117,78 @@
 
     move-result-object v5
 
-    .line 489
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 491
-    const-string/jumbo v5, " from "
+    const-string v5, " from "
 
-    .line 489
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 491
     move-object/from16 v0, p1
 
     iget-object v5, v0, Lcom/android/server/am/BroadcastRecord;->callerPackage:Ljava/lang/String;
 
-    .line 489
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 491
-    const-string/jumbo v5, " (pid="
+    const-string v5, " (pid="
 
-    .line 489
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 492
     move-object/from16 v0, p1
 
     iget v5, v0, Lcom/android/server/am/BroadcastRecord;->callingPid:I
 
-    .line 489
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 492
-    const-string/jumbo v5, ", uid="
+    const-string v5, ", uid="
 
-    .line 489
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 492
     move-object/from16 v0, p1
 
     iget v5, v0, Lcom/android/server/am/BroadcastRecord;->callingUid:I
 
-    .line 489
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 492
-    const-string/jumbo v5, ")"
+    const-string v5, ")"
 
-    .line 489
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 493
-    const-string/jumbo v5, " requires appop "
+    const-string v5, " requires appop "
 
-    .line 489
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 494
     move-object/from16 v0, p2
 
     iget-object v5, v0, Lcom/android/server/am/BroadcastFilter;->requiredPermission:Ljava/lang/String;
 
-    .line 493
     invoke-static {v5}, Landroid/app/AppOpsManager;->permissionToOp(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v5
 
-    .line 489
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 495
-    const-string/jumbo v5, " due to registered receiver "
+    const-string v5, " due to registered receiver "
 
-    .line 489
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
@@ -1401,12 +1205,10 @@
 
     invoke-static {v2, v4}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 496
     const/16 v18, 0x1
 
     goto/16 :goto_0
 
-    .line 517
     .end local v16    # "opCode":I
     .restart local v3    # "requiredPermission":Ljava/lang/String;
     .restart local v15    # "i":I
@@ -1415,7 +1217,6 @@
 
     move-result v13
 
-    .line 518
     .local v13, "appOp":I
     const/4 v2, -0x1
 
@@ -1427,14 +1228,12 @@
 
     if-eq v13, v2, :cond_8
 
-    .line 519
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/am/BroadcastQueue;->mService:Lcom/android/server/am/ActivityManagerService;
 
     iget-object v2, v2, Lcom/android/server/am/ActivityManagerService;->mAppOpsService:Lcom/android/server/AppOpsService;
 
-    .line 520
     move-object/from16 v0, p2
 
     iget-object v4, v0, Lcom/android/server/am/BroadcastFilter;->receiverList:Lcom/android/server/am/ReceiverList;
@@ -1471,137 +1270,108 @@
 
     move-result-object v5
 
-    .line 522
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 524
-    const-string/jumbo v5, " to "
+    const-string v5, " to "
 
-    .line 522
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 524
     move-object/from16 v0, p2
 
     iget-object v5, v0, Lcom/android/server/am/BroadcastFilter;->receiverList:Lcom/android/server/am/ReceiverList;
 
     iget-object v5, v5, Lcom/android/server/am/ReceiverList;->app:Lcom/android/server/am/ProcessRecord;
 
-    .line 522
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 525
-    const-string/jumbo v5, " (pid="
+    const-string v5, " (pid="
 
-    .line 522
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 525
     move-object/from16 v0, p2
 
     iget-object v5, v0, Lcom/android/server/am/BroadcastFilter;->receiverList:Lcom/android/server/am/ReceiverList;
 
     iget v5, v5, Lcom/android/server/am/ReceiverList;->pid:I
 
-    .line 522
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 526
-    const-string/jumbo v5, ", uid="
+    const-string v5, ", uid="
 
-    .line 522
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 526
     move-object/from16 v0, p2
 
     iget-object v5, v0, Lcom/android/server/am/BroadcastFilter;->receiverList:Lcom/android/server/am/ReceiverList;
 
     iget v5, v5, Lcom/android/server/am/ReceiverList;->uid:I
 
-    .line 522
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 526
-    const-string/jumbo v5, ")"
+    const-string v5, ")"
 
-    .line 522
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 527
-    const-string/jumbo v5, " requires appop "
+    const-string v5, " requires appop "
 
-    .line 522
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 527
     invoke-static {v3}, Landroid/app/AppOpsManager;->permissionToOp(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v5
 
-    .line 522
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 529
-    const-string/jumbo v5, " due to sender "
+    const-string v5, " due to sender "
 
-    .line 522
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 529
     move-object/from16 v0, p1
 
     iget-object v5, v0, Lcom/android/server/am/BroadcastRecord;->callerPackage:Ljava/lang/String;
 
-    .line 522
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 530
-    const-string/jumbo v5, " (uid "
+    const-string v5, " (uid "
 
-    .line 522
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 530
     move-object/from16 v0, p1
 
     iget v5, v0, Lcom/android/server/am/BroadcastRecord;->callingUid:I
 
-    .line 522
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 530
-    const-string/jumbo v5, ")"
+    const-string v5, ")"
 
-    .line 522
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
@@ -1665,7 +1435,7 @@
 
     move-result-object v4
 
-    const-string/jumbo v5, "] "
+    const-string v5, "] "
 
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -1677,28 +1447,22 @@
 
     move-result-object v4
 
-    .line 572
-    const-string/jumbo v5, " to "
+    const-string v5, " to "
 
-    .line 571
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 572
     move-object/from16 v0, p2
 
     iget-object v5, v0, Lcom/android/server/am/BroadcastFilter;->receiverList:Lcom/android/server/am/ReceiverList;
 
-    .line 571
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    .line 572
-    const-string/jumbo v5, ": process crashing"
+    const-string v5, ": process crashing"
 
-    .line 571
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
@@ -1730,14 +1494,12 @@
 
     iput-object v2, v0, Lcom/android/server/am/BroadcastRecord;->receiver:Landroid/os/IBinder;
 
-    .line 582
     move-object/from16 v0, p2
 
     move-object/from16 v1, p1
 
     iput-object v0, v1, Lcom/android/server/am/BroadcastRecord;->curFilter:Lcom/android/server/am/BroadcastFilter;
 
-    .line 583
     move-object/from16 v0, p2
 
     iget-object v2, v0, Lcom/android/server/am/BroadcastFilter;->receiverList:Lcom/android/server/am/ReceiverList;
@@ -1746,14 +1508,12 @@
 
     iput-object v0, v2, Lcom/android/server/am/ReceiverList;->curBroadcast:Lcom/android/server/am/BroadcastRecord;
 
-    .line 584
     const/4 v2, 0x2
 
     move-object/from16 v0, p1
 
     iput v2, v0, Lcom/android/server/am/BroadcastRecord;->state:I
 
-    .line 585
     move-object/from16 v0, p2
 
     iget-object v2, v0, Lcom/android/server/am/BroadcastFilter;->receiverList:Lcom/android/server/am/ReceiverList;
@@ -1762,7 +1522,6 @@
 
     if-eqz v2, :cond_c
 
-    .line 591
     move-object/from16 v0, p2
 
     iget-object v2, v0, Lcom/android/server/am/BroadcastFilter;->receiverList:Lcom/android/server/am/ReceiverList;
@@ -1773,7 +1532,6 @@
 
     iput-object v2, v0, Lcom/android/server/am/BroadcastRecord;->curApp:Lcom/android/server/am/ProcessRecord;
 
-    .line 592
     move-object/from16 v0, p2
 
     iget-object v2, v0, Lcom/android/server/am/BroadcastFilter;->receiverList:Lcom/android/server/am/ReceiverList;
@@ -1784,7 +1542,6 @@
 
     iput-object v0, v2, Lcom/android/server/am/ProcessRecord;->curReceiver:Lcom/android/server/am/BroadcastRecord;
 
-    .line 593
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/am/BroadcastQueue;->mService:Lcom/android/server/am/ActivityManagerService;
@@ -2693,7 +2450,6 @@
 
     invoke-virtual {v4, v6}, Lcom/android/server/am/BroadcastQueue$BroadcastHandler;->post(Ljava/lang/Runnable;)Z
 
-    .line 599
     :cond_b
     return-void
 
@@ -5155,7 +4911,6 @@
 
     iget-object v5, v0, Lcom/android/server/am/BroadcastRecord;->resultTo:Landroid/content/IIntentReceiver;
 
-    .line 600
     new-instance v6, Landroid/content/Intent;
 
     move-object/from16 v0, v39
@@ -7532,7 +7287,6 @@
     .prologue
     const/4 v3, 0x0
 
-    .line 439
     iget-object v1, p0, Lcom/android/server/am/BroadcastQueue;->mOrderedBroadcasts:Ljava/util/ArrayList;
 
     invoke-virtual {v1}, Ljava/util/ArrayList;->size()I
@@ -7547,7 +7301,6 @@
 
     iget-object v2, p1, Lcom/android/server/am/BroadcastRecord;->intent:Landroid/content/Intent;
 
-    .line 440
     iget-object v1, p0, Lcom/android/server/am/BroadcastQueue;->mOrderedBroadcasts:Ljava/util/ArrayList;
 
     invoke-virtual {v1, v0}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -7988,7 +7741,6 @@
 
     iget-object v0, p0, Lcom/android/server/am/BroadcastQueue;->mPendingBroadcast:Lcom/android/server/am/BroadcastRecord;
 
-    .line 441
     .local v0, "br":Lcom/android/server/am/BroadcastRecord;
     if-eqz v0, :cond_0
 
@@ -7998,23 +7750,18 @@
 
     if-ne v1, p1, :cond_0
 
-    .line 322
     const/4 v1, 0x0
 
     iput v1, v0, Lcom/android/server/am/BroadcastRecord;->state:I
 
-    .line 323
     iget v1, p0, Lcom/android/server/am/BroadcastQueue;->mPendingBroadcastRecvIndex:I
 
     iput v1, v0, Lcom/android/server/am/BroadcastRecord;->nextReceiver:I
 
-    .line 324
     iput-object v2, p0, Lcom/android/server/am/BroadcastQueue;->mPendingBroadcast:Lcom/android/server/am/BroadcastRecord;
 
-    .line 325
     invoke-virtual {p0}, Lcom/android/server/am/BroadcastQueue;->scheduleBroadcastsLocked()V
 
-    .line 319
     :cond_0
     return-void
 .end method

@@ -843,7 +843,6 @@
     .locals 0
 
     .prologue
-    .line 138
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
@@ -853,7 +852,6 @@
     .locals 1
 
     .prologue
-    .line 715
     sget v0, Landroid/app/SystemServiceRegistry;->sServiceCacheSize:I
 
     new-array v0, v0, [Ljava/lang/Object;
@@ -869,7 +867,6 @@
     .prologue
     const/4 v1, 0x0
 
-    .line 722
     sget-object v2, Landroid/app/SystemServiceRegistry;->SYSTEM_SERVICE_FETCHERS:Ljava/util/HashMap;
 
     invoke-virtual {v2, p1}, Ljava/util/HashMap;->get(Ljava/lang/Object;)Ljava/lang/Object;
@@ -878,7 +875,6 @@
 
     check-cast v0, Landroid/app/SystemServiceRegistry$ServiceFetcher;
 
-    .line 723
     .local v0, "fetcher":Landroid/app/SystemServiceRegistry$ServiceFetcher;, "Landroid/app/SystemServiceRegistry$ServiceFetcher<*>;"
     if-eqz v0, :cond_0
 
@@ -902,7 +898,6 @@
     .end annotation
 
     .prologue
-    .line 730
     .local p0, "serviceClass":Ljava/lang/Class;, "Ljava/lang/Class<*>;"
     sget-object v0, Landroid/app/SystemServiceRegistry;->SYSTEM_SERVICE_NAMES:Ljava/util/HashMap;
 
@@ -932,19 +927,16 @@
     .end annotation
 
     .prologue
-    .line 739
     .local p1, "serviceClass":Ljava/lang/Class;, "Ljava/lang/Class<TT;>;"
     .local p2, "serviceFetcher":Landroid/app/SystemServiceRegistry$ServiceFetcher;, "Landroid/app/SystemServiceRegistry$ServiceFetcher<TT;>;"
     sget-object v0, Landroid/app/SystemServiceRegistry;->SYSTEM_SERVICE_NAMES:Ljava/util/HashMap;
 
     invoke-virtual {v0, p1, p0}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 740
     sget-object v0, Landroid/app/SystemServiceRegistry;->SYSTEM_SERVICE_FETCHERS:Ljava/util/HashMap;
 
     invoke-virtual {v0, p0, p2}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 738
     return-void
 .end method
 

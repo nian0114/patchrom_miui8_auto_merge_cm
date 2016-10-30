@@ -89,34 +89,26 @@
     .end annotation
 
     .prologue
-    .line 247
     .local p3, "filters":Ljava/util/List;, "Ljava/util/List<Landroid/bluetooth/le/ScanFilter;>;"
     .local p6, "resultStorages":Ljava/util/List;, "Ljava/util/List<Ljava/util/List<Landroid/bluetooth/le/ResultStorageDescriptor;>;>;"
     iput-object p1, p0, Landroid/bluetooth/le/BluetoothLeScanner$BleScanCallbackWrapper;->this$0:Landroid/bluetooth/le/BluetoothLeScanner;
 
     invoke-direct {p0}, Landroid/bluetooth/BluetoothGattCallbackWrapper;-><init>()V
 
-    .line 250
     iput-object p2, p0, Landroid/bluetooth/le/BluetoothLeScanner$BleScanCallbackWrapper;->mBluetoothGatt:Landroid/bluetooth/IBluetoothGatt;
 
-    .line 251
     iput-object p3, p0, Landroid/bluetooth/le/BluetoothLeScanner$BleScanCallbackWrapper;->mFilters:Ljava/util/List;
 
-    .line 252
     iput-object p4, p0, Landroid/bluetooth/le/BluetoothLeScanner$BleScanCallbackWrapper;->mSettings:Landroid/bluetooth/le/ScanSettings;
 
-    .line 253
     iput-object p5, p0, Landroid/bluetooth/le/BluetoothLeScanner$BleScanCallbackWrapper;->mScanCallback:Landroid/bluetooth/le/ScanCallback;
 
-    .line 254
     const/4 v0, 0x0
 
     iput v0, p0, Landroid/bluetooth/le/BluetoothLeScanner$BleScanCallbackWrapper;->mClientIf:I
 
-    .line 255
     iput-object p6, p0, Landroid/bluetooth/le/BluetoothLeScanner$BleScanCallbackWrapper;->mResultStorages:Ljava/util/List;
 
-    .line 249
     return-void
 .end method
 
@@ -126,23 +118,20 @@
     .locals 4
 
     .prologue
-    .line 296
     monitor-enter p0
 
-    .line 297
     :try_start_0
     iget v1, p0, Landroid/bluetooth/le/BluetoothLeScanner$BleScanCallbackWrapper;->mClientIf:I
 
     if-gtz v1, :cond_0
 
-    .line 298
-    const-string/jumbo v1, "BluetoothLeScanner"
+    const-string v1, "BluetoothLeScanner"
 
     new-instance v2, Ljava/lang/StringBuilder;
 
     invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string/jumbo v3, "Error state, mLeHandle: "
+    const-string v3, "Error state, mLeHandle: "
 
     invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -164,10 +153,8 @@
 
     monitor-exit p0
 
-    .line 299
     return-void
 
-    .line 302
     :cond_0
     :try_start_1
     iget-object v1, p0, Landroid/bluetooth/le/BluetoothLeScanner$BleScanCallbackWrapper;->mBluetoothGatt:Landroid/bluetooth/IBluetoothGatt;
@@ -184,19 +171,16 @@
     :goto_0
     monitor-exit p0
 
-    .line 295
     return-void
 
-    .line 303
     :catch_0
     move-exception v0
 
-    .line 304
     .local v0, "e":Landroid/os/RemoteException;
     :try_start_2
-    const-string/jumbo v1, "BluetoothLeScanner"
+    const-string v1, "BluetoothLeScanner"
 
-    const-string/jumbo v2, "Failed to get pending scan results"
+    const-string v2, "Failed to get pending scan results"
 
     invoke-static {v1, v2, v0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
     :try_end_2
@@ -204,7 +188,6 @@
 
     goto :goto_0
 
-    .line 296
     .end local v0    # "e":Landroid/os/RemoteException;
     :catchall_0
     move-exception v1
@@ -227,7 +210,6 @@
     .end annotation
 
     .prologue
-    .line 363
     .local p1, "results":Ljava/util/List;, "Ljava/util/List<Landroid/bluetooth/le/ScanResult;>;"
     new-instance v0, Landroid/os/Handler;
 
@@ -237,7 +219,6 @@
 
     invoke-direct {v0, v1}, Landroid/os/Handler;-><init>(Landroid/os/Looper;)V
 
-    .line 364
     .local v0, "handler":Landroid/os/Handler;
     new-instance v1, Landroid/bluetooth/le/BluetoothLeScanner$BleScanCallbackWrapper$2;
 
@@ -245,7 +226,6 @@
 
     invoke-virtual {v0, v1}, Landroid/os/Handler;->post(Ljava/lang/Runnable;)Z
 
-    .line 362
     return-void
 .end method
 
@@ -257,14 +237,13 @@
     .prologue
     const/4 v8, -0x1
 
-    .line 314
-    const-string/jumbo v0, "BluetoothLeScanner"
+    const-string v0, "BluetoothLeScanner"
 
     new-instance v1, Ljava/lang/StringBuilder;
 
     invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string/jumbo v2, "onClientRegistered() - status="
+    const-string v2, "onClientRegistered() - status="
 
     invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -274,10 +253,8 @@
 
     move-result-object v1
 
-    .line 315
-    const-string/jumbo v2, " clientIf="
+    const-string v2, " clientIf="
 
-    .line 314
     invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v1
@@ -327,14 +304,12 @@
 
     iget-object v4, p0, Landroid/bluetooth/le/BluetoothLeScanner$BleScanCallbackWrapper;->mFilters:Ljava/util/List;
 
-    .line 325
     iget-object v5, p0, Landroid/bluetooth/le/BluetoothLeScanner$BleScanCallbackWrapper;->mResultStorages:Ljava/util/List;
 
     invoke-static {}, Landroid/app/ActivityThread;->currentOpPackageName()Ljava/lang/String;
 
     move-result-object v6
 
-    .line 324
     const/4 v2, 0x0
 
     invoke-interface/range {v0 .. v6}, Landroid/bluetooth/IBluetoothGatt;->startScan(IZLandroid/bluetooth/le/ScanSettings;Ljava/util/List;Ljava/util/List;Ljava/lang/String;)V
@@ -342,7 +317,6 @@
     .catch Landroid/os/RemoteException; {:try_start_1 .. :try_end_1} :catch_0
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
-    .line 334
     :goto_0
     :try_start_2
     iget v0, p0, Landroid/bluetooth/le/BluetoothLeScanner$BleScanCallbackWrapper;->mClientIf:I
@@ -374,23 +348,20 @@
 
     monitor-exit p0
 
-    .line 313
     return-void
 
-    .line 326
     :catch_0
     move-exception v7
 
-    .line 327
     .local v7, "e":Landroid/os/RemoteException;
     :try_start_3
-    const-string/jumbo v0, "BluetoothLeScanner"
+    const-string v0, "BluetoothLeScanner"
 
     new-instance v1, Ljava/lang/StringBuilder;
 
     invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string/jumbo v2, "fail to start le scan: "
+    const-string v2, "fail to start le scan: "
 
     invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -406,7 +377,6 @@
 
     invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 328
     const/4 v0, -0x1
 
     iput v0, p0, Landroid/bluetooth/le/BluetoothLeScanner$BleScanCallbackWrapper;->mClientIf:I
@@ -415,7 +385,6 @@
 
     goto :goto_0
 
-    .line 316
     .end local v7    # "e":Landroid/os/RemoteException;
     :catchall_0
     move-exception v0
@@ -673,7 +642,6 @@
 
     throw v2
 
-    .line 332
     :cond_1
     :try_start_4
     iget-object v2, p0, Landroid/bluetooth/le/BluetoothLeScanner$BleScanCallbackWrapper;->this$0:Landroid/bluetooth/le/BluetoothLeScanner;
@@ -693,10 +661,8 @@
     .locals 4
 
     .prologue
-    .line 380
     monitor-enter p0
 
-    .line 381
     :try_start_0
     iget v1, p0, Landroid/bluetooth/le/BluetoothLeScanner$BleScanCallbackWrapper;->mClientIf:I
 
@@ -730,10 +696,8 @@
 
     monitor-exit p0
 
-    .line 283
     return-void
 
-    .line 286
     :cond_0
     :try_start_1
     iget-object v1, p0, Landroid/bluetooth/le/BluetoothLeScanner$BleScanCallbackWrapper;->mBluetoothGatt:Landroid/bluetooth/IBluetoothGatt;
@@ -744,7 +708,6 @@
 
     invoke-interface {v1, v2, v3}, Landroid/bluetooth/IBluetoothGatt;->stopScan(IZ)V
 
-    .line 287
     iget-object v1, p0, Landroid/bluetooth/le/BluetoothLeScanner$BleScanCallbackWrapper;->mBluetoothGatt:Landroid/bluetooth/IBluetoothGatt;
 
     iget v2, p0, Landroid/bluetooth/le/BluetoothLeScanner$BleScanCallbackWrapper;->mClientIf:I
@@ -754,7 +717,6 @@
     .catch Landroid/os/RemoteException; {:try_start_1 .. :try_end_1} :catch_0
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
-    .line 291
     :goto_0
     :try_start_2
     iget v1, p0, Landroid/bluetooth/le/BluetoothLeScanner$BleScanCallbackWrapper;->mClientIf:I
@@ -773,19 +735,16 @@
 
     monitor-exit p0
 
-    .line 279
     return-void
 
-    .line 288
     :catch_0
     move-exception v0
 
-    .line 289
     .local v0, "e":Landroid/os/RemoteException;
     :try_start_3
-    const-string/jumbo v1, "BluetoothLeScanner"
+    const-string v1, "BluetoothLeScanner"
 
-    const-string/jumbo v2, "Failed to stop scan and unregister"
+    const-string v2, "Failed to stop scan and unregister"
 
     invoke-static {v1, v2, v0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
     :try_end_3
@@ -793,7 +752,6 @@
 
     goto :goto_0
 
-    .line 280
     .end local v0    # "e":Landroid/os/RemoteException;
     :catchall_0
     move-exception v1

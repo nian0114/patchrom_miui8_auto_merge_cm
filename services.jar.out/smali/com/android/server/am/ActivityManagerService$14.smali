@@ -32,7 +32,6 @@
     .param p3, "val$goingCallback"    # Ljava/lang/Runnable;
 
     .prologue
-    .line 12110
     .local p2, "val$doneReceivers":Ljava/util/ArrayList;, "Ljava/util/ArrayList<Landroid/content/ComponentName;>;"
     iput-object p1, p0, Lcom/android/server/am/ActivityManagerService$14;->this$0:Lcom/android/server/am/ActivityManagerService;
 

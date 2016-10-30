@@ -202,89 +202,70 @@
     .prologue
     const/4 v1, 0x0
 
-    .line 4747
     iput-object p1, p0, Lcom/android/server/backup/BackupManagerService$FullRestoreEngine;->this$0:Lcom/android/server/backup/BackupManagerService;
 
     invoke-direct {p0, p1}, Lcom/android/server/backup/BackupManagerService$RestoreEngine;-><init>(Lcom/android/server/backup/BackupManagerService;)V
 
-    .line 4685
     iput-object v1, p0, Lcom/android/server/backup/BackupManagerService$FullRestoreEngine;->mObbConnection:Lcom/android/server/backup/BackupManagerService$FullBackupObbConnection;
 
-    .line 4689
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 4688
     iput-object v0, p0, Lcom/android/server/backup/BackupManagerService$FullRestoreEngine;->mPackagePolicies:Ljava/util/HashMap;
 
-    .line 4692
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
     iput-object v0, p0, Lcom/android/server/backup/BackupManagerService$FullRestoreEngine;->mPackageInstallers:Ljava/util/HashMap;
 
-    .line 4696
     new-instance v0, Ljava/util/HashMap;
 
     invoke-direct {v0}, Ljava/util/HashMap;-><init>()V
 
-    .line 4695
     iput-object v0, p0, Lcom/android/server/backup/BackupManagerService$FullRestoreEngine;->mManifestSignatures:Ljava/util/HashMap;
 
-    .line 4699
     new-instance v0, Ljava/util/HashSet;
 
     invoke-direct {v0}, Ljava/util/HashSet;-><init>()V
 
     iput-object v0, p0, Lcom/android/server/backup/BackupManagerService$FullRestoreEngine;->mClearedPackages:Ljava/util/HashSet;
 
-    .line 4708
     iput-object v1, p0, Lcom/android/server/backup/BackupManagerService$FullRestoreEngine;->mPipes:[Landroid/os/ParcelFileDescriptor;
 
-    .line 4711
     iput-object v1, p0, Lcom/android/server/backup/BackupManagerService$FullRestoreEngine;->mWidgetData:[B
 
-    .line 5175
     new-instance v0, Lcom/android/server/backup/BackupManagerService$FullRestoreEngine$RestoreInstallObserver;
 
     invoke-direct {v0, p0}, Lcom/android/server/backup/BackupManagerService$FullRestoreEngine$RestoreInstallObserver;-><init>(Lcom/android/server/backup/BackupManagerService$FullRestoreEngine;)V
 
     iput-object v0, p0, Lcom/android/server/backup/BackupManagerService$FullRestoreEngine;->mInstallObserver:Lcom/android/server/backup/BackupManagerService$FullRestoreEngine$RestoreInstallObserver;
 
-    .line 5176
     new-instance v0, Lcom/android/server/backup/BackupManagerService$FullRestoreEngine$RestoreDeleteObserver;
 
     invoke-direct {v0, p0}, Lcom/android/server/backup/BackupManagerService$FullRestoreEngine$RestoreDeleteObserver;-><init>(Lcom/android/server/backup/BackupManagerService$FullRestoreEngine;)V
 
     iput-object v0, p0, Lcom/android/server/backup/BackupManagerService$FullRestoreEngine;->mDeleteObserver:Lcom/android/server/backup/BackupManagerService$FullRestoreEngine$RestoreDeleteObserver;
 
-    .line 4749
     iput-object p2, p0, Lcom/android/server/backup/BackupManagerService$FullRestoreEngine;->mObserver:Landroid/app/backup/IFullBackupRestoreObserver;
 
-    .line 4750
     iput-object p3, p0, Lcom/android/server/backup/BackupManagerService$FullRestoreEngine;->mOnlyPackage:Landroid/content/pm/PackageInfo;
 
-    .line 4751
     iput-boolean p4, p0, Lcom/android/server/backup/BackupManagerService$FullRestoreEngine;->mAllowApks:Z
 
-    .line 4752
     iput-boolean p5, p0, Lcom/android/server/backup/BackupManagerService$FullRestoreEngine;->mAllowObbs:Z
 
-    .line 4753
     const v0, 0x8000
 
     new-array v0, v0, [B
 
     iput-object v0, p0, Lcom/android/server/backup/BackupManagerService$FullRestoreEngine;->mBuffer:[B
 
-    .line 4754
     const-wide/16 v0, 0x0
 
     iput-wide v0, p0, Lcom/android/server/backup/BackupManagerService$FullRestoreEngine;->mBytes:J
 
-    .line 4748
     return-void
 .end method
 
@@ -297,14 +278,11 @@
 
     const/4 v8, 0x0
 
-    .line 5686
     const/4 v3, 0x0
 
-    .line 5687
     .local v3, "offset":I
     array-length v4, p1
 
-    .line 5688
     .local v4, "todo":I
     new-instance v0, Ljava/lang/StringBuilder;
 
@@ -312,13 +290,11 @@
 
     invoke-direct {v0, v5}, Ljava/lang/StringBuilder;-><init>(I)V
 
-    .line 5689
     .local v0, "buf":Ljava/lang/StringBuilder;
     :goto_0
     if-lez v4, :cond_2
 
-    .line 5690
-    const-string/jumbo v5, "%04x   "
+    const-string v5, "%04x   "
 
     new-array v6, v9, [Ljava/lang/Object;
 
@@ -334,14 +310,12 @@
 
     invoke-virtual {v0, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 5691
     const/16 v5, 0x10
 
     if-le v4, v5, :cond_0
 
     const/16 v2, 0x10
 
-    .line 5692
     .local v2, "numThisLine":I
     :goto_1
     const/4 v1, 0x0
@@ -350,8 +324,7 @@
     :goto_2
     if-ge v1, v2, :cond_1
 
-    .line 5693
-    const-string/jumbo v5, "%02x "
+    const-string v5, "%02x "
 
     new-array v6, v9, [Ljava/lang/Object;
 
@@ -371,12 +344,10 @@
 
     invoke-virtual {v0, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 5692
     add-int/lit8 v1, v1, 0x1
 
     goto :goto_2
 
-    .line 5691
     .end local v1    # "i":I
     .end local v2    # "numThisLine":I
     :cond_0
@@ -385,10 +356,9 @@
     .restart local v2    # "numThisLine":I
     goto :goto_1
 
-    .line 5695
     .restart local v1    # "i":I
     :cond_1
-    const-string/jumbo v5, "hexdump"
+    const-string v5, "hexdump"
 
     invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
@@ -396,18 +366,14 @@
 
     invoke-static {v5, v6}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 5696
     invoke-virtual {v0, v8}, Ljava/lang/StringBuilder;->setLength(I)V
 
-    .line 5697
     sub-int/2addr v4, v2
 
-    .line 5698
     add-int/2addr v3, v2
 
     goto :goto_0
 
-    .line 5685
     .end local v1    # "i":I
     .end local v2    # "numThisLine":I
     :cond_2
@@ -421,8 +387,7 @@
     .prologue
     const/4 v2, 0x0
 
-    .line 5653
-    const-string/jumbo v0, "c"
+    const-string v0, "c"
 
     iget-object v1, p1, Lcom/android/server/backup/BackupManagerService$FileMetadata;->domain:Ljava/lang/String;
 
@@ -432,12 +397,10 @@
 
     if-eqz v0, :cond_0
 
-    .line 5657
     return v2
 
-    .line 5660
     :cond_0
-    const-string/jumbo v0, "r"
+    const-string v0, "r"
 
     iget-object v1, p1, Lcom/android/server/backup/BackupManagerService$FileMetadata;->domain:Ljava/lang/String;
 
@@ -447,10 +410,9 @@
 
     if-eqz v0, :cond_1
 
-    .line 5665
     iget-object v0, p1, Lcom/android/server/backup/BackupManagerService$FileMetadata;->path:Ljava/lang/String;
 
-    const-string/jumbo v1, "no_backup/"
+    const-string v1, "no_backup/"
 
     invoke-virtual {v0, v1}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
 
@@ -458,14 +420,12 @@
 
     if-eqz v0, :cond_1
 
-    .line 5669
     return v2
 
-    .line 5674
     :cond_1
     iget-object v0, p1, Lcom/android/server/backup/BackupManagerService$FileMetadata;->path:Ljava/lang/String;
 
-    const-string/jumbo v1, ".."
+    const-string v1, ".."
 
     invoke-virtual {v0, v1}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
 
@@ -475,7 +435,7 @@
 
     iget-object v0, p1, Lcom/android/server/backup/BackupManagerService$FileMetadata;->path:Ljava/lang/String;
 
-    const-string/jumbo v1, "//"
+    const-string v1, "//"
 
     invoke-virtual {v0, v1}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
 
@@ -483,11 +443,9 @@
 
     if-eqz v0, :cond_3
 
-    .line 5678
     :cond_2
     return v2
 
-    .line 5682
     :cond_3
     const/4 v0, 0x1
 
@@ -501,7 +459,6 @@
     .param p1, "info"    # Lcom/android/server/backup/BackupManagerService$FileMetadata;
 
     .prologue
-    .line 5516
     return-void
 .end method
 
@@ -517,22 +474,19 @@
     .end annotation
 
     .prologue
-    .line 5499
     array-length v1, p1
 
-    .line 5500
     .local v1, "end":I
     if-lt p2, v1, :cond_0
 
     new-instance v3, Ljava/io/IOException;
 
-    const-string/jumbo v4, "Incomplete data"
+    const-string v4, "Incomplete data"
 
     invoke-direct {v3, v4}, Ljava/io/IOException;-><init>(Ljava/lang/String;)V
 
     throw v3
 
-    .line 5503
     :cond_0
     move v2, p2
 
@@ -540,16 +494,13 @@
     :goto_0
     if-ge v2, v1, :cond_1
 
-    .line 5504
     aget-byte v0, p1, v2
 
-    .line 5507
     .local v0, "c":B
     const/16 v3, 0xa
 
     if-ne v0, v3, :cond_2
 
-    .line 5511
     .end local v0    # "c":B
     :cond_1
     new-instance v3, Ljava/lang/String;
@@ -562,13 +513,10 @@
 
     aput-object v3, p3, v4
 
-    .line 5512
     add-int/lit8 v2, v2, 0x1
 
-    .line 5513
     return v2
 
-    .line 5503
     .restart local v0    # "c":B
     :cond_2
     add-int/lit8 v2, v2, 0x1
@@ -591,14 +539,11 @@
     .prologue
     const/16 v10, 0x30
 
-    .line 5789
     const-wide/16 v4, 0x0
 
-    .line 5790
     .local v4, "value":J
     add-int v1, p2, p3
 
-    .line 5791
     .local v1, "end":I
     move v2, p2
 
@@ -606,10 +551,8 @@
     :goto_0
     if-ge v2, v1, :cond_0
 
-    .line 5792
     aget-byte v0, p1, v2
 
-    .line 5794
     .local v0, "b":B
     if-eqz v0, :cond_0
 
@@ -617,12 +560,10 @@
 
     if-ne v0, v3, :cond_1
 
-    .line 5801
     .end local v0    # "b":B
     :cond_0
     return-wide v4
 
-    .line 5795
     .restart local v0    # "b":B
     :cond_1
     if-lt v0, v10, :cond_2
@@ -633,7 +574,6 @@
 
     if-le v0, v3, :cond_3
 
-    .line 5796
     :cond_2
     new-instance v3, Ljava/io/IOException;
 
@@ -641,7 +581,7 @@
 
     invoke-direct {v6}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string/jumbo v7, "Invalid number in header: \'"
+    const-string v7, "Invalid number in header: \'"
 
     invoke-virtual {v6, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -653,10 +593,8 @@
 
     move-result-object v6
 
-    .line 5797
-    const-string/jumbo v7, "\' for radix "
+    const-string v7, "\' for radix "
 
-    .line 5796
     invoke-virtual {v6, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v6
@@ -673,7 +611,6 @@
 
     throw v3
 
-    .line 5799
     :cond_3
     int-to-long v6, p4
 
@@ -685,7 +622,6 @@
 
     add-long v4, v6, v8
 
-    .line 5791
     add-int/lit8 v2, v2, 0x1
 
     goto :goto_0
@@ -703,14 +639,11 @@
     .end annotation
 
     .prologue
-    .line 5805
     add-int v0, p2, p3
 
-    .line 5806
     .local v0, "end":I
     move v1, p2
 
-    .line 5808
     .local v1, "eos":I
     :goto_0
     if-ge v1, v0, :cond_0
@@ -723,13 +656,12 @@
 
     goto :goto_0
 
-    .line 5809
     :cond_0
     new-instance v2, Ljava/lang/String;
 
     sub-int v3, v1, p2
 
-    const-string/jumbo v4, "US-ASCII"
+    const-string v4, "US-ASCII"
 
     invoke-direct {v2, p1, p2, v3, v4}, Ljava/lang/String;-><init>([BIILjava/lang/String;)V
 
@@ -740,7 +672,6 @@
     .locals 1
 
     .prologue
-    .line 4758
     iget-object v0, p0, Lcom/android/server/backup/BackupManagerService$FullRestoreEngine;->mAgent:Landroid/app/IBackupAgent;
 
     return-object v0
@@ -753,18 +684,16 @@
     .param p3, "instream"    # Ljava/io/InputStream;
 
     .prologue
-    .line 5179
     const/4 v10, 0x1
 
-    .line 5181
     .local v10, "okay":Z
-    const-string/jumbo v19, "RestoreEngine"
+    const-string v19, "RestoreEngine"
 
     new-instance v20, Ljava/lang/StringBuilder;
 
     invoke-direct/range {v20 .. v20}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string/jumbo v21, "Installing from backup: "
+    const-string v21, "Installing from backup: "
 
     invoke-virtual/range {v20 .. v21}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -786,7 +715,6 @@
 
     invoke-static/range {v19 .. v20}, Landroid/util/Slog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 5185
     new-instance v4, Ljava/io/File;
 
     move-object/from16 v0, p0
@@ -813,14 +741,12 @@
 
     invoke-direct {v4, v0, v1}, Ljava/io/File;-><init>(Ljava/io/File;Ljava/lang/String;)V
 
-    .line 5187
     .local v4, "apkFile":Ljava/io/File;
     :try_start_0
     new-instance v5, Ljava/io/FileOutputStream;
 
     invoke-direct {v5, v4}, Ljava/io/FileOutputStream;-><init>(Ljava/io/File;)V
 
-    .line 5188
     .local v5, "apkStream":Ljava/io/FileOutputStream;
     const v19, 0x8000
 
@@ -828,13 +754,11 @@
 
     new-array v6, v0, [B
 
-    .line 5189
     .local v6, "buffer":[B
     move-object/from16 v0, p1
 
     iget-wide v14, v0, Lcom/android/server/backup/BackupManagerService$FileMetadata;->size:J
 
-    .line 5190
     .local v14, "size":J
     :goto_0
     const-wide/16 v20, 0x0
@@ -843,7 +767,6 @@
 
     if-lez v19, :cond_1
 
-    .line 5191
     array-length v0, v6
 
     move/from16 v19, v0
@@ -868,7 +791,6 @@
 
     move-wide/from16 v16, v0
 
-    .line 5192
     .local v16, "toRead":J
     :goto_1
     move-wide/from16 v0, v16
@@ -889,7 +811,6 @@
 
     move-result v7
 
-    .line 5193
     .local v7, "didRead":I
     if-ltz v7, :cond_1
 
@@ -1565,7 +1486,6 @@
 
     throw v19
 
-    .line 5194
     :cond_0
     move-object/from16 v0, p1
 
@@ -1626,7 +1546,6 @@
 
     if-nez v19, :cond_1
 
-    .line 5205
     move-object/from16 v0, p0
 
     iget-wide v0, v0, Lcom/android/server/backup/BackupManagerService$FullRestoreEngine;->mBytes:J
@@ -1688,7 +1607,6 @@
 
     if-ne v0, v1, :cond_f
 
-    .line 5208
     move-object/from16 v0, p0
 
     move-object/from16 v1, v17
@@ -1716,7 +1634,6 @@
 
     if-eqz v19, :cond_e
 
-    .line 5210
     move-object/from16 v0, p0
 
     move-object/from16 v1, v17
@@ -1733,7 +1650,6 @@
 
     move-result v18
 
-    .line 5214
     move-object/from16 v0, p0
 
     move-object/from16 v1, v17
@@ -2157,7 +2073,6 @@
 
     move-object/from16 v21, v0
 
-    .line 5221
     invoke-virtual/range {v20 .. v21}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v20
@@ -2689,7 +2604,6 @@
 
     const/4 v12, 0x0
 
-    .line 5265
     move-object/from16 v0, p0
 
     move-object/from16 v1, p2
@@ -2708,7 +2622,6 @@
 
     if-nez v11, :cond_1
 
-    .line 5266
     move-object/from16 v0, p0
 
     iget-wide v12, v0, Lcom/android/server/backup/BackupManagerService$FullRestoreEngine;->mBytes:J
@@ -3095,7 +3008,6 @@
 
     throw v12
 
-    .line 5367
     :cond_0
     move-object/from16 v0, p2
 
@@ -3152,7 +3064,6 @@
 
     add-long/2addr v12, v14
 
-    .line 5373
     move-object/from16 v0, p0
 
     iput-wide v12, v0, Lcom/android/server/backup/BackupManagerService$FullRestoreEngine;->mBytes:J
@@ -3200,7 +3111,6 @@
 
     const/16 v13, 0xa
 
-    .line 5384
     move-object/from16 v0, p0
 
     invoke-virtual {v0, v3, v9, v12, v13}, Lcom/android/server/backup/BackupManagerService$FullRestoreEngine;->extractRadix([BIII)J
@@ -4016,14 +3926,12 @@
 
     if-nez v5, :cond_3
 
-    .line 5388
     move-object/from16 v0, p0
 
     iget-object v5, v0, Lcom/android/server/backup/BackupManagerService$FullRestoreEngine;->mOnlyPackage:Landroid/content/pm/PackageInfo;
 
     if-eqz v5, :cond_1
 
-    .line 5390
     move-object/from16 v0, p0
 
     iget-object v5, v0, Lcom/android/server/backup/BackupManagerService$FullRestoreEngine;->mOnlyPackage:Landroid/content/pm/PackageInfo;
@@ -4074,7 +3982,6 @@
 
     const/4 v5, -0x3
 
-    .line 5396
     move-object/from16 v0, p0
 
     invoke-virtual {v0, v5}, Lcom/android/server/backup/BackupManagerService$FullRestoreEngine;->setResult(I)V
@@ -4123,7 +4030,6 @@
 
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/backup/BackupManagerService$FullRestoreEngine;->tearDownPipes()V
 
-    .line 5403
     move-object/from16 v0, p0
 
     iget-object v5, v0, Lcom/android/server/backup/BackupManagerService$FullRestoreEngine;->mTargetApp:Landroid/content/pm/ApplicationInfo;
@@ -4739,7 +4645,6 @@
 
     const/4 v7, 0x0
 
-    .line 5411
     move-object/from16 v0, p1
 
     move/from16 v1, v46
@@ -5484,7 +5389,6 @@
     :try_end_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 5303
     :cond_0
     :goto_0
     return-void
@@ -5656,7 +5560,6 @@
     :goto_0
     iput-object v4, p0, Lcom/android/server/backup/BackupManagerService$FullRestoreEngine;->mPipes:[Landroid/os/ParcelFileDescriptor;
 
-    .line 5741
     :cond_0
     return-void
 
