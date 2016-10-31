@@ -19,7 +19,7 @@ local-modified-jars :=
 # All apks from MIUI
 local-miui-removed-apps := FM
 
-local-miui-modified-apps := TeleService SecurityCoreAdd XiaomiServiceFramework
+local-miui-modified-apps := TeleService SecurityCoreAdd XiaomiServiceFramework MiuiSystemUI
 
 PORT_PRODUCT := nian_m7
 
