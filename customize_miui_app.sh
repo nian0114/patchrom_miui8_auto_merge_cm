@@ -45,3 +45,7 @@ fi
 if [ $1 = "SecurityCoreAdd" ];then
     applyPatch $1 $2
 fi
+
+if [ $1 = "XiaomiServiceFramework" ];then
+    applyPatch $1 $2
+fi
