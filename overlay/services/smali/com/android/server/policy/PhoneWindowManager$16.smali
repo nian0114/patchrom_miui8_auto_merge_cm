@@ -121,7 +121,7 @@
 
     iget-boolean v1, v1, Lcom/android/server/policy/PhoneWindowManager;->mNavigationBarOnBottom:Z
 
-    if-eqz v1, :cond_3
+    if-eqz v1, :cond_2
 
     :cond_0
     :goto_0
@@ -132,7 +132,7 @@
 
     iget-object v1, v1, Lcom/android/server/policy/PhoneWindowManager;->mFocusedWindow:Landroid/view/WindowManagerPolicy$WindowState;
 
-    if-eqz v1, :cond_1
+    if-eqz v1, :cond_miui_0
 
     iget-object v1, p0, Lcom/android/server/policy/PhoneWindowManager$16;->this$0:Lcom/android/server/policy/PhoneWindowManager;
 
@@ -146,19 +146,19 @@
 
     and-int/lit16 v1, v1, 0xbb6
 
-    if-eqz v1, :cond_4
+    if-eqz v1, :cond_3
 
     const/4 v0, 0x1
 
-    :cond_1
-    :goto_1
+    :cond_miui_0
+    :goto_miui_0
     iget-object v1, p0, Lcom/android/server/policy/PhoneWindowManager$16;->this$0:Lcom/android/server/policy/PhoneWindowManager;
 
     invoke-static {v1}, Lcom/android/server/policy/PhoneWindowManager;->-get5(Lcom/android/server/policy/PhoneWindowManager;)Z
 
     move-result v1
 
-    if-eqz v1, :cond_2
+    if-eqz v1, :cond_1
 
     iget-object v1, p0, Lcom/android/server/policy/PhoneWindowManager$16;->this$0:Lcom/android/server/policy/PhoneWindowManager;
 
@@ -166,9 +166,9 @@
 
     move-result v1
 
-    if-eqz v1, :cond_2
+    if-eqz v1, :cond_1
 
-    if-eqz v0, :cond_2
+    if-eqz v0, :cond_1
 
     iget-object v1, p0, Lcom/android/server/policy/PhoneWindowManager$16;->this$0:Lcom/android/server/policy/PhoneWindowManager;
 
@@ -176,11 +176,11 @@
 
     invoke-virtual {v1}, Lcom/android/server/policy/keyguard/KeyguardServiceDelegate;->showKeyguard()V
 
-    :cond_2
+    :cond_1
     return-void
 
     .end local v0    # "focusedWindowIsExternalKeyguard":Z
-    :cond_3
+    :cond_2
     iget-object v1, p0, Lcom/android/server/policy/PhoneWindowManager$16;->this$0:Lcom/android/server/policy/PhoneWindowManager;
 
     iget-boolean v1, v1, Lcom/android/server/policy/PhoneWindowManager;->mNavigationBarLeftInLandscape:Z
@@ -198,10 +198,10 @@
     goto :goto_0
 
     .restart local v0    # "focusedWindowIsExternalKeyguard":Z
-    :cond_4
+    :cond_3
     const/4 v0, 0x0
 
-    goto :goto_1
+    goto :goto_miui_0
 .end method
 
 .method public onSwipeFromRight()V

@@ -61,7 +61,7 @@
 
     move-result-object v2
 
-    const-string v3, "android.hardware.type.watch"
+    const-string/jumbo v3, "android.hardware.type.watch"
 
     invoke-virtual {v2, v3}, Landroid/content/pm/PackageManager;->hasSystemFeature(Ljava/lang/String;)Z
 
@@ -219,7 +219,7 @@
 
     move-result-object v2
 
-    const-string v3, "android.hardware.type.television"
+    const-string/jumbo v3, "android.hardware.type.television"
 
     invoke-virtual {v2, v3}, Landroid/content/pm/PackageManager;->hasSystemFeature(Ljava/lang/String;)Z
 
